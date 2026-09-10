@@ -3,6 +3,7 @@
 **Built:** what exists now that didn't before  
 - ~/12_months on wsl
 - uv project initialized
+- published to github
 
 **Broke:** what went wrong, and the actual root cause  
 - `*` in filenames was a fail -- wanted to show which files AI created
