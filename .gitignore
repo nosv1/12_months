@@ -1,2 +1,2 @@
-telemetry/.venv/
-telemetry/__pycache__
+.venv/
+__pycache__/
