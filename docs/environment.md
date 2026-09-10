@@ -131,7 +131,30 @@ networkingMode=mirrored
 Budget debugging time anyway. Cross-machine discovery is the standard first wall in real ROS 2
 work, and `ROS_DOMAIN_ID` mismatches will get you at least once.
 
-### 5. Native dual-boot before Part 3
+### 6. `uv` is missing in non-interactive shells
+
+`uv` installs to `~/.local/bin` and is put on `PATH` by line 119 of `~/.bashrc`:
+
+```bash
+. "$HOME/.local/bin/env"
+```
+
+But `~/.bashrc` returns early for non-interactive shells, so:
+
+```bash
+bash -c  'command -v uv'   # NOT found
+bash -lc 'command -v uv'   # found (login shells read ~/.profile, which adds ~/.local/bin)
+```
+
+Interactive terminals and login shells are fine. What breaks is anything that runs a bare
+non-interactive shell: `make` recipes, git hooks, `subprocess.run(..., shell=True)`, cron, and
+some CI steps. Symptom is `uv: command not found` for a command that clearly works when you type
+it yourself.
+
+Fix at the point of use — call `~/.local/bin/uv` by absolute path, or set `PATH` explicitly in
+the script/workflow rather than relying on shell startup files.
+
+### 7. Native dual-boot before Part 3
 
 WSL2 is genuinely good for Parts 1–2 — Python, C++, Linux, Docker are all native-quality. It gets
 flaky exactly where you're heading:
