@@ -7,6 +7,7 @@ A 52-week self-directed curriculum: rusty CS grad → employable robotics/AI eng
 - [docs/environment.md](docs/environment.md) — machine, toolchain, gotchas
 - [docs/background-threads.md](docs/background-threads.md) — build log, interviews, applications
 - [docs/syllabus-revisions.md](docs/syllabus-revisions.md) — why the syllabus differs from the original draft
+- [docs/ta-notes.md](docs/ta-notes.md) — Claude's working notes; read at session start, update at session end
 
 ---
 
