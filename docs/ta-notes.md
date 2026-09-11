@@ -77,6 +77,11 @@ pair only ever flags the first row of the pair.
 2. Backfill Thursday + Friday hours in `week-01.md`.
 3. Fix the falsy-return bug — he should choose between exceptions and a proper result type, and
    defend the choice.
+   **Post-break update (`e986ec1`):** he added four `assert type(x) is ...` lines in `parser`
+   *after* the `if messages: continue`, to narrow the Optionals. Does not fix the bug — the
+   `v=0.0` rows are diverted before reaching them — and `assert` is stripped under `python -O`.
+   Told him the tell is the commit message itself ("given validator returns optionals"): five
+   call sites doing damage control for one return shape. **Still haven't named the fix.**
 4. `mypy` — pitch as the thing that catches items 3 and 7 for free.
 5. First test: parse a line with `velocity=0.0`, assert a `Reading` comes back. The bug is the
    test case. **He has never written a test before** — arrange/act/assert, `test_*.py`,
