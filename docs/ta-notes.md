@@ -10,14 +10,77 @@ Read this at the start of a session. Update it at the end, and commit it.
 
 ## Where things stand
 
-**Last updated:** 2026-09-10 (end of day 2)
+**Last updated:** 2026-09-11 (end of day 3)
 
 - Curriculum started **Wed 2026-09-09**. Day 1 landed on the syllabus's designated *off* day, so
   don't infer the current week or day-of-rhythm from the calendar — check the dashboard or ask.
 - Part 1 deliverable lives at `telemetry/` — uv project, src-layout, `pytest` added as a dev dep.
-- Design is in `telemetry/README.md`, committed (`d6ae328`). Code is started but **uncommitted**
-  at end of day 2: `reading.py`, `robot.py`, `warning.py`, `analysis.py`, `main.py`, `tests/`.
+- Design is in `telemetry/README.md`, committed (`d6ae328`).
+- **The pipeline runs end to end as of day 3**:
+  `uv run python -m telemetry.main data/sample_telemetry.csv output` → `output/output.json`.
+  He fixed day 2's crash bugs himself, mostly in the VS Code debugger.
+- Six source files plus new `validator.py` and `.vscode/` were **uncommitted** when he stopped —
+  ended the session fried, distractions at home. Prompt a commit first thing.
 - `scratchpad.md` at repo root is his notes-away-from-PC file.
+
+## Day 3 (2026-09-11)
+
+Started 16:13; **hours not yet written to `docs/background-threads/week-01.md`** — the entry is
+open-ended (`20260911 1613 -`), and Thursday's ~2h was never logged at all. Ask him to backfill
+both. Dashboard still says "1 hour"; it's a Sunday job.
+
+Pace at day 3: ~5h of the 10–12h target, week-1 checklist has `mypy`, `logging`, `argparse`,
+`pathlib`, `exceptions` untouched. Told him design is ahead, running code is behind, and that
+Boss Fight #1 can't rehearse a system that never worked. That framing landed — he built the rest
+and ran it the same evening.
+
+He asked what CI stood for (thought it might be "command line"). Explained Continuous
+Integration, GitHub Actions, and why an empty machine catches "works on mine". Week 2 topic.
+
+Debugger: his `launch.json` had `"args"` as a bare string. Gave him the list form plus
+`${workspaceFolder}`, and warned that `"program": "${file}"` debugs whatever tab is focused.
+Tooling, so I answered outright.
+
+### Review given at end of day 3 — he has fixed none of it yet
+
+Delivered as critique, not patches. Ordered as I gave it:
+
+1. **The falsy-return bug — the one that matters.** `Validator.*` returns `(value, None)` on
+   success and `(False, msg)` on failure, and callers test `if not valid_float`. A parked robot's
+   `velocity == 0.0` is falsy, so amr-01's ~12 s of `v=0` rows are **silently dropped as invalid**
+   and its average velocity is wrong. No crash, no message. I pointed at the return shape and the
+   parked-robot rows and asked him to count the readings — **did not name the fix.** Ties directly
+   to the unticked "exceptions and error boundaries" item: the error channel and the value channel
+   are the same channel.
+2. `__`-prefixed dataclass fields + `to_json` returning `self.__dict__` → report keys come out as
+   `_Analysis__warnings`. Name mangling, not privacy.
+3. `Analysis.analyze_robot` and every `Validator` method take no `self` and aren't
+   `@staticmethod`. Works only because he always calls them on the class. mypy catches this.
+4. `analysis.py:30` divides by `len(robot.readings)` — still ZeroDivisionError if every row for a
+   robot is bad.
+5. Timestamp regression message reads "is after previous" when it fired because it's *before*.
+6. `report()` never creates `output_dir`; `output/` exists locally but is untracked → fresh clone
+   and CI both hit `FileNotFoundError`.
+7. Dead code: `Reading.parse_line` (undefined names, would `NameError`), `Robot.validate_reading`
+   (always `True`) and `Robot.try_add_reading` (never called — the parser appends directly).
+8. Still `print` and `sys.argv`.
+9. `Warning` still shadows the builtin. Flagged twice now; he's keeping it. Let it go.
+
+**Planted defects still uncaught: two.** The exact duplicate row (his `<` timestamp check passes
+equal timestamps) and velocity `ERR`— actually caught by `validate_float`, so the duplicate is the
+live one; I told him "two" counting the duplicate and the zero-velocity loss. The swapped amr-03
+pair only ever flags the first row of the pair.
+
+### Next session
+
+1. Commit the working tree (8 files) **before** any refactor.
+2. Backfill Thursday + Friday hours in `week-01.md`.
+3. Fix the falsy-return bug — he should choose between exceptions and a proper result type, and
+   defend the choice.
+4. `mypy` — pitch as the thing that catches items 3 and 7 for free.
+5. First test: parse a line with `velocity=0.0`, assert a `Reading` comes back. The bug is the
+   test case. **He has never written a test before** — arrange/act/assert, `test_*.py`,
+   `test_*` functions. `tests/test.py` still collects nothing.
 
 ## Telemetry — state of the design (day 2)
 
@@ -69,12 +132,11 @@ Point at the line only if he's stuck. As of end of day 2:
   functions). **He's never written tests before** — first target is the line→`Reading`
   function, test cases = the dataset's defects. Explained arrange/act/assert with a toy example.
 
-### Next session
-
-1. Commit what he has (pushed twice today; README got committed, code didn't).
-2. Run it — let the bugs above surface on their own.
-3. First real test on line parsing.
-4. mypy — pitch it as the fix for his "the README is always inconsistent" frustration.
+**Resolved on day 3** — he found and fixed the crash bugs above by running it, except: the
+divide-by-zero, the `__` name mangling, the missing `self`, the broken `parse_line`, and
+`tests/test.py` still collecting nothing. Those carry forward to the day-3 list below.
+`pyproject.toml`'s `telemetry:main` script entry is still broken — he runs it with
+`python -m telemetry.main` instead, so the CLI item is unfinished.
 
 Remaining week 1 checklist items — mypy, logging, argparse, pathlib, exceptions — exercise while
 building, not as separate topics. Dataclasses and type hints are now in use.
