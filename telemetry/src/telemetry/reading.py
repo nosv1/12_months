@@ -13,7 +13,7 @@ class Reading:
         temperature: float,
     ):
         self.robot_id = robot_id
-        self.timestamp: datetime = timestamp
-        self.velocity: float = velocity  # m/s
-        self.battery: float = battery  # percent of charge, 0–100
-        self.temperature: float = temperature  # °C, motor controller
+        self.timestamp = timestamp
+        self.velocity = velocity  # m/s
+        self.battery = battery  # percent of charge, 0–100
+        self.temperature = temperature  # °C, motor controller
