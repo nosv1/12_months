@@ -22,4 +22,5 @@
 **Stuck on:** open questions carried forward  
 **Hours:** actual, not aspirational  
 20260909 2103 - 2200 (1 hour)
-20260909 1753 -
+20260910 1753 - 2000 (2 hours)
+20260911 1613 - 1823 (2 hours)

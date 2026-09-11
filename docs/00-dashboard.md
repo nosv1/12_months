@@ -2,14 +2,14 @@
 
 Single source of truth. Update every Sunday.
 
-**Started:** Wed 2026 Sep 9   **Current week:** 1   **Hours logged:** 1
+**Started:** Wed 2026 Sep 9   **Current week:** 1   **Hours logged:** 5
 
 ---
 
 ## Parts
 
 | Part | Weeks | Focus | Status |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 1 | 1–2 | Reactivation | ☐ |
 | 2 | 3–7 | C++ + Linux systems | ☐ |
 | 3 | 8–10 | Robotics fundamentals | ☐ |
@@ -40,7 +40,7 @@ Single source of truth. Update every Sunday.
 The real progress metric. Each is a blank-page rebuild — no tutorial, no copying prior work.
 
 | # | Week | Challenge | Passed |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 1 | 2 | Rebuild telemetry analyzer from empty dir | ☐ |
 | 2 | 7 | Add a sensor type without touching the core | ☐ |
 | 3 | 10 | Drive forward → detect obstacle → stop | ☐ |
@@ -84,7 +84,7 @@ See [background-threads.md](background-threads.md).
 
 - [ ] Build log started (wk 1) — current streak: ___ weeks
 - [ ] Interview problems (from wk 20) — total: ___
-- [ ] Applications (from wk 22) — sent: ___ · screens: ___ · onsites: ___
+- [ ] Applications (from wk 22) — sent: ___· screens:___ · onsites: ___
 - [ ] Open-source PR merged (by wk 40)
 
 ## Career
