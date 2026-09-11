@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+from datetime import datetime
 from enum import Enum
 from typing import TextIO
 
@@ -65,6 +66,11 @@ def parser(telemetry_file: TextIO) -> dict[str, Robot]:
         if messages:
             robot.bad_readings.append([line, messages])
             continue
+
+        assert type(timestamp) is datetime
+        assert type(velocity) is float
+        assert type(battery) is float
+        assert type(temperature) is float
 
         robot.readings.append(
             Reading(
