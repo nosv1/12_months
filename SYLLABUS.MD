@@ -1,6 +1,6 @@
 # Robotics + AI Engineer
 
-**52-Week Curriculum — revised September 2026**
+## 52-Week Curriculum — revised September 2026
 
 > Revised from the original 12-month draft against a specific starting point: MS in CS (2024,
 > data-science emphasis), two years out of practice, prior Gazebo exposure from a graduate
@@ -10,7 +10,7 @@
 ## At a glance
 
 | | |
-|---|---|
+| --- | --- |
 | **Weekly commitment** | 10–12 hours |
 | **Availability** | Evenings after work + Saturday |
 | **Primary languages** | Python + C++ |
@@ -29,7 +29,7 @@ target is what keeps week 30 from feeling like failure.
 ## The weekly rhythm
 
 | Day | Mode | Time | What happens |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | **Monday** | Learn | ~1.5 h | New concepts, documentation, videos, examples. |
 | **Tuesday** | Build | ~1.5 h | Implement what Monday taught. |
 | **Wednesday** | Off | — | No guilt. |
@@ -67,7 +67,7 @@ can you delete it and rewrite it from memory tomorrow? See
 ## Year map
 
 | Part | Weeks | Focus | Deliverable |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 1 | 1–2 | Reactivation | Telemetry toolkit |
 | 2 | 3–7 | **C++ + Linux systems** | Sensor simulator + network service |
 | 3 | 8–10 | Robotics fundamentals | Simulated mobile robot |
@@ -127,9 +127,7 @@ A command-line robot telemetry analyzer, as a real repository.
 *Input:* `timestamp`, `robot_id`, `velocity`, `battery`, `temperature`
 *Output:* average velocity, max temperature, min battery, warnings
 
-```
-raw data → parser → validation → analysis → report
-```
+`raw data → parser → validation → analysis → report`
 
 Must have: clean module boundaries, tests, a CLI, a README someone else could follow, an example
 dataset, and CI that runs the tests on push.
@@ -174,9 +172,7 @@ Do not rush it. If you need a sixth week, take it from Part 3.
 - [ ] Error handling: exceptions vs error codes
 - [ ] Build a small library and link it from another project
 
-```
-Sensor → SensorBuffer → Processor → Statistics
-```
+`Sensor → SensorBuffer → Processor → Statistics`
 
 ### Week 6 — Linux internals
 
@@ -200,7 +196,7 @@ Sensor → SensorBuffer → Processor → Statistics
 
 A C++ program simulating multiple sensors at different rates, exposed over a network interface.
 
-```
+```md
 GPS ───────┐
 IMU ───────┼──> Sensor Bus ──> Logger
 LIDAR ─────┤
@@ -316,7 +312,7 @@ most valuable line on a robotics résumé. Depth here pays compound interest.
 
 Turn your simulated robot into a real ROS 2 system.
 
-```
+```md
                 ┌─────────────┐
                 │   Camera    │
                 └──────┬──────┘
@@ -373,9 +369,7 @@ interface for each link — and be able to defend why each is a topic, service, 
 
 ### Deliverable — Autonomous Navigation
 
-```
-START → MAP → TARGET → PLAN → NAVIGATE → ARRIVE
-```
+`START → MAP → TARGET → PLAN → NAVIGATE → ARRIVE`
 
 ### 🥊 Boss Fight #5
 
@@ -466,9 +460,7 @@ demo.
 
 ### Deliverable — Robot Vision Pipeline
 
-```
-Camera → Vision Model → Object → Position → ROS message
-```
+`Camera → Vision Model → Object → Position → ROS message`
 
 Running on your real robot, not just in sim.
 
@@ -519,9 +511,7 @@ Be honest with yourself here — this is the one place where the DS asterisk cou
 
 Collect and label your own dataset **from your robot's camera**, then train a detector on it.
 
-```
-Dataset → Training → Validation → Testing → Error analysis
-```
+`Dataset → Training → Validation → Testing → Error analysis`
 
 Using your own data is the point. Public datasets are clean in ways the world isn't.
 
@@ -565,9 +555,7 @@ Where the previous eight parts connect.
 
 ### Deliverable — Vision-Guided Robot
 
-```
-SEE → IDENTIFY → LOCATE → DECIDE → MOVE
-```
+`SEE → IDENTIFY → LOCATE → DECIDE → MOVE`
 
 On hardware. This is portfolio project #2.
 
@@ -626,9 +614,7 @@ The arm is simulated (Franka Panda or UR5 in Gazebo). Do not buy one.
 
 ### Deliverable — Robot Task Manager
 
-```
-Find object → Approach → Verify → Grasp → Transport → Place
-```
+`Find object → Approach → Verify → Grasp → Transport → Place`
 
 ### 🥊 Boss Fight #10
 
@@ -686,9 +672,7 @@ Keep the RL foundations — they're the vocabulary. But land the plane on what s
 Train a policy from your own demonstrations to solve a manipulation task. Start embarrassingly
 simple.
 
-```
-observe state → policy → action → environment → reward
-```
+`observe state → policy → action → environment → reward`
 
 Report: demonstrations collected, success rate, failure modes, and a comparison against a
 scripted baseline. **If the scripted baseline wins, say so.** That's a real and publishable
@@ -732,9 +716,7 @@ portfolio project from a toy.
 
 Take a previous project and make it look like software a team could maintain.
 
-```
-Camera → Perception → Planner → Control → Robot → Telemetry → Dashboard
-```
+`Camera → Perception → Planner → Control → Robot → Telemetry → Dashboard`
 
 ### 🥊 Boss Fight #12
 
@@ -857,7 +839,7 @@ Explicit, because it matters more than any checklist here.
 
 Your progression will routinely look like:
 
-```
+```md
 "I have no idea what this is."
              ↓
 "I kind of understand it."
