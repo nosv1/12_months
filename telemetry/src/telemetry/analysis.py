@@ -27,9 +27,16 @@ class Analysis:
                 if warning_msg:
                     analysis.__warnings.append(warning_msg)
 
-        analysis.__average_velocity = sum_velocities / len(robot.readings)
+        analysis.__average_velocity = (
+            (sum_velocities / len(robot.readings)) if robot.readings else None
+        )
 
         return analysis
 
     def to_json(self):
-        return self.__dict__
+        return {
+            "average_velocity": self.__average_velocity,
+            "max_temperature": self.__max_temperature,
+            "min_battery": self.__min_battery,
+            "warnings": self.__warnings,
+        }

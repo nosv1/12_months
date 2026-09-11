@@ -1,48 +1,72 @@
+from __future__ import annotations
+
 from datetime import datetime
 from typing import Optional
 
 
 class Validator:
+    def __init__(self, is_valid: bool, msg: Optional[str] = None):
+        self.is_valid = is_valid
+        self.msg = msg
+
+    @staticmethod
     def validate_timestamp(
         timestamp_iso_str: str, prev_timestamp: Optional[datetime]
-    ) -> tuple[bool, Optional[str]]:
+    ) -> tuple[Validator, Optional[datetime]]:
         timestamp = datetime.fromisoformat(timestamp_iso_str)
-        if prev_timestamp and timestamp < prev_timestamp:
-            return False, "timestamp is after previous reading's timestamp"
-        return timestamp, None
+        if prev_timestamp:
+            if timestamp < prev_timestamp:
+                return (
+                    Validator(
+                        False, "timestamp is before previous reading's timestamp"
+                    ),
+                    None,
+                )
+            if timestamp == prev_timestamp:
+                return (
+                    Validator(False, "timestamp equals previous reading's timestamp"),
+                    None,
+                )
+        return Validator(True), timestamp
 
-    def validate_float(float_str: str):
+    @staticmethod
+    def validate_float(float_str: str) -> tuple[Validator, Optional[float]]:
         if float_str.lower() == "nan":
-            return False, "nan present"
+            return Validator(False, "nan present"), None
 
         try:
             n = float(float_str)
-            return n, None
+            return Validator(True), n
+
         except ValueError:
-            return False, "ValueError - could not convert a value to float"
+            return (
+                Validator(False, "ValueError - could not convert a value to float"),
+                None,
+            )
 
+    @staticmethod
     def validate_velocity(velocity_str: str):
-        valid_float, msg = Validator.validate_float(velocity_str)
-        if not valid_float:
-            return valid_float, msg
-        return valid_float, None
+        validator, value = Validator.validate_float(velocity_str)
+        return validator, value
 
-    def validate_battery(battery_str):
-        valid_float, msg = Validator.validate_float(battery_str)
-        if not valid_float:
-            return valid_float, msg
+    @staticmethod
+    def validate_battery(battery_str: str):
+        validator, value = Validator.validate_float(battery_str)
+        if not validator.is_valid:
+            return validator, value
 
-        if not (0 <= valid_float <= 100):
-            return False, "battery is not within range [0-100]"
+        if not (0 <= value <= 100):
+            return Validator(False, "battery is not within range [0-100]"), None
 
-        return valid_float, None
+        return validator, value
 
-    def validate_temperature(temperature_str):
-        valid_float, msg = Validator.validate_float(temperature_str)
-        if not valid_float:
-            return valid_float, msg
+    @staticmethod
+    def validate_temperature(temperature_str: str):
+        validator, value = Validator.validate_float(temperature_str)
+        if not validator.is_valid:
+            return validator, value
 
-        if not (0 <= valid_float):
-            return False, "temperature is not reasonable"
+        if not (0 <= value):
+            return Validator(False, "temperature is not reasonable"), None
 
-        return valid_float, None
+        return validator, value

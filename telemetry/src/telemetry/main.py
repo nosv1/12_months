@@ -37,26 +37,30 @@ def parser(telemetry_file: TextIO) -> dict[str, Robot]:
         robot = robots_dict[robot_id]
 
         messages = []
-        timestamp, msg = Validator.validate_timestamp(
+        validator, timestamp = Validator.validate_timestamp(
             parts[HEADERS.TIMESTAMP_IDX.value],
             robot.readings[-1].timestamp if robot.readings else None,
         )
-        if msg:
-            messages.append(msg)
+        if not validator.is_valid:
+            messages.append(validator.msg)
 
-        velocity, msg = Validator.validate_velocity(parts[HEADERS.VELOCITY_IDX.value])
-        if msg:
-            messages.append(msg)
+        validator, velocity = Validator.validate_velocity(
+            parts[HEADERS.VELOCITY_IDX.value]
+        )
+        if not validator.is_valid:
+            messages.append(validator.msg)
 
-        battery, msg = Validator.validate_battery(parts[HEADERS.BATTERY_IDX.value])
-        if msg:
-            messages.append(msg)
+        validator, battery = Validator.validate_battery(
+            parts[HEADERS.BATTERY_IDX.value]
+        )
+        if not validator.is_valid:
+            messages.append(validator.msg)
 
-        temperature, msg = Validator.validate_temperature(
+        validator, temperature = Validator.validate_temperature(
             parts[HEADERS.TEMPERATURE_IDX.value]
         )
-        if msg:
-            messages.append(msg)
+        if not validator.is_valid:
+            messages.append(validator.msg)
 
         if messages:
             robot.bad_readings.append([line, messages])
