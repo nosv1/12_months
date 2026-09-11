@@ -9,7 +9,7 @@ class Warning(ABC):
     def detect_warning(reading: Reading) -> Optional[str]:
         pass
 
-    def handle_warning(warning: str, value: float, threshold: float)
+    def handle_warning(self, warning: str, value: float, threshold: float):
         return f"WARNING: {warning}={value} (threshold={threshold})"
 
 
@@ -18,7 +18,7 @@ class BatteryWarning(Warning):
         self.min_battery = min_battery
 
     def detect_warning(self, reading: Reading) -> Optional[str]:
-        if (reading.battery < self.min_battery):
+        if reading.battery < self.min_battery:
             return self.handle_warning("LOW BATTERY", reading.battery, self.min_battery)
         return None
 
@@ -28,6 +28,8 @@ class TemperatureWarning(Warning):
         self.max_temperature = max_temperature
 
     def detect_warning(self, reading: Reading) -> Optional[str]:
-        if (reading.temperature < self.max_temperature):
-            return self.handle_warning("HIGH TEMPERATURE", reading.temperature, self.max_temperature)
+        if reading.temperature > self.max_temperature:
+            return self.handle_warning(
+                "HIGH TEMPERATURE", reading.temperature, self.max_temperature
+            )
         return None

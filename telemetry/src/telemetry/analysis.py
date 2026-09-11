@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from telemetry.robot import Robot
 from telemetry.warning import Warning
@@ -12,7 +12,7 @@ class Analysis:
     __average_velocity: float = 0.0
     __max_temperature: float = -float("inf")
     __min_battery: float = float("inf")
-    __warnings: list[str] = []
+    __warnings: list[str] = field(default_factory=list)
 
     def analyze_robot(robot: Robot, defined_warnings: list[Warning]) -> Analysis:
         analysis = Analysis()
