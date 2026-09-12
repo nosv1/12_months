@@ -17,4 +17,5 @@ message should be, i don't want it to waste time, but also it needs to be inform
 ## 20260912
 
 - asserts are disgusting to handle bad outputs, but i want the validator to output the bool and the value, or do i?
-- What if claude rated my abilities, 0/10, with notes on what im good at or skills im lacking, idk
+- What if claude rated my abilities, 0/10, with notes on what im good at or skills im lacking, 
+- sometimes the sessions seem un productive because there is no coding invovled - hence why i ask what else needs done, im looking for per session deliverables... ive been reading ta notes to try and prepare mind for what i can do, but i also sometimes run out before my mind runs out of energy. 
