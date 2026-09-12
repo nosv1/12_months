@@ -5,7 +5,7 @@ Machine, toolchain, and the gotchas that will otherwise cost you an evening each
 ## Hardware
 
 | | |
-|---|---|
+| --- | --- |
 | CPU | AMD Ryzen 7 9800X3D (8C/16T) |
 | RAM | 32 GB |
 | GPU | **NVIDIA RTX 5080, 16 GB** (Blackwell, `sm_120`) |
@@ -21,7 +21,7 @@ in `.wslconfig` if you hit swapping.
 Settled September 2026.
 
 | Ubuntu | ROS 2 | EOL | Verdict |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 22.04 Jammy | Humble | **May 2027** | Dies at ~week 35 of 52 |
 | **24.04 Noble** | **Jazzy Jalisco** | **May 2029** | ✅ Chosen |
 | 26.04 | Lyrical Luth | May 2031 | Too new — third-party packages lag |
@@ -172,12 +172,12 @@ environment first" is the most reliable way for week 1 to never happen.
 Set up in `Ubuntu-24.04` during week 1:
 
 - [ ] `build-essential`, `cmake`, `gdb`, `valgrind`
-- [ ] Python 3 + `uv` (or `venv`)
+- [x] Python 3 + `uv` (or `venv`)
 - [ ] PyTorch with **cu128+** — verify with the snippet above
 - [ ] Docker Engine (in WSL, not Docker Desktop — fewer moving parts)
-- [ ] Git configured: name, email, SSH key on GitHub
+- [x] Git configured: name, email, SSH key on GitHub
 - [ ] Shell you actually like — you'll be in it for 550 hours
-- [ ] VS Code + Remote-WSL extension
+- [x] VS Code + Remote-WSL extension
 - [ ] ROS 2 Jazzy — **not needed until week 11**, don't install early
 
 ## Verify
