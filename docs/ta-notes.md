@@ -167,6 +167,11 @@ environment, and docs files are the stated exception.
 
 He is on limited evening hours. Lead with the answer.
 
+**I log his hours (standing, 2026-09-12).** On a session opener ("we're back" etc.) run `date` and
+note the start; on sign-off run `date`, append `YYYYMMDD HHMM - HHMM (N hours -- note)` under
+**Hours** in `docs/background-threads/week-NN.md`, bump **Hours logged** in `00-dashboard.md`,
+commit as Claude. If he leaves without signing off, ask for the end time next session. Don't guess.
+
 **`scratchpad.md` is background, not a prompt.** Read it at session start for context on what he's
 thinking. Don't raise its entries in chat unprompted; let them shape how I teach instead. (Stated
 2026-09-12.)
