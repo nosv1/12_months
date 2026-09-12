@@ -58,7 +58,7 @@ def parser(telemetry_file: TextIO) -> dict[str, Robot]:
             temperature = validate_temperature(parts[HEADERS.TEMPERATURE_IDX.value])
 
         except ValueError as ve:
-            logger.warning("Line %d had a value error.", i + 1)
+            logger.warning("Line %d had a value error - %s", i + 1, str(ve))
             robot.bad_readings.append((line, str(ve)))
             continue
 
