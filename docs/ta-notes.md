@@ -75,6 +75,12 @@ Big day. In order:
 
 ### Next session
 
+0. **`5af71c1` introduced a bug, pushed as he signed off.** The truncated-row branch in `cli.py`
+   appends to `robot.bad_readings` *before* `robot` is assigned for that line — so it files the row
+   under the **previous line's robot** (wrong robot, silently), or raises `NameError` if the first
+   data row is truncated. mypy reports 1 error. Pointed at the line and the ordering only; the fix,
+   and the day-2 question of where an unattributable row belongs, are his.
+
 1. If he's doing prereqs: toolchain install script (I write it) → have him verify with a
    hello-world compile.
 2. **First test ever.** The obvious first one: `validate_velocity("0.0") == 0.0` — the two-day bug
