@@ -44,3 +44,4 @@ logging separates four concerns that print fuses into one:
 20260911 1613 - 1823 (2 hours)
 20260912 0750 - 0900 (soft 1 hour, watching motogp)
 20260912 1151 - 1355 (2 hours -- week 1 complete????)
+20260912 1715 - 1830 (1.25 hours -- C++ toolchain + hello world, telemetry critique cleared)
