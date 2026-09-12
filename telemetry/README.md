@@ -1,68 +1,89 @@
-# TELEMETRY TOOLKIT
+# Telemetry Toolkit
 
-The telemety toolkit is a toy problem involving importing a telemetry csv vile then parsing, validating, analyzing, and reporting on that data.
+A toy problem: import a telemetry CSV file, then parse, validate, analyze, and report on that data.
 
-*Input:* `timestamp`, `robot_id`, `velocity`, `battery`, `temperature`
-*Output:* average velocity, max temperature, min battery, warnings
+| | |
+| --- | --- |
+| **Input** | `timestamp`, `robot_id`, `velocity`, `battery`, `temperature` |
+| **Output** | average velocity, max temperature, min battery, warnings |
 
-Must have: clean module boundaries, tests, a CLI, a README someone else could follow, an example dataset, and CI that runs the tests on push.
+---
 
-## SETUP AND RUNNING
+## Setup and running
+
+Requires [uv](https://docs.astral.sh/uv/) — it handles Python for you.
 
 ```bash
-# install uv (it'll handle python)
 cd telemetry
-uv sync # optional (`uv run` syncs)
+uv sync                  # optional — `uv run` syncs automatically
+
 # uv run telemetry <telemetry_path> <output_dir>
 uv run telemetry data/sample_telemetry.csv output
 ```
 
-## INPUT FORMAT
+---
 
-See [data/sample_telemetry.csv](data/sample_telemetry.csv) for a two-minute log dump from three of our mobile robots (`amr-01`, `amr-02`, `amr-03`). They log at roughly 1 Hz and all write to the same file, so the robots' rows are mixed together. It's what our loggers actually produce, and they aren't perfect.
+## Input format
 
-- **timestamp**: ISO 8601, UTC (`2026-09-03T14:00:00.016Z`)
-- **velocity**: m/s
-- **battery**: percent of charge, 0–100
-- **temperature**: °C, motor controller
-- **Warn us when** a robot's battery drops below 20% or its temperature goes above 60 °C.
+See [data/sample_telemetry.csv](data/sample_telemetry.csv) for a two-minute log dump from three of
+our mobile robots (`amr-01`, `amr-02`, `amr-03`). That's 361 data rows plus a header.
 
-That's 361 data rows plus a header.
+The robots log at roughly 1 Hz and all write to the same file, so their rows are mixed together.
+It's what our loggers actually produce, and they aren't perfect.
 
-## ARCHITECTURE
+| Column | Units / format |
+| --- | --- |
+| `timestamp` | ISO 8601, UTC (`2026-09-03T14:00:00.016Z`) |
+| `robot_id` | e.g. `amr-01` |
+| `velocity` | m/s |
+| `battery` | percent of charge, 0–100 |
+| `temperature` | °C, motor controller |
 
-`raw data → parser → validation → analysis → report`
+> **Warn us when** a robot's battery drops below 20% or its temperature goes above 60 °C.
 
-### Raw data
+---
 
-The csv telemetry data with inputs for timestamp (ISO 8601), velocity (m/s), battery (percent of charge, 0–100) and temperature (°C, motor controller)
+## Architecture
 
-### Parser
+```text
+raw data → parser → validation → analysis → report
+```
 
-Reads the data file line by line - passing the each of the line's data points to their appropriate validation checks.
+| Stage | Responsibility |
+| --- | --- |
+| **Raw data** | The CSV telemetry data: timestamp (ISO 8601), velocity (m/s), battery (percent of charge, 0–100), and temperature (°C, motor controller). |
+| **Parser** | Reads the data file line by line, passing each of the line's data points to their appropriate validation checks. |
+| **Validation** | Validates the inputs. Timestamps should be after the robot's previous timestamp, floats should be in range and not NaN, etc. |
+| **Analysis** | Analyzes the robot's readings, capturing average velocity, max temperature, min battery, and warnings. Bad readings are recorded as well. |
+| **Report** | A JSON output of the analysis, written to an output directory. |
 
-### Validation
+---
 
-Validate the inputs. Timestamps should be in the future. Floats should be in range and not nan.
+## Design decisions
 
-### Analysis
+### Detect warnings in analysis, not the parser
 
-Analyze the robot's readings - capturing average velocity, max temperature, min battery, warnings. Additionally, bad readings are recorded as well.
-
-### Report
-
-A JSON output of analysis to an output directory.
-
-## DESIGN DECISIONS
-
-### Document warnings in analysis, not the parser
-
-Given the data is from a file (AND NOT LIVE) the warnings can be detected during analysis and not during parsing. The parser's duty remains simply to observe the facts of the file. If we wanted to be warned during data handling, we may develop a handler to "do things with this valid data."
+Given the data comes from a file (**not live**), warnings can be detected during analysis rather
+than during parsing. The parser's duty remains simply to observe the facts of the file. If we
+wanted to be warned during data handling, we could develop a handler to "do things with this valid
+data."
 
 ### Raise errors in validation, not the parser
 
-Similar to above and keeping the parser simple. It's not the parser's job to detect errors or shout when there is one. The parser reads a line, hands it to the validator, and then the validator either raises an error or returns a valid value. The parser does handle the valid and erroneous Readings.
+Similar to above, this keeps the parser simple. It's not the parser's job to detect errors or shout
+when there is one. The parser reads a line and hands it to the validator; the validator either
+raises an error or returns a valid value. The parser then handles the valid and erroneous readings.
 
-### Drop and record bad rows; don't treat them as fatal
+---
 
-## LESSONS
+## Lessons
+
+1. **`main` is still the conductor**, even though the report needs everything run first.
+
+   Early on, "report" felt like the final product, so it seemed natural to put `main()` in
+   `report.py` and have it call everything else. Instead, `main()` lives in `cli.py` and
+   orchestrates the calls:
+
+   ```text
+   main → parser → validator → main → analyzer → main → report
+   ```
