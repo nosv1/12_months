@@ -28,7 +28,10 @@ def parser(telemetry_file: TextIO) -> dict[str, Robot]:
         TEMPERATURE_IDX = 4
         NUM_COLUMNS = 5
 
-    robots_dict: dict[str, Robot] = {}
+    # defining with unknown in case there is missing data in a telemetry line
+    # it may be the case where robot id *is* inside the line, but it's also less
+    # easy to assume robot id is in the correct index if there is missing information
+    robots_dict: dict[str, Robot] = {"unknown": Robot("unknown")}
 
     for i, line in enumerate(telemetry_file.readlines()):
         if not i:
@@ -37,7 +40,7 @@ def parser(telemetry_file: TextIO) -> dict[str, Robot]:
         parts = line.split(",")
         if not parts or len(parts) != HEADERS.NUM_COLUMNS.value:
             logger.warning("Line %d was missing data.", i + 1)
-            # TODO robot.bad_readings.append((line, "line is missing data"))
+            robots_dict["unknown"].bad_readings.append((line, "line is missing data"))
             continue
 
         robot_id = parts[HEADERS.ROBOT_ID_IDX.value]
