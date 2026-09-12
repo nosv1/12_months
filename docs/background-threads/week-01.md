@@ -24,7 +24,7 @@
 ### git stuff
 
 - `git add -A`, `git dff --cached`, and un-anchoring in `.gitignore` `telemetry/.venv/` -> `.venv/`
-- commit messages answer **what chnaged and why**, not **when** -- phrase the first bit as a command, *the developer did this*, only need a body when the *why* isn't obvious
+- commit messages answer **what changed and why**, not **when** -- phrase the first bit as a command, *the developer did this*, only need a body when the *why* isn't obvious
 
 ### logging
 
