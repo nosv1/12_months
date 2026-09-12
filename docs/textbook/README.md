@@ -20,6 +20,7 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | --- | --- | --- | --- |
 | 01 | [Logging](01-logging.md) | 1 | Replacing `print` diagnostics in the telemetry CLI |
 | 02 | [Exceptions and error boundaries](02-exceptions-and-error-boundaries.md) | 1 | The falsy-return bug that silently dropped a parked robot's readings |
+| 03 | [pathlib](03-pathlib.md) | 1 | Replacing the `os.path` calls in the CLI's `report()` |
 
 ---
 
