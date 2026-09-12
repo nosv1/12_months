@@ -29,7 +29,7 @@ class Analysis:
             for warning in defined_warnings:
                 warning_msg = warning.detect_warning(r)
                 if warning_msg:
-                    analysis.__warnings.append(warning_msg)
+                    analysis.__warnings.append(f"{warning_msg}")
 
         analysis.__average_velocity = (
             (sum_velocities / len(robot.readings)) if robot.readings else None
