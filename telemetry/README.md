@@ -68,11 +68,17 @@ than during parsing. The parser's duty remains simply to observe the facts of th
 wanted to be warned during data handling, we could develop a handler to "do things with this valid
 data."
 
-### Raise errors in validation, not the parser
+### Raise errors in validation — don't judge validity by the returned value
 
-Similar to above, this keeps the parser simple. It's not the parser's job to detect errors or shout
-when there is one. The parser reads a line and hands it to the validator; the validator either
-raises an error or returns a valid value. The parser then handles the valid and erroneous readings.
+One could imagine the returned value being the tell for whether it passed validation, but some
+valid values are **falsy**. The encountered case was a velocity of `0.0`: Python treats `0` as
+`False`, but `0` is also a valid velocity (a parked robot).
+
+### Missing telemetry data goes to an `unknown` robot
+
+When a reading doesn't come with all the expected data points, it's unsafe to assume the robot id
+is in the line at all — and even less safe to assume it's at the correct index. So the reading is
+considered bad and appended to an `unknown` robot in `robots_dict`.
 
 ---
 
