@@ -10,28 +10,28 @@ from telemetry.warning import Warning
 @dataclass
 class Analysis:
     # *Output:* average velocity, max temperature, min battery, warnings
-    __average_velocity: Optional[float] = 0.0
-    __max_temperature: float = -float("inf")
-    __min_battery: float = float("inf")
-    __warnings: list[str] = field(default_factory=list)
-    __bad_readings: list[tuple[str, str]] = field(default_factory=list)
+    average_velocity: Optional[float] = 0.0
+    max_temperature: float = -float("inf")
+    min_battery: float = float("inf")
+    warnings: list[str] = field(default_factory=list)
+    bad_readings: list[tuple[str, str]] = field(default_factory=list)
 
     @staticmethod
     def analyze_robot(robot: Robot, defined_warnings: list[Warning]) -> Analysis:
         analysis = Analysis()
-        analysis.__bad_readings = robot.bad_readings
+        analysis.bad_readings = robot.bad_readings
         sum_velocities: float = 0
         for r in robot.readings:
             sum_velocities += r.velocity
-            analysis.__max_temperature = max(analysis.__max_temperature, r.temperature)
-            analysis.__min_battery = min(analysis.__min_battery, r.battery)
+            analysis.max_temperature = max(analysis.max_temperature, r.temperature)
+            analysis.min_battery = min(analysis.min_battery, r.battery)
 
             for warning in defined_warnings:
                 warning_msg = warning.detect_warning(r)
                 if warning_msg:
-                    analysis.__warnings.append(f"{warning_msg}")
+                    analysis.warnings.append(f"{warning_msg}")
 
-        analysis.__average_velocity = (
+        analysis.average_velocity = (
             (sum_velocities / len(robot.readings)) if robot.readings else None
         )
 
@@ -39,9 +39,9 @@ class Analysis:
 
     def to_json(self):
         return {
-            "average_velocity": self.__average_velocity,
-            "max_temperature": self.__max_temperature,
-            "min_battery": self.__min_battery,
-            "warnings": self.__warnings,
-            "bad_readings": self.__bad_readings,
+            "average_velocity": self.average_velocity,
+            "max_temperature": self.max_temperature,
+            "min_battery": self.min_battery,
+            "warnings": self.warnings,
+            "bad_readings": self.bad_readings,
         }
