@@ -207,6 +207,10 @@ thinking. Don't raise its entries in chat unprompted; let them shape how I teach
 
 ## Decisions made, so they don't get relitigated
 
+- **Boss Fight #1 may spill into week 3** (decided 2026-09-12). His goal: done by Sun Sep 20 night.
+  Log in the dashboard slippage table only if it actually spills.
+- **Toolchain prereq not added to the syllabus**. It's already installed and verified, so moot.
+
 - **uv over pip.** The lockfile is the point, not the speed. `uv.lock` is committed; `.venv/` is
   not.
 - **Python 3.12**, because Noble ships it and Jazzy is built against it — not a free choice.
