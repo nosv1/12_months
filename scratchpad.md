@@ -15,3 +15,5 @@ message should be, i don't want it to waste time, but also it needs to be inform
 ## 20260911
 
 ## 20260912
+
+What if claude rated my abilties, 0/10, with notes on what im good at or skills im lacking, idk
