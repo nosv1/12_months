@@ -101,16 +101,16 @@ you've misread this part.
 
 ### Week 1 — Engineering practice, not Python
 
-- [ ] WSL2 environment configured, dotfiles, shell you like
-- [ ] Virtual environments (`venv` / `uv`) and dependency pinning
-- [ ] Project layout: package vs script, `pyproject.toml`, imports that work
-- [ ] Type hints + `mypy`
-- [ ] `dataclasses`
-- [ ] `logging` (not `print`)
-- [ ] `argparse` and CLI design
-- [ ] `pathlib`
-- [ ] Exceptions and error boundaries
-- [ ] Git: branches, meaningful commits, `.gitignore`
+- [x] WSL2 environment configured, dotfiles, shell you like
+- [x] Virtual environments (`venv` / `uv`) and dependency pinning
+- [x] Project layout: package vs script, `pyproject.toml`, imports that work
+- [x] Type hints + `mypy`
+- [x] `dataclasses`
+- [x] `logging` (not `print`)
+- [x] `argparse` and CLI design
+- [x] `pathlib`
+- [x] Exceptions and error boundaries
+- [x] Git: branches, meaningful commits, `.gitignore`
 
 ### Week 2 — Testing, structure, and a real deliverable
 
