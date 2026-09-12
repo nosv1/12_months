@@ -21,6 +21,8 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 01 | [Logging](01-logging.md) | 1 | Replacing `print` diagnostics in the telemetry CLI |
 | 02 | [Exceptions and error boundaries](02-exceptions-and-error-boundaries.md) | 1 | The falsy-return bug that silently dropped a parked robot's readings |
 | 03 | [pathlib](03-pathlib.md) | 1 | Replacing the `os.path` calls in the CLI's `report()` |
+| 04 | [Commits: what goes in one, and how to split them](04-commits.md) | 1 | Nine modified files that seemed impossible to split |
+| 05 | [Packaging: `__init__.py` and console scripts](05-packaging-and-console-scripts.md) | 1 | `uv run telemetry/` → `Permission denied`, and a script entry that never worked |
 
 ---
 
