@@ -2,7 +2,7 @@
 
 Single source of truth. Update every Sunday.
 
-**Started:** Wed 2026 Sep 9   **Current week:** 1   **Hours logged:** 5
+**Started:** Wed 2026 Sep 9   **Current week:** 1   **Hours logged:** 8
 
 ---
 
@@ -84,7 +84,7 @@ See [background-threads.md](background-threads.md).
 
 - [ ] Build log started (wk 1) — current streak: ___ weeks
 - [ ] Interview problems (from wk 20) — total: ___
-- [ ] Applications (from wk 22) — sent: ___· screens:___ · onsites: ___
+- [ ] Applications (from wk 22) — sent: _**· screens:**_ · onsites: ___
 - [ ] Open-source PR merged (by wk 40)
 
 ## Career
