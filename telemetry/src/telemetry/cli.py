@@ -37,7 +37,7 @@ def parser(telemetry_file: TextIO) -> dict[str, Robot]:
         parts = line.split(",")
         if not parts or len(parts) != HEADERS.NUM_COLUMNS.value:
             logger.warning("Line %d was missing data.", i + 1)
-            robot.bad_readings.append((line, "line is missing data"))
+            # TODO robot.bad_readings.append((line, "line is missing data"))
             continue
 
         robot_id = parts[HEADERS.ROBOT_ID_IDX.value]
