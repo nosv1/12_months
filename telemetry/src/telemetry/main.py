@@ -99,8 +99,22 @@ def report(output_dir: str, robot_analysis_dict: dict[str, Analysis]):
 
 
 if __name__ == "__main__":
-    telemetry_file_path = sys.argv[1]  ## python main.py <telemetry_path> <output_dir>
-    output_dir = sys.argv[2]
+    arg_parser = argparse.ArgumentParser(description="telemetry report")
+
+    arg_parser.add_argument(
+        "telemetry_file_path",
+        type=str,
+        help="the csv path of the telemetry file",
+    )
+    arg_parser.add_argument(
+        "output_dir",
+        type=str,
+        help="the directory path where the report will be saved",
+    )
+    args = arg_parser.parse_args()
+
+    telemetry_file_path = args.telemetry_file_path
+    output_dir = args.output_dir
 
     defined_warnings = [
         BatteryWarning(min_battery=20),
