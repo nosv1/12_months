@@ -6,7 +6,7 @@ from telemetry.reading import Reading
 
 class Warning(ABC):
     @abstractmethod
-    def detect_warning(reading: Reading) -> Optional[str]:
+    def detect_warning(self, reading: Reading) -> Optional[str]:
         pass
 
     def handle_warning(self, warning: str, value: float, threshold: float):

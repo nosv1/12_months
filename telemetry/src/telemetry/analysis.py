@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Optional
 
 from telemetry.robot import Robot
 from telemetry.warning import Warning
@@ -9,13 +10,16 @@ from telemetry.warning import Warning
 @dataclass
 class Analysis:
     # *Output:* average velocity, max temperature, min battery, warnings
-    __average_velocity: float = 0.0
+    __average_velocity: Optional[float] = 0.0
     __max_temperature: float = -float("inf")
     __min_battery: float = float("inf")
     __warnings: list[str] = field(default_factory=list)
+    __bad_readings: list[tuple[str, str]] = field(default_factory=list)
 
+    @staticmethod
     def analyze_robot(robot: Robot, defined_warnings: list[Warning]) -> Analysis:
         analysis = Analysis()
+        analysis.__bad_readings = robot.bad_readings
         sum_velocities: float = 0
         for r in robot.readings:
             sum_velocities += r.velocity
@@ -39,4 +43,5 @@ class Analysis:
             "max_temperature": self.__max_temperature,
             "min_battery": self.__min_battery,
             "warnings": self.__warnings,
+            "bad_readings": self.__bad_readings,
         }

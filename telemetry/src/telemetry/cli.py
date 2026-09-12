@@ -1,15 +1,22 @@
+import argparse
 import json
-import os
-import sys
-from datetime import datetime
+import logging
 from enum import Enum
+from pathlib import Path
 from typing import TextIO
 
 from telemetry.analysis import Analysis
 from telemetry.reading import Reading
 from telemetry.robot import Robot
-from telemetry.validator import Validator
+from telemetry.validator import (
+    validate_battery,
+    validate_temperature,
+    validate_timestamp,
+    validate_velocity,
+)
 from telemetry.warning import BatteryWarning, TemperatureWarning
+
+logger = logging.getLogger(__name__)
 
 
 def parser(telemetry_file: TextIO) -> dict[str, Robot]:
@@ -29,7 +36,7 @@ def parser(telemetry_file: TextIO) -> dict[str, Robot]:
 
         parts = line.split(",")
         if not parts or len(parts) != HEADERS.NUM_COLUMNS.value:
-            print(f"WARNING: Line {i+1} was missing data.")
+            logger.warning("Line %d was missing data.", i + 1)
             continue
 
         robot_id = parts[HEADERS.ROBOT_ID_IDX.value]
@@ -37,40 +44,19 @@ def parser(telemetry_file: TextIO) -> dict[str, Robot]:
             robots_dict[robot_id] = Robot(robot_id)
         robot = robots_dict[robot_id]
 
-        messages = []
-        validator, timestamp = Validator.validate_timestamp(
-            parts[HEADERS.TIMESTAMP_IDX.value],
-            robot.readings[-1].timestamp if robot.readings else None,
-        )
-        if not validator.is_valid:
-            messages.append(validator.msg)
+        try:
+            timestamp = validate_timestamp(
+                parts[HEADERS.TIMESTAMP_IDX.value],
+                robot.readings[-1].timestamp if robot.readings else None,
+            )
+            velocity = validate_velocity(parts[HEADERS.VELOCITY_IDX.value])
+            battery = validate_battery(parts[HEADERS.BATTERY_IDX.value])
+            temperature = validate_temperature(parts[HEADERS.TEMPERATURE_IDX.value])
 
-        validator, velocity = Validator.validate_velocity(
-            parts[HEADERS.VELOCITY_IDX.value]
-        )
-        if not validator.is_valid:
-            messages.append(validator.msg)
-
-        validator, battery = Validator.validate_battery(
-            parts[HEADERS.BATTERY_IDX.value]
-        )
-        if not validator.is_valid:
-            messages.append(validator.msg)
-
-        validator, temperature = Validator.validate_temperature(
-            parts[HEADERS.TEMPERATURE_IDX.value]
-        )
-        if not validator.is_valid:
-            messages.append(validator.msg)
-
-        if messages:
-            robot.bad_readings.append([line, messages])
+        except ValueError as ve:
+            logger.warning("Line %d had a value error.", i + 1)
+            robot.bad_readings.append((line, str(ve)))
             continue
-
-        assert type(timestamp) is datetime
-        assert type(velocity) is float
-        assert type(battery) is float
-        assert type(temperature) is float
 
         robot.readings.append(
             Reading(
@@ -85,46 +71,49 @@ def parser(telemetry_file: TextIO) -> dict[str, Robot]:
     return robots_dict
 
 
-def report(output_dir: str, robot_analysis_dict: dict[str, Analysis]):
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+def report(output_dir: Path, robot_analysis_dict: dict[str, Analysis]):
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     output_json = {}
     for r_id, analysis in robot_analysis_dict.items():
         output_json[r_id] = analysis.to_json()
         print(f"{r_id}: {json.dumps(output_json[r_id], indent=4)}")
 
-    with open(os.path.join(output_dir, "output.json"), "w") as output:
+    with (output_dir / "output.json").open("w") as output:
         json.dump(output_json, output, indent=4)
 
 
-if __name__ == "__main__":
+def main():
     arg_parser = argparse.ArgumentParser(description="telemetry report")
 
     arg_parser.add_argument(
         "telemetry_file_path",
-        type=str,
+        type=Path,
         help="the csv path of the telemetry file",
     )
     arg_parser.add_argument(
         "output_dir",
-        type=str,
+        type=Path,
         help="the directory path where the report will be saved",
     )
     args = arg_parser.parse_args()
 
-    telemetry_file_path = args.telemetry_file_path
-    output_dir = args.output_dir
+    telemetry_file_path: Path = args.telemetry_file_path
+    output_dir: Path = args.output_dir
 
     defined_warnings = [
         BatteryWarning(min_battery=20),
         TemperatureWarning(max_temperature=60),
     ]
-    with open(telemetry_file_path, "r") as telemetry_file:
+    with telemetry_file_path.open("r") as telemetry_file:
         robots_dict = parser(telemetry_file)
         analysis_dict = {
             r_id: Analysis.analyze_robot(r, defined_warnings)
             for r_id, r in robots_dict.items()
         }
+        # [r.plot(output_dir) for r in robots_dict.values()]
         report(output_dir, analysis_dict)
-        pass
+
+
+if __name__ == "__main__":
+    main()

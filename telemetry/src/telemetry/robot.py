@@ -1,3 +1,7 @@
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+
 from telemetry.reading import Reading
 
 
@@ -5,4 +9,10 @@ class Robot:
     def __init__(self, id_: str):
         self.id_ = id_
         self.readings: list[Reading] = []
-        self.bad_readings: list[list[Reading, list[str]]] = []
+        self.bad_readings: list[tuple[str, str]] = []  # [[line, error message]]
+
+    def plot(self, output_dir: Path):
+        plt.plot([r.velocity for r in self.readings])
+        plt.savefig(output_dir / "plot.png")
+        plt.show()
+        pass
