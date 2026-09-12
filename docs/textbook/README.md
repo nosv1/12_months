@@ -23,6 +23,7 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 03 | [pathlib](03-pathlib.md) | 1 | Replacing the `os.path` calls in the CLI's `report()` |
 | 04 | [Commits: what goes in one, and how to split them](04-commits.md) | 1 | Nine modified files that seemed impossible to split |
 | 05 | [Packaging: `__init__.py` and console scripts](05-packaging-and-console-scripts.md) | 1 | `uv run telemetry/` → `Permission denied`, and a script entry that never worked |
+| 06 | [`#include`, namespaces, and `using namespace std`](06-include-and-namespaces.md) | 1 | Deleting `#include <iostream>` from the first hello world |
 
 ---
 

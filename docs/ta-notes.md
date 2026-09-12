@@ -167,6 +167,10 @@ environment, and docs files are the stated exception.
 
 He is on limited evening hours. Lead with the answer.
 
+**`scratchpad.md` is background, not a prompt.** Read it at session start for context on what he's
+thinking. Don't raise its entries in chat unprompted; let them shape how I teach instead. (Stated
+2026-09-12.)
+
 **Day 2 observations:**
 
 - He was hesitant to ask "check my work" every step. I told him review at *decision points* is
