@@ -8,6 +8,7 @@ A 52-week self-directed curriculum: rusty CS grad → employable robotics/AI eng
 - [docs/background-threads.md](docs/background-threads.md) — build log, interviews, applications
 - [docs/syllabus-revisions.md](docs/syllabus-revisions.md) — why the syllabus differs from the original draft
 - [docs/ta-notes.md](docs/ta-notes.md) — Claude's working notes; read at session start, update at session end
+- [docs/textbook/](docs/textbook/README.md) — write-ups of lessons taught in session; Claude writes these
 
 ---
 
@@ -34,6 +35,11 @@ capability he owns. If I solve the hard parts, the year produces nothing.
 - Review code he wrote and be blunt about what's wrong. Critique is high-value; authorship isn't.
 - Rubber-duck a design before he builds it.
 - Ask him to explain things back. If he can't, he hasn't got it yet.
+- **Write up lessons in [docs/textbook/](docs/textbook/README.md).** When a session produces a real
+  explanation — a concept taught, a rule set, a bug whose root cause generalises — write it up as a
+  numbered entry and add it to that TOC. His request, standing: "feel free to do this whenever a
+  'lesson' is given in chat." Docs are mine to write; keep the bug that prompted it, the tradeoffs,
+  and the open questions, not just the conclusion.
 
 ### What I don't do
 
