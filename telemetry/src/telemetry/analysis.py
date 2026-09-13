@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 from telemetry.robot import Robot
-from telemetry.warning import Warning
+from telemetry.telemetry_warning import TelemetryWarning
 
 
 @dataclass
@@ -17,7 +17,9 @@ class Analysis:
     bad_readings: list[tuple[str, str]] = field(default_factory=list)
 
     @staticmethod
-    def analyze_robot(robot: Robot, defined_warnings: list[Warning]) -> Analysis:
+    def analyze_robot(
+        robot: Robot, defined_warnings: list[TelemetryWarning]
+    ) -> Analysis:
         analysis = Analysis()
         analysis.bad_readings = robot.bad_readings
         sum_velocities: float = 0
