@@ -13,8 +13,9 @@ Read this at the start of a session. Update it at the end, and commit it.
 **Last updated:** 2026-09-12 18:30 (Saturday evening session, 17:15–18:30). He plans to start
 week-2 work Sunday Sep 13.
 
-- Curriculum started **Wed 2026-09-09**. Weeks are **calendar-aligned (Mon–Sun)**: week 2 is
-  **Sep 14–20**, week 3 (C++) starts **Mon Sep 21**. He is not behind. **9.25 h logged.**
+- Curriculum started **Wed 2026-09-09**. **Week files track syllabus progress, not the calendar**
+  (see Decisions): week 2 work began Sun Sep 13 and is logged in `week-02.md`. Nominal calendar
+  target for week 3 (C++) is still **Mon Sep 21**. He is not behind. **9.25 h logged.**
 - **Week 1 done and verified.** mypy clean, CLI runs end to end, all 8 planted defects reach the
   report (truncated row → `unknown` robot, `f97c3f9`).
 - **Tests: 1 passing.** He renamed `test.py` → `test_*` himself after "no tests ran."
@@ -203,6 +204,11 @@ thinking. Don't raise its entries in chat unprompted; let them shape how I teach
 - **Boss Fight #1 may spill into week 3** (decided 2026-09-12). His goal: done by Sun Sep 20 night.
   Log in the dashboard slippage table only if it actually spills.
 - **Toolchain prereq not added to the syllabus**. It's already installed and verified, so moot.
+- **Week files follow syllabus progress; hours lines are dated by calendar day** (decided
+  2026-09-12). Week 1 is finished in his head, so Sun Sep 13 work goes in `week-02.md` under
+  `20260913`. Slippage is still judged against the nominal calendar (week 3 ≈ Mon Sep 21).
+- **He writes his own time estimates** in the week file before starting; actuals go beside them.
+  Estimates must name a checkable end state, not a topic. Compare on Sundays.
 
 - **uv over pip.** The lockfile is the point, not the speed. `uv.lock` is committed; `.venv/` is
   not.
