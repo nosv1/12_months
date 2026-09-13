@@ -5,7 +5,7 @@ from typing import Optional
 from telemetry.reading import Reading
 
 
-class Warning(ABC):
+class TelemetryWarning(ABC):
     @abstractmethod
     def detect_warning(self, reading: Reading) -> Optional[str]:
         pass
@@ -16,7 +16,7 @@ class Warning(ABC):
         return f"WARNING: {warning}={value} (threshold={threshold}) at {str(timestamp)}"
 
 
-class BatteryWarning(Warning):
+class BatteryWarning(TelemetryWarning):
     def __init__(self, min_battery: float):
         self.min_battery = min_battery
 
@@ -28,7 +28,7 @@ class BatteryWarning(Warning):
         return None
 
 
-class TemperatureWarning(Warning):
+class TemperatureWarning(TelemetryWarning):
     def __init__(self, max_temperature: float):
         self.max_temperature = max_temperature
 
