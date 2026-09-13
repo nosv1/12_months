@@ -14,7 +14,7 @@ from telemetry.validator import (
     validate_timestamp,
     validate_velocity,
 )
-from telemetry.warning import BatteryWarning, TemperatureWarning
+from telemetry.telemetry_warning import BatteryWarning, TemperatureWarning
 
 logger = logging.getLogger(__name__)
 
