@@ -19,7 +19,7 @@ from telemetry.warning import BatteryWarning, TemperatureWarning
 logger = logging.getLogger(__name__)
 
 
-def parser(telemetry_file: TextIO) -> dict[str, Robot]:
+def parser(telemetry_lines: list[str]) -> dict[str, Robot]:
     class HEADERS(Enum):
         TIMESTAMP_IDX = 0
         ROBOT_ID_IDX = 1
@@ -33,7 +33,7 @@ def parser(telemetry_file: TextIO) -> dict[str, Robot]:
     # easy to assume robot id is in the correct index if there is missing information
     robots_dict: dict[str, Robot] = {"unknown": Robot("unknown")}
 
-    for i, line in enumerate(telemetry_file.readlines()):
+    for i, line in enumerate(telemetry_lines):
         if not i:
             continue
 
@@ -110,7 +110,7 @@ def main():
         TemperatureWarning(max_temperature=60),
     ]
     with telemetry_file_path.open("r") as telemetry_file:
-        robots_dict = parser(telemetry_file)
+        robots_dict = parser(telemetry_file.readlines())
         analysis_dict = {
             r_id: Analysis.analyze_robot(r, defined_warnings)
             for r_id, r in robots_dict.items()
