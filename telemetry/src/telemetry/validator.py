@@ -4,6 +4,9 @@ import math
 from datetime import datetime
 from typing import Optional
 
+from telemetry.parser import ParsedLine
+from telemetry.reading import Reading
+
 
 def validate_timestamp(
     timestamp_iso_str: str, prev_timestamp: Optional[datetime]
@@ -45,3 +48,18 @@ def validate_temperature(temperature_str: str) -> float:
     if not (0 <= value):
         raise ValueError("temperature is not reasonable")
     return value
+
+
+def validate_parsed_line(
+    parsed_line: ParsedLine, prev_reading: Optional[Reading]
+) -> Reading:
+    return Reading(
+        robot_id=parsed_line.robot_id,
+        timestamp=validate_timestamp(
+            parsed_line.timestamp_str,
+            prev_reading.timestamp if prev_reading else None,
+        ),
+        velocity=validate_velocity(parsed_line.velocity_str),
+        battery=validate_battery(parsed_line.battery_str),
+        temperature=validate_temperature(parsed_line.temperature_str),
+    )
