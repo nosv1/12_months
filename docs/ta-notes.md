@@ -10,8 +10,8 @@ Read this at the start of a session. Update it at the end, and commit it.
 
 ## Where things stand
 
-**Last updated:** 2026-09-12 18:30 (Saturday evening session, 17:15–18:30). He plans to start
-week-2 work Sunday Sep 13.
+**Last updated:** 2026-09-12 22:45 (Saturday late session, ~20:30–22:45). **Week 2 work already
+started** — see "Late 2026-09-12" below. **11.5 h logged.**
 
 - Curriculum started **Wed 2026-09-09**. **Week files track syllabus progress, not the calendar**
   (see Decisions): week 2 work began Sun Sep 13 and is logged in `week-02.md`. Nominal calendar
@@ -26,6 +26,46 @@ week-2 work Sunday Sep 13.
 - Evening: he pushed back that AI writes tests faster. Answered: AI types them; deciding what
   counts as wrong (the `0.0` bug) is the skill. Watch whether he engages with `parametrize` cases
   himself in week 2 or wants to hand them off.
+
+## Late 2026-09-12 — week 2 started early: parser redesign
+
+Opened by discussing his scratchpad (he asked to). Outcomes:
+
+- **Per-session deliverables / checklist-rush.** He noticed himself sliding into "get through the
+  checklist fast." Agreed bar: a session goal is something he can *do* and check from outside,
+  phrased as the problem, not the tool ("every bad row has a failing-if-broken test", not
+  "understand parametrize"). He writes his own estimates in `week-02.md`; actuals beside them.
+  Tests estimate already grew 1h → 2h "and parser redesign" — scope creep, he logged it himself.
+- **0–10 rating:** offered an evidence-backed per-skill version instead of one number. Not taken
+  up yet; don't push.
+- **Tests:** split the try/except test into two; found `pytest.raises` himself. 2 passing.
+- **Redesign, all his** (I rubber-ducked): `ParsedLine` dataclass in `parser.py` (split only,
+  raises `MissingDataError` — replaced a misused `BufferError`), `validate_parsed_line(parsed,
+  prev_reading)` in `validator.py`, loop `parse_telemetry_lines(lines: Iterable[str],
+  headers_count)` now in `cli.py` "for now" (`3aff0b7`). Hit a circular import (validator ↔
+  parser) → textbook 07. He first "fixed" it with a method on ParsedLine, disliked it, then found
+  the cycle was the loop sharing a file. Verified: mypy clean, CLI catches all 8 defects.
+- **I over-claimed at sign-off:** said input was now streamed. It isn't — `cli.py` still calls
+  `telemetry_file.readlines()`. Told him. Still his to change.
+- Commits are now one idea each (except `862cc49`/`284ad5a`, same message). Real improvement.
+- He wrote `telemetry/debug.sh` (pytest → pause → run). Tooling; noted pytest failure doesn't stop it.
+- README updates feel like "the bane of my existence." Advised: once, when modules stop moving.
+
+### Open, for next session
+
+1. **Where `parse_telemetry_lines` lives and its name.** He floated `preprocessing`, `processor`;
+   I pushed on both being too broad ("every stage processes"). His call; parked, he was tired.
+   Settle before writing tests — test imports depend on it.
+2. He dislikes the column indexes living in `ParsedLine` rather than `main`. Asked: if columns are
+   reordered, which file do you edit? And the header row already names the columns.
+3. Header skip is still a hidden rule (`headers_count`). Came from my "parser silently skips line 0"
+   catch.
+4. **No tests yet for `ParsedLine.parse_line` or `validate_parsed_line`** — the point of the
+   redesign. Suggested test-first. Then parametrize over the defects.
+5. `readlines()` still in `main`. `report()` still mixes JSON building with mkdir/print/write.
+6. `pdb`: tick only after real use (`breakpoint()` / `pytest --pdb`). He'd thought VS Code
+   debugger alone might count.
+7. Offered `ruff` setup (tooling, mine) for unused imports. Not accepted yet.
 
 ## Evening 2026-09-12 — critique round closed
 
