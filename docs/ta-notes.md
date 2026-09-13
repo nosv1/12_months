@@ -22,26 +22,35 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-12 22:45.**
+**Updated 2026-09-13 15:30.**
 
-- Started Wed 2026-09-09. **Week 2 in progress** (started early, Sat evening). **11.5 h logged.**
-  Nominal week 3 (C++) start: Mon Sep 21. Not behind.
+- Started Wed 2026-09-09. **Week 2 in progress.** **14.0 h logged.** Nominal week 3 (C++) start:
+  Mon Sep 21. Not behind.
 - Week 1 done and verified. C++ toolchain installed and verified.
-- Telemetry is mid-redesign, by him: `ParsedLine` (`parser.py`) → `validate_parsed_line`
-  (`validator.py`) → loop in `cli.py` "for now". 2 tests, mypy clean, all 8 defects caught.
-- Textbook through [07](textbook/07-circular-imports.md).
+- Telemetry redesigned into stages, by him (`b830018`): `read_file` (`reader.py`) → `parse_lines`
+  → `group_robots` → per-robot `validate_robot_timestamps` then `validate_parsed_line_values` →
+  analysis → `report`. `main(path, out)` is only function calls; `cli()` does argparse. Rejected
+  rows are `BadReading(line_number, original_line, err)`; unparseable rows go in a top-level
+  list, no `"unknown"` robot. Verified at close: all 8 defects reported, console script works,
+  mypy clean, 3 tests pass. **One of the 3 has no assertion** (see below).
+- Textbook through [08](textbook/08-pipeline-stages.md).
 
 ## Next session
 
 1. **Log hours:** run `date` at the opener.
-2. **Where `parse_telemetry_lines` lives and what it's called.** He tried `preprocessing`,
-   `processor`; I pushed that both are too broad. His call. Settle before tests (imports depend on it).
-3. **Tests for `ParsedLine.parse_line` and `validate_parsed_line`** — the reason for the redesign.
-   Test-first suggested. Then `parametrize` over the defects.
-4. Still open, his: column indexes in `ParsedLine` vs `main` vs read from the header row; hidden
-   header-skip rule (`headers_count`); `readlines()` in `main`; `report()` mixes JSON with file I/O.
-5. Rest of week 2: `pdb` (tick only after real use — `breakpoint()` / `pytest --pdb`), CI after
-   tests, README once modules stop moving (stranger test; I hold a gap list).
+2. **Stage order, still open (his):** the timestamp order check runs before the value check, so
+   the format gets parsed twice, a malformed timestamp gives up to 3 `BadReading`s, and an
+   unchecked row can be "previous." My last hint: the order check needs the `datetime` the value
+   check produces. Is "first" an earlier pass or earlier in the same iteration? Don't go further
+   unless he's stuck 30+ min.
+3. **`test_all_defects_caught` asserts nothing** and depends on cwd (`Path.cwd() / "data/..."`,
+   writes to `telemetry/output/`, which is gitignored). Passing it proves nothing. Ask him what it
+   should check. It should have caught the dropped-truncated-row regression earlier today.
+4. Still open, his: `-Infinity` in JSON for a robot with no good readings (customer complaint);
+   who serializes `BadReading` (`Analysis.to_json` knows its fields); swapped-pair semantics
+   (forward vs backward walk); column indexes; `headers_count`; `readlines()`.
+5. Rest of week 2: `pdb` (tick only after real use), CI after tests, README once modules stop
+   moving (stranger test; I hold a gap list).
 6. Offered `ruff` setup (mine, tooling). Not accepted yet.
 7. **Boss Fight #1:** target Sun Sep 20, spill into week 3 allowed. Strictly hands-off.
 

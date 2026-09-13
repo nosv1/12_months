@@ -11,7 +11,7 @@
 ## **Hours:** actual, not aspirational  
 
 20260912 2030 - 2245 (2.25 hours -- parser redesign, circular import fix; start approx.)
-20260913
+20260913 1217 - 1530 (2.5 hours -- pipeline stages redesign, BadReading, customer reject-row spec; 37 min break 1401-1438 excluded)
 
 ### Estimated Task Times
 

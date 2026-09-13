@@ -37,11 +37,27 @@ Minor, older: exceptions short-circuit, so `bad_readings` holds only the *first*
 never asked him to defend it; good test-design question. `robot.plot()` commented out, would
 overwrite one `plot.png` per robot — WIP, don't review until he picks it up.
 
+## Week 2 stages (2026-09-13, his, `b830018`)
+
+```text
+read_file ─► parse_lines ─► group_robots ─► per robot: validate_robot_timestamps
+reader.py    parser.py      cli.py                     ─► validate_parsed_line_values ─► Robot
+             rejects ─► top-level bad_readings in report     rejects ─► robot.bad_readings
+```
+
+Came from the naming problem (`reader.read_file` returning `dict[str, Robot]`), then the split.
+Known issues he's aware of: order check before value check (double format parse, triple-reported
+malformed timestamp, unchecked row as "previous"). Lesson written up in
+[textbook 08](../textbook/08-pipeline-stages.md).
+
 ## I play the customer
 
 I generated `telemetry/data/sample_telemetry.csv` (committed as Claude, `94b4543`) and gave a
 customer-voice spec: ISO 8601 UTC, m/s, battery %, °C; **warn battery < 20%, temperature > 60 °C**.
-I answer **requirements** questions in character — not design questions. Candidate requirements
+I answer **requirements** questions in character — not design questions. **Answered 2026-09-13, rejected rows:** report needs (1) line number in the original file,
+(2) reason in plain words, (3) the row exactly as it appeared, not rebuilt (for firmware tickets).
+Group under the robot when known; unattributable rows listed separately, no invented robot.
+`-Infinity` in the JSON breaks the customer's dashboard. Candidate requirements
 questions he may raise: does a header always exist; can columns be reordered; should a swapped
 pair flag both rows; are sub-zero temperatures valid (validator rejects `< 0`).
 

@@ -33,3 +33,32 @@ Verified at close: 2 tests pass, mypy clean, 8 defects caught. **I wrongly claim
 streamed** at sign-off — `readlines()` still in `main`; corrected before he left.
 
 Estimate: tests 1h → 2h "and parser redesign" (his edit).
+
+## Sun Sep 13, 12:17–15:30, break 14:01–14:38 — pipeline stages (2.5 h)
+
+Work, his:
+
+1. **Naming the loop** is still stuck. I gave three methods: write the call site, a one-sentence
+   docstring with no "and", standard stage verbs. He proposed `reader.read_file(path)`. I pointed
+   out it returns `dict[str, Robot]` (says less than it does) and that `reader.py` sits next to
+   `reading.py`.
+2. **He split the loop into stages himself** (parse → validate → group). I flagged that the
+   per-robot timestamp check can't run before grouping; sample lines 3–4 interleave.
+3. **Rebuilt the raw string** from a `Reading` for `bad_readings` → `'202Z,...'`. He had the right
+   constraint (Reading shouldn't know about lines). I pointed at where the source is lost, not at a
+   fix. He noted loop count; I said speed isn't the reason, streams (week 11) are.
+4. **Asked the customer** what a rejected row needs. Answered in character (telemetry.md):
+   line number, reason, exact original row, no invented robot, `-Infinity` breaks JSON.
+5. Built `BadReading`, `ParsedLine.original_line`/`line_number`, grouping on `ParsedLine`s,
+   `main(path, out)` as only function calls, `cli()` split out. Set comprehension with `(k: v)`
+   syntax → explained the bracket table.
+6. **He spotted the double timestamp-format parse himself.** I explained it's a dependency-order
+   symptom and gave a hint only (pass vs same iteration). Also flagged: truncated row dropped
+   (unused return value; he fixed), last-row off-by-one (he fixed), bad row as "previous" (open),
+   malformed timestamp reported 3× (open).
+
+Committed `b830018` (his). Verified at close: 8 defects, console script, mypy, 3 tests. One test
+(`test_all_defects_caught`) has no assertion. → textbook 08.
+
+Me: wrote CLI output to `~/claude-scratch-out` (outside repo) by mistake mid-session; deleted, told
+him. Use the scratchpad dir.
