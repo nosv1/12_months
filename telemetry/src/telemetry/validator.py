@@ -1,24 +1,27 @@
 from __future__ import annotations
 
+import logging
 import math
+from collections.abc import Iterable
 from datetime import datetime
-from typing import Optional
 
 from telemetry.parser import ParsedLine
-from telemetry.reading import Reading
+from telemetry.reading import BadReading, Reading
+
+logger = logging.getLogger(__name__)
 
 
-def validate_timestamp(
-    timestamp_iso_str: str, prev_timestamp: Optional[datetime]
-) -> datetime:
-    timestamp = datetime.fromisoformat(timestamp_iso_str)
-    if prev_timestamp:
-        if timestamp < prev_timestamp:
-            raise ValueError("timestamp is before previous reading's timestamp")
+def validate_timestamp_format(timestamp_iso_str: str) -> datetime:
+    return datetime.fromisoformat(timestamp_iso_str)
 
-        if timestamp == prev_timestamp:
-            raise ValueError("timestamp equals previous reading's timestamp")
-    return timestamp
+
+def validate_timestamp_order(timestamp: datetime, prev_timestamp: datetime):
+    if timestamp < prev_timestamp:
+        raise ValueError("timestamp is before previous reading's timestamp")
+
+    if timestamp == prev_timestamp:
+        raise ValueError("timestamp equals previous reading's timestamp")
+    return True
 
 
 def validate_float(float_str: str) -> float:
@@ -50,16 +53,74 @@ def validate_temperature(temperature_str: str) -> float:
     return value
 
 
-def validate_parsed_line(
-    parsed_line: ParsedLine, prev_reading: Optional[Reading]
-) -> Reading:
+def validate_parsed_line(parsed_line: ParsedLine) -> Reading:
     return Reading(
         robot_id=parsed_line.robot_id,
-        timestamp=validate_timestamp(
-            parsed_line.timestamp_str,
-            prev_reading.timestamp if prev_reading else None,
-        ),
+        timestamp=validate_timestamp_format(parsed_line.timestamp_str),
         velocity=validate_velocity(parsed_line.velocity_str),
         battery=validate_battery(parsed_line.battery_str),
         temperature=validate_temperature(parsed_line.temperature_str),
     )
+
+
+def handle_value_error(parsed_line: ParsedLine, ve: ValueError) -> BadReading:
+    logger.warning("Line %d had a value error - %s", parsed_line.line_number, str(ve))
+    return BadReading(parsed_line.line_number, parsed_line.original_line, str(ve))
+
+
+def validate_parsed_line_values(
+    parsed_lines: Iterable[ParsedLine],
+) -> tuple[list[Reading], list[BadReading]]:
+    readings: list[Reading] = []
+    bad_readings: list[BadReading] = []
+    for parsed_line in parsed_lines:
+        try:
+            readings.append(validate_parsed_line(parsed_line))
+
+        except ValueError as ve:
+            bad_readings.append(handle_value_error(parsed_line, ve))
+
+    return readings, bad_readings
+
+
+def validate_robot_timestamps(
+    parsed_lines: list[ParsedLine],
+) -> tuple[list[ParsedLine], list[BadReading]]:
+    bad_readings: list[BadReading] = []
+    i = len(parsed_lines) - 1
+    while i > 0:
+        parsed_line = parsed_lines[i]
+        prev_parsed_line = parsed_lines[i - 1]
+        try:
+            valid_timestamp = False
+            valid_prev_timestamp = False
+            try:
+                timestamp = validate_timestamp_format(parsed_line.timestamp_str)
+                valid_timestamp = True
+            except ValueError as ve:
+                bad_readings.append(handle_value_error(parsed_line, ve))
+
+            try:
+                prev_timestamp = validate_timestamp_format(
+                    prev_parsed_line.timestamp_str
+                )
+                valid_prev_timestamp = True
+            except ValueError as ve:
+                bad_readings.append(handle_value_error(prev_parsed_line, ve))
+
+            if valid_timestamp and valid_prev_timestamp:
+                validate_timestamp_order(timestamp, prev_timestamp)
+
+        except ValueError as ve:
+            logger.warning(
+                "Line %s had a value error - %s",
+                parsed_line.line_number,
+                ve,
+            )
+            bad_readings.append(
+                BadReading(parsed_line.line_number, parsed_line.original_line, str(ve))
+            )
+            del parsed_lines[i]
+        i -= 1
+
+    return parsed_lines, bad_readings

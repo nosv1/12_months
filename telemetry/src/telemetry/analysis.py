@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Optional
 
+from telemetry.reading import BadReading
 from telemetry.robot import Robot
 from telemetry.telemetry_warning import TelemetryWarning
 
@@ -14,7 +15,7 @@ class Analysis:
     max_temperature: float = -float("inf")
     min_battery: float = float("inf")
     warnings: list[str] = field(default_factory=list)
-    bad_readings: list[tuple[str, str]] = field(default_factory=list)
+    bad_readings: list[BadReading] = field(default_factory=list)
 
     @staticmethod
     def analyze_robot(
@@ -45,5 +46,12 @@ class Analysis:
             "max_temperature": self.max_temperature,
             "min_battery": self.min_battery,
             "warnings": self.warnings,
-            "bad_readings": self.bad_readings,
+            "bad_readings": [
+                {
+                    "line_number": br.line_number,
+                    "line": br.unparsed_string,
+                    "error": br.err,
+                }
+                for br in self.bad_readings
+            ],
         }

@@ -1,1 +1,1 @@
-from telemetry.cli import main
+from telemetry.cli import cli

@@ -1,13 +1,13 @@
 from pathlib import Path
 
-from telemetry.reading import Reading
+from telemetry.reading import BadReading, Reading
 
 
 class Robot:
     def __init__(self, id_: str):
         self.id_ = id_
         self.readings: list[Reading] = []
-        self.bad_readings: list[tuple[str, str]] = []  # [[line, error message]]
+        self.bad_readings: list[BadReading] = []
 
     def plot(self, output_dir: Path):
         import matplotlib.pyplot as plt
