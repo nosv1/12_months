@@ -7,6 +7,7 @@ from datetime import datetime
 
 from telemetry.parser import ParsedLine
 from telemetry.reading import BadReading, Reading
+from telemetry.robot import Robot
 
 logger = logging.getLogger(__name__)
 
@@ -124,3 +125,22 @@ def validate_robot_timestamps(
         i -= 1
 
     return parsed_lines, bad_readings
+
+
+def validate_parsed_robots(
+    parsed_robots: dict[str, list[ParsedLine]],
+) -> dict[str, Robot]:
+    robots_dict: dict[str, Robot] = {}
+    for robot_id, parsed_lines in parsed_robots.items():
+        robot = Robot(robot_id)
+        validated_timestamp_lines, robot.bad_readings = validate_robot_timestamps(
+            parsed_lines
+        )
+
+        robot.readings, new_bad_readings = validate_parsed_line_values(
+            validated_timestamp_lines
+        )
+        robot.bad_readings += new_bad_readings
+        robots_dict[robot_id] = robot
+
+    return robots_dict

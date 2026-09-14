@@ -15,4 +15,3 @@ class Robot:
         plt.plot([r.velocity for r in self.readings])
         plt.savefig(output_dir / "plot.png")
         plt.show()
-        pass

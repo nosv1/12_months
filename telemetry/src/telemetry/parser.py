@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from collections.abc import Iterable
 from dataclasses import dataclass
 
 from telemetry.reading import BadReading
@@ -48,7 +49,7 @@ def parse_line(line: str, line_number: int) -> ParsedLine:
 
 
 def parse_lines(
-    lines: list[str], headers_count: int = 0
+    lines: Iterable[str], headers_count: int = 0
 ) -> tuple[list[ParsedLine], list[BadReading]]:
     parsed_lines: list[ParsedLine] = []
     bad_readings: list[BadReading] = []
