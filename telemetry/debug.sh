@@ -1,3 +1,4 @@
+uv run ruff check
 uv run mypy ./ --check-untyped-defs
 read -rp "Enter to continue..."
 uv run pytest
