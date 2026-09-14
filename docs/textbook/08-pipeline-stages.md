@@ -2,10 +2,10 @@
 
 **Week 2** · deliverable requirement: "clean module boundaries" · [syllabus](../../SYLLABUS.MD)
 
-This started as a naming problem. He needed a name for the module holding
-`parse_telemetry_lines`, the loop that turns file lines into `dict[str, Robot]`. `preprocessing`,
-`processor` and `reader` all failed. He then split the loop into stages (parse → validate →
-group), and three bugs followed from that split:
+This started as a naming problem: what to call the module holding `parse_telemetry_lines`, the
+loop that turns file lines into `dict[str, Robot]`. `preprocessing`, `processor` and `reader` all
+failed. Splitting the loop into stages (parse → validate → group) produced the name, and three
+bugs followed from the split:
 
 1. The per-robot timestamp check ran before grouping. "Previous reading" then meant the line
    above, and robots' rows interleave in the file.
@@ -38,6 +38,9 @@ a one-sentence docstring. If it needs "and," it's two jobs. This loop needed thr
 
 Standard stage verbs, which make good names: *read, load, ingest, parse, validate, transform,
 group, aggregate, analyze, report.*
+
+Those verbs name a *stage*. Naming the function that runs all the stages is a different rule —
+see [I/O at the edges](09-io-at-the-edges.md#naming-a-composition).
 
 - **group**: puts items into buckets by key. SQL `GROUP BY`, pandas `groupby`.
 - **aggregate**: reduces a bucket to a value: sum, max, mean. That's `Analysis`, not grouping.
@@ -101,7 +104,7 @@ back:
 `as_unparsed_line` had real bugs as well (`[:3]` sliced the whole string, `%D` is `mm/dd/yy`),
 but fixing them wouldn't have helped. **Rebuilding cannot meet the requirement.**
 
-He also had a correct design constraint: `Reading` shouldn't know it came from a text file.
+There is also a correct design constraint in play: `Reading` shouldn't know it came from a text file.
 A `Reading` could just as well come from a socket or a ROS message. The source belongs on the type
 whose *name* says it came from a line: `ParsedLine` now carries `line_number` and
 `original_line`.
@@ -112,7 +115,7 @@ one. You cannot guarantee it by rebuilding the source later.
 
 ## Batch vs. stream, and why counting loops is the wrong worry
 
-His objection to the split: "I absolutely despise looping this many times."
+The objection to the split, from this session: "I absolutely despise looping this many times."
 
 **On speed, it's the wrong measure.** Five linear passes over 400 rows take microseconds. In batch
 code, clearer stages and testable seams usually win over fewer passes.
@@ -129,7 +132,7 @@ per-robot state can.
 That design also sidesteps the provenance problem. While you're processing row *N*, its source is
 right there.
 
-## Open questions (his to answer)
+## Open questions
 
 - **"Validate format first": an earlier *pass*, or earlier in the *same iteration*?** In one loop
   over a robot's rows, what's in scope at row *N*? Is the `ParsedLine` there? Is the previous

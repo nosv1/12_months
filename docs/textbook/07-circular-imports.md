@@ -5,7 +5,7 @@
 Came up moving `ParsedLine` into its own `parser.py`. Putting the "turn a `ParsedLine` into a
 `Reading`" function in `validator.py` produced `ImportError: cannot import name ... (most likely due
 to a circular import)` — "partially initialized module". The fix that shipped was making it a
-`validate()` method on `ParsedLine`, which he didn't like.
+`validate()` method on `ParsedLine`, which felt wrong.
 
 ---
 
@@ -59,7 +59,7 @@ early because it needs the name to exist *right now*.
 | **`if TYPE_CHECKING:` import** | Import only for mypy; with `from __future__ import annotations`, annotations aren't evaluated at runtime, so nothing runs | Works whenever the other module needs the name *only as a type hint*. Silences the symptom; the modules still depend on each other conceptually |
 
 What shipped — a method on `ParsedLine` — is the first fix: validation-of-a-line moved into
-`parser.py`, so `validator.py` never imports `parser`. It works. His discomfort is legitimate: a
+`parser.py`, so `validator.py` never imports `parser`. It works. The discomfort with it is legitimate: a
 data holder that also knows every validation rule has two jobs.
 
 ## The design signal: draw the arrows
@@ -77,7 +77,7 @@ A cycle means two modules each need something from the other. Usually one of the
 The README draws `parser → validation → analysis → report`. Code whose import arrows match the
 architecture diagram is what "clean module boundaries" means concretely.
 
-## Open question (his to answer)
+## Open question
 
 After the move, `parser.py` contains both *parsing a line* and *the loop that runs the whole
 pipeline over a file* (`parse_telemetry_lines`: splitting, robot grouping, calling validation,

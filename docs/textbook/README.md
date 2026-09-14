@@ -26,6 +26,7 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 06 | [`#include`, namespaces, and `using namespace std`](06-include-and-namespaces.md) | 1 | Deleting `#include <iostream>` from the first hello world |
 | 07 | [Circular imports and dependency direction](07-circular-imports.md) | 2 | "Partially initialized module" moving validation out of `ParsedLine` |
 | 08 | [Pipeline stages: order, provenance, and streams](08-pipeline-stages.md) | 2 | A module that wouldn't name, a rebuilt row printed as `'202Z,...'`, and a timestamp parsed twice |
+| 09 | [I/O at the edges, and naming the thing in the middle](09-io-at-the-edges.md) | 2 | A test that asserted nothing, and no name for the function that runs the pipeline |
 
 ---
 
@@ -38,4 +39,6 @@ learned, not in syllabus order — the sequence is the actual path through the y
   forgettable; "this is why the average velocity was wrong" is not.
 - Record the open questions and the tradeoffs, not just the answer. The decision is the learning.
 - Cross-link related entries.
+- No personal pronouns. Keep the specific bug and the specific project; write the lesson
+  impersonally or in the second person.
 - Note where the idea returns later in the curriculum.
