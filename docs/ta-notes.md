@@ -22,37 +22,54 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-13 15:30.**
+**Updated 2026-09-14 18:29.**
 
-- Started Wed 2026-09-09. **Week 2 in progress.** **14.0 h logged.** Nominal week 3 (C++) start:
-  Mon Sep 21. Not behind.
+- Started Wed 2026-09-09. **Week 2 in progress.** **15.75 h logged.** Nominal week 3 (C++) start:
+  Mon Sep 21. Not behind on hours; the boss fight is the thing at risk (see below).
 - Week 1 done and verified. C++ toolchain installed and verified.
-- Telemetry redesigned into stages, by him (`b830018`): `read_file` (`reader.py`) → `parse_lines`
-  → `group_robots` → per-robot `validate_robot_timestamps` then `validate_parsed_line_values` →
-  analysis → `report`. `main(path, out)` is only function calls; `cli()` does argparse. Rejected
-  rows are `BadReading(line_number, original_line, err)`; unparseable rows go in a top-level
-  list, no `"unknown"` robot. Verified at close: all 8 defects reported, console script works,
-  mypy clean, 3 tests pass. **One of the 3 has no assertion** (see below).
-- Textbook through [08](textbook/08-pipeline-stages.md).
+- **2026-09-14: functional core / imperative shell split, by him.** `analyze_telemetry(lines,
+  warnings) -> Analysis` is the pure composition; `main(path, out)` is read → analyze → dump and
+  nothing else. New `Analysis` dataclass (`robot_analyses: dict[str, RobotAnalysis]` +
+  `bad_readings`) replaced the loose 2-tuple; the old `Analysis` is now `RobotAnalysis`.
+  `analyze_robot` moved off the class to a module function. `reporter.py` split into pure
+  `build_report` and `dump_analysis`. New `grouper.py`. Broken `__main__` block deleted.
+  Verified at close: 3 tests pass, mypy clean on 13 files, console script works.
+  **His work is uncommitted** — do not sweep it into a Claude commit.
+- **`test_all_defects_caught` now asserts** `num_bad_readings == 8`. First real assertion in the
+  suite.
+- Textbook through [09](textbook/09-io-at-the-edges.md). **No personal pronouns in textbook
+  entries** — his call, now in the entry conventions; 07/08/09 retrofitted.
 
 ## Next session
 
 1. **Log hours:** run `date` at the opener.
-2. **Stage order, still open (his):** the timestamp order check runs before the value check, so
-   the format gets parsed twice, a malformed timestamp gives up to 3 `BadReading`s, and an
-   unchecked row can be "previous." My last hint: the order check needs the `datetime` the value
-   check produces. Is "first" an earlier pass or earlier in the same iteration? Don't go further
-   unless he's stuck 30+ min.
-3. **`test_all_defects_caught` asserts nothing** and depends on cwd (`Path.cwd() / "data/..."`,
-   writes to `telemetry/output/`, which is gitignored). Passing it proves nothing. Ask him what it
-   should check. It should have caught the dropped-truncated-row regression earlier today.
-4. Still open, his: `-Infinity` in JSON for a robot with no good readings (customer complaint);
-   who serializes `BadReading` (`Analysis.to_json` knows its fields); swapped-pair semantics
-   (forward vs backward walk); column indexes; `headers_count`; `readlines()`.
-5. Rest of week 2: `pdb` (tick only after real use), CI after tests, README once modules stop
-   moving (stranger test; I hold a gap list).
-6. Offered `ruff` setup (mine, tooling). Not accepted yet.
-7. **Boss Fight #1:** target Sun Sep 20, spill into week 3 allowed. Strictly hands-off.
+2. **Review left on the table (all his, none started):**
+   - `analyze_telemetry` lives in `analysis.py`, which now imports `grouper` and `parser` — the
+     composition is inside one of its own stages. Cycle risk the moment any stage needs the
+     `Analysis` type; he's already had that bug (07). Suggested `pipeline.py`.
+   - `group_and_validate_robots` has "and" in it and doesn't group — grouping already happened.
+     Its chain is `dict[str, list[ParsedLine]] → dict[str, Robot]`.
+   - `analyze_robots` takes `bad_readings` only to pass it to the `Analysis` constructor.
+   - `build_report(...) -> dict` is a bare `dict`; `"bad_readings"` still shares a key namespace
+     with robot ids.
+   - Three function-local imports in `test_validations.py` — asked twice why, no answer yet.
+3. **Tests, the week-2 item.** Agreed direction, his to write: upgrade `== 8` to a **set of
+   line numbers** read off the sample file (identity not count, and pytest prints the symmetric
+   difference); add `pytest.mark.parametrize` unit tests per defect kind on inline strings.
+   Warned against deriving the expected set from the validators — self-fulfilling test.
+4. **His idea, good, not yet built:** distinct exception types per validation failure instead of
+   bare `ValueError`. That's what would let `BadReading` carry a stable *kind* so tests can assert
+   `(line_number, kind)` without coupling to prose error messages.
+5. **Stage order, still open (his):** timestamp order check runs before the value check. Last
+   hint given: the order check needs the `datetime` the value check produces — is "first" an
+   earlier pass or earlier in the same iteration? Don't go further unless stuck 30+ min.
+6. Still open, his: `-Infinity` for a robot with no good readings; who serializes `BadReading`;
+   swapped-pair semantics; column indexes; `headers_count`; `readlines()`.
+7. Rest of week 2: `pdb` (tick only after real use), CI after tests, README once modules stop
+   moving. `conftest.py` explained 09-14, not built — offered as the anchor for the data dir.
+8. Offered `ruff` (mine, tooling). Not accepted yet; raised again 09-14 re: an unused import.
+9. **Boss Fight #1:** target Sun Sep 20, spill into week 3 allowed. Strictly hands-off. **If the
+   week runs short, slip README and CI, not this.**
 
 ## Standing instructions
 

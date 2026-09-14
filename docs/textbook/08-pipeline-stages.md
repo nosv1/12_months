@@ -36,8 +36,8 @@ away inside something called *read*.
 When no name fits, a common reason is that the code does more than one job. The test is to write
 a one-sentence docstring. If it needs "and," it's two jobs. This loop needed three.
 
-Standard stage verbs, which make good names: *read, load, ingest, parse, validate, transform,
-group, aggregate, analyze, report.*
+Standard stage verbs, which make good names: **read, load, ingest, parse, validate, transform,
+group, aggregate, analyze, report.**
 
 Those verbs name a *stage*. Naming the function that runs all the stages is a different rule —
 see [I/O at the edges](09-io-at-the-edges.md#naming-a-composition).

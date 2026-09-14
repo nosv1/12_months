@@ -62,3 +62,45 @@ Committed `b830018` (his). Verified at close: 8 defects, console script, mypy, 3
 
 Me: wrote CLI output to `~/claude-scratch-out` (outside repo) by mistake mid-session; deleted, told
 him. Use the scratchpad dir.
+
+---
+
+## 2026-09-14 (Mon) 1637–1829, 1.75 h
+
+Opened asking whether to finish Sunday's work or switch gears. Said finish, pointed at
+`test_all_defects_caught` asserting nothing.
+
+1. **"Annoying writing and rewriting tests while stuff is moving."** Answered with his own
+   evidence: two of three tests had survived three redesigns with zero rewrites, the third
+   couldn't be finished. Churn tracks how much structure a test reaches through. The requirement
+   ("8 defects in the sample file") is the stable thing.
+2. **"Why would main ever return anything tho, that feels wrong."** He was right and I'd framed it
+   badly. Reframed: `main` should return `None` *and* compute nothing — the problem was four jobs,
+   not the return type. Functional core / imperative shell. He did the whole split himself,
+   including inventing the `Analysis` wrapper type.
+3. **First attempt extracted the stages but not the composition** — the test ended up with a
+   character-for-character copy of `main`'s body. Pointed at it as the churn he'd complained about
+   an hour earlier, rebuilt by hand. He then extracted `analyze_telemetry`.
+4. **Naming.** He'd gone to the textbook looking for a name for the composition, found 08's stage
+   verbs, and it didn't answer him. Rule given: a stage is named for what it does, a composition
+   for what it returns — and the name wouldn't come because the return type wasn't decided. He
+   named the type, then the function named itself. His words: "as soon as i figured out what that
+   pipeline returned i could name it." → textbook 09, and 08 now cross-links to it.
+5. **Code review, two rounds.** Round 1 caught: `print` left inside the pure `build_report`; a
+   `__main__` block that crashed on a wrong relative path *and* littered `src/output/` (I deleted
+   that; my run created it); the return still a loose 2-tuple; `run_pipeline` as a name. He fixed
+   all of it. Round 2 findings are in ta-notes *Next session* — the big one is that
+   `analyze_telemetry` now lives in `analysis.py`, so a stage imports its siblings.
+6. **Explained `conftest.py`** end to end (auto-import, fixtures, scoping/stacking, hooks,
+   rootdir/`sys.path` caveat, gotchas). Not built yet.
+7. **`assert == 8`.** He said it felt wrong and he "got lazy." Reframed: not lazy, but it tells
+   you nothing on failure. His proposed fix — enumerate the validations and compare — walks into a
+   self-fulfilling test; expectation has to come from the data file, not the code. Gave: set of
+   line numbers (pytest prints the symmetric difference), plus `parametrize` per defect kind.
+   He came back with distinct exception types per failure, unprompted, which is the piece that
+   makes `(line_number, kind)` assertable.
+
+Asked at close whether he's behind. He isn't on hours; the boss fight is the exposure.
+
+Mine: wrote textbook 09, retrofitted pronouns out of 07/08/09 at his request, added it to the
+entry conventions. His code is uncommitted — left it alone.
