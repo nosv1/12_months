@@ -1,8 +1,10 @@
 # Environment
 
-Machine, toolchain, and the gotchas that will otherwise cost you an evening each.
+Machines, toolchain, and the gotchas that will otherwise cost you an evening each.
 
 ## Hardware
+
+### Desktop (primary)
 
 | | |
 | --- | --- |
@@ -15,6 +17,26 @@ Machine, toolchain, and the gotchas that will otherwise cost you an evening each
 This is comfortably above spec for everything in the syllabus, including Isaac Lab. RAM is the
 only soft spot — 32 GB gets tight running Isaac Sim alongside WSL2 and Windows. Cap WSL's memory
 in `.wslconfig` if you hit swapping.
+
+### Laptop (secondary, portable) — hostname `Novo`
+
+| | |
+| --- | --- |
+| CPU | AMD Ryzen 5 5600H (6C/12T) |
+| RAM | 13 GB |
+| GPU | NVIDIA GeForce GTX 1650, 4 GB (Turing, `sm_75`) |
+| Driver | 560.94 |
+| OS | Windows 11 |
+
+Added 2026-09-15, for evenings away from the desktop. Fine for Parts 1–2 — Python, C++, Linux,
+Docker, ROS 2 basics are not GPU-bound. **Not "comfortably above spec"** the way the desktop is:
+4 GB VRAM is tight past small batches, and Isaac Lab (Part 11) will probably need the desktop.
+Turing (`sm_75`) is older and more broadly supported than Blackwell, so the cu128+ requirement in
+gotcha #1 below is a desktop-only problem — stock PyTorch wheels should install and run here — but
+expect to fall back to CPU or small batches on this machine when training gets heavy.
+
+WSL (`Ubuntu-24.04`) confirmed up here 2026-09-15: `uv sync` ran clean, Python 3.12.3 present as
+`python3` (see gotcha #6).
 
 ## Decision: Ubuntu 24.04 + ROS 2 Jazzy
 
@@ -131,7 +153,7 @@ networkingMode=mirrored
 Budget debugging time anyway. Cross-machine discovery is the standard first wall in real ROS 2
 work, and `ROS_DOMAIN_ID` mismatches will get you at least once.
 
-### 6. `uv` is missing in non-interactive shells
+### 5. `uv` is missing in non-interactive shells
 
 `uv` installs to `~/.local/bin` and is put on `PATH` by line 119 of `~/.bashrc`:
 
@@ -154,7 +176,24 @@ it yourself.
 Fix at the point of use — call `~/.local/bin/uv` by absolute path, or set `PATH` explicitly in
 the script/workflow rather than relying on shell startup files.
 
-### 7. Native dual-boot before Part 3
+### 6. There is no `python`, only `python3`
+
+Noble ships `python3` but no bare `python` — this isn't a broken install, it's Debian/Ubuntu
+policy (`python` was reserved, then deliberately left unaliased after the 2→3 transition).
+
+```
+$ python --version
+python: command not found
+$ python3 --version
+Python 3.12.3
+```
+
+Every command in this doc and in tutorials you'll hit says `python3` for this reason — copy them
+literally. If you want bare `python` to work for muscle memory, `sudo apt install
+python-is-python3` adds the symlink; not required, `uv run` sidesteps it entirely since it
+resolves its own interpreter.
+
+### 8. Native dual-boot before Part 3
 
 WSL2 is genuinely good for Parts 1–2 — Python, C++, Linux, Docker are all native-quality. It gets
 flaky exactly where you're heading:
