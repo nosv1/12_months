@@ -35,7 +35,7 @@ def validate_float(float_str: str) -> float:
 
 def validate_velocity(velocity_str: str) -> float:
     value = validate_float(velocity_str)
-    if abs(value) >= 2:
+    if not abs(value) <= 2:
         raise ValueError("velocity is out of maximum range [-2, 2]")
     return value
 
@@ -49,7 +49,7 @@ def validate_battery(battery_str: str) -> float:
 
 def validate_temperature(temperature_str: str) -> float:
     value = validate_float(temperature_str)
-    if not (0 <= value):
+    if not (-40 <= value <= 150):
         raise ValueError("temperature is not reasonable")
     return value
 

@@ -35,9 +35,9 @@ It's what our loggers actually produce, and they aren't perfect.
 | --- | --- |
 | `timestamp` | ISO 8601, UTC (`2026-09-03T14:00:00.016Z`) |
 | `robot_id` | e.g. `amr-01` |
-| `velocity` | m/s |
-| `battery` | percent of charge, 0–100 |
-| `temperature` | °C, motor controller |
+| `velocity` | m/s [-2.0, 2.0] |
+| `battery` | percent of charge, [0, 100] |
+| `temperature` | °C, motor controller [-40, 150] |
 
 > **Warn us when** a robot's battery drops below 20% or its temperature goes above 60 °C.
 
