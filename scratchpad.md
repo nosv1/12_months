@@ -10,10 +10,6 @@
 - also, im bad at writing commit messages, not sure what the purpose of a commit
 message should be, i don't want it to waste time, but also it needs to be informative i guess to future readers?? idk
 
-## 20260910
-
-## 20260911
-
 ## 20260912
 
 - asserts are disgusting to handle bad outputs, but i want the validator to output the bool and the value, or do i?
@@ -23,3 +19,8 @@ message should be, i don't want it to waste time, but also it needs to be inform
 ## 20260913
 
 - oh yeah, i did stick a breakpoint() in the code earlier today, and i could call variables in the terminal to see what they were, was pretty neat
+
+## 20260915
+
+-- so this parametrizing for test functions, if i wrote a parse_line test, i could have the inputs for the fixture be individual lines?
+`@pytest.fixture(params=[<input_line1>, <input_line2>, ...])`
