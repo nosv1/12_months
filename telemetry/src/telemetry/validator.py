@@ -32,8 +32,8 @@ logger = logging.getLogger(__name__)
 def validate_timestamp_format(timestamp_str: str) -> datetime:
     try:
         return datetime.fromisoformat(timestamp_str)
-    except ValueError:
-        raise TimestampFormatError(timestamp_str)
+    except ValueError as ve:
+        raise TimestampFormatError(timestamp_str) from ve
 
 
 def validate_timestamp_order(timestamp: datetime, prev_timestamp: datetime):
@@ -49,8 +49,8 @@ def validate_float(float_str: str) -> float:
     try:
         value = float(float_str)
 
-    except ValueError:
-        raise NotANumberError("", float_str)
+    except ValueError as ve:
+        raise NotANumberError("", float_str) from ve
 
     if math.isnan(value):
         raise NaNError("", float_str)
@@ -61,10 +61,10 @@ def validate_float(float_str: str) -> float:
 def validate_velocity(velocity_str: str) -> float:
     try:
         value = validate_float(velocity_str)
-    except NotANumberError:
-        raise VelocityNotANumberError(velocity_str)
-    except NaNError:
-        raise VelocityWasNaNError(velocity_str)
+    except NotANumberError as nan:
+        raise VelocityNotANumberError(velocity_str) from nan
+    except NaNError as nan:
+        raise VelocityWasNaNError(velocity_str) from nan
 
     if not abs(value) <= 2:
         raise VelocityOutOfRangeError(velocity_str)
@@ -74,10 +74,10 @@ def validate_velocity(velocity_str: str) -> float:
 def validate_battery(battery_str: str) -> float:
     try:
         value = validate_float(battery_str)
-    except NotANumberError:
-        raise BatteryNotANumberError(battery_str)
-    except NaNError:
-        raise BatteryWasNaNError(battery_str)
+    except NotANumberError as nan:
+        raise BatteryNotANumberError(battery_str) from nan
+    except NaNError as nan:
+        raise BatteryWasNaNError(battery_str) from nan
 
     if not (0 <= value <= 100):
         raise BatteryOutOfRangeError(battery_str)
@@ -87,10 +87,10 @@ def validate_battery(battery_str: str) -> float:
 def validate_temperature(temperature_str: str) -> float:
     try:
         value = validate_float(temperature_str)
-    except NotANumberError:
-        raise TemperatureNotANumberError(temperature_str)
-    except NaNError:
-        raise TemperatureWasNaNError(temperature_str)
+    except NotANumberError as nan:
+        raise TemperatureNotANumberError(temperature_str) from nan
+    except NaNError as nan:
+        raise TemperatureWasNaNError(temperature_str) from nan
     if not (-40 <= value <= 150):
         raise TemperatureOutOfRangeError(temperature_str)
     return value
