@@ -79,8 +79,19 @@ firmware tickets) — he proposed both, accepted. Unrecognized errors go in an `
 bucket with a count that should always be zero; **quarantine, don't crash** — a shift can't wait
 for a release.
 
-Remaining candidate requirements questions: does a header always exist; can columns be reordered;
-should a swapped pair flag both rows.
+**Answered 2026-09-16, wrong column count:** `MissingDataError` replaced by **`ColumnCountError`**
+— the name says what's wrong with the row, not why, because half these rows are truncated writes
+and half are duplicated delimiters. Message must carry both counts: `Expected 5 columns, found 4.`
+(it gets pasted into firmware tickets). **A header is always present**, first line, no exceptions;
+a file without one is a broken export and should fail loudly — not be parsed with a data row as
+the header. **A vendor firmware update once appended a column and the old tooling rejected all
+40,000 rows**, so checking against the header beats a constant someone has to remember to update.
+Handling *new* columns gracefully is explicitly not required yet, but don't build something that
+makes it impossible. (TA note: deriving the count fixes appended columns and turns *inserted*
+columns from a loud failure into silent field-shifting corruption. He was told; his call.)
+
+Remaining candidate requirements questions: can columns be reordered; should a swapped pair flag
+both rows.
 
 **These ranges are not yet in `telemetry/README.md`** — left to him, since the README is his. Boss
 Fight #1 rebuilds from the spec and the sample file, so if they only live in `validator.py` he'll

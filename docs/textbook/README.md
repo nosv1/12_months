@@ -28,6 +28,8 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 08 | [Pipeline stages: order, provenance, and streams](08-pipeline-stages.md) | 2 | A module that wouldn't name, a rebuilt row printed as `'202Z,...'`, and a timestamp parsed twice |
 | 09 | [I/O at the edges, and naming the thing in the middle](09-io-at-the-edges.md) | 2 | A test that asserted nothing, and no name for the function that runs the pipeline |
 | 10 | [Exception taxonomies: base classes, blind excepts, and where to fail loud](10-exception-taxonomies.md) | 2 | A registry that never matched, a blind `except` hiding dead NaN detection, and a `del` that stopped running |
+| 11 | [Writing tests: what a test claims, and why counting isn't one](11-writing-tests.md) | 2 | `assert 9 == 8`, a tautological accepts test, and a count that balanced while the wrong rows were blamed |
+| 12 | [`raise X from Y`, and letting a linter teach you](12-exception-chaining-and-lint-rulesets.md) | 2 | Bugbear's B904 acted on backwards, and an editor linting rules the terminal had never heard of |
 
 ---
 

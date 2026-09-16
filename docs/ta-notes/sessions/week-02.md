@@ -149,3 +149,76 @@ textbook 10. His code is uncommitted — left it alone.
 
 Closed saying he's not burnt out and looks forward to the evenings, but can't do more than ~2 h of
 "constant thought" at a stretch.
+
+---
+
+## 2026-09-16, 1614–1840 (2.4 h) — the test suite got built
+
+Opened with "WEDNESDAY CLAUDE WOO" on an off day. Went from one assertion to 29 tests.
+
+1. **He asked for the testing mindset outright** — "think of something that could fail and see if
+   it does? also check expected values are as they should be?" Both half right. Answer given: a
+   test is a claim about a promise, not a recording of behavior; expected values must come from
+   outside the implementation; cases come from the spec clause by clause, then boundaries, then
+   non-value shapes, then the happy path. Written up as [textbook 11](../../textbook/11-writing-tests.md).
+2. **Asked him to name the promises of `validate_parsed_line_values`.** He returned the eleven
+   per-field checks — right list, wrong function. Used that to separate unit contracts from
+   collector contracts (partition, never-raises, values intact). The partition invariant is the
+   one that catches the `del` bug; none of his eleven do. He also filed "timestamp order" under a
+   function that doesn't check it — flagged as a sign the stage boundaries still aren't crisp.
+3. **He fixed the `del` bug himself** before I raised it, with a guard comparing
+   `bad_readings[-1].line_number` to the current row. Verified by running the partition: 361 in,
+   353 good, 8 bad, no overlap. Told him *how* it's true — the guard fires a lap late because the
+   order handler attributes to `prev`, and the backwards walk makes the off-by-one cancel. It
+   works but is load-bearing coupling to the attribution bug.
+4. **Named the loop he was stuck in** — wants to write tests, keeps getting reminded the order
+   function is wrong, wants to fix that first. Answer: write the failing test, let it stay red.
+   Two arguments: it gets the bug out of his head into an artifact, and it gives him a definition
+   of done other than reading log output and squinting. He took it.
+5. **He proposed a dict of known errors keyed by `(error_name, line)`** and hand-rolled `__eq__`
+   and `__hash__` on `BadReading` to support it. Four problems given: the loop only asserts one
+   direction; `__hash__` returned a tuple (mypy had said so); `__eq__` compared an exception name
+   to `"BadReading"` so it was always False; and test pressure was leaking into a domain class.
+   Offered `@dataclass` vs a projection to `(int, str)` tuples as the two roads. **He took the
+   projection** and the test now reads as a set comparison with a symmetric-difference diff.
+6. **"The output shows memory locations"** — `__repr__`, explained. Used it to reinforce the
+   projection choice: tuples print themselves.
+7. **ruff rule sets.** He didn't know `B` or `C4`. Explained prefixes, `--select` to trial,
+   `ruff rule <code>` to learn one, `[tool.ruff.lint] select` to persist, `# noqa: CODE`.
+   **Finding: there is no ruff config in the repo at all** — `uv run ruff check .` says "All
+   checks passed" while his editor extension was firing BLE001 and T100. Editor and terminal
+   disagree; CI would agree with neither. Told him to fix it before CI exists. Not done yet.
+8. **He turned on `B`, acted on B904, and got `from` backwards** — `raise ve from NotANumberError(...)`
+   in all five sites. Two tests went red instantly. Gave the rule (`raise NEW from OLD`), the
+   out-loud check, and the note that `from` never changes which exception propagates. Registered
+   with him that the tests had just earned their keep on a five-site mechanical change.
+   [Textbook 12](../../textbook/12-exception-chaining-and-lint-rulesets.md).
+9. **My `set({...})` remark misfired** — said the `set()` wrapper was redundant, he deleted the
+   braces instead and got `TypeError: set expected at most 1 argument, got 8`. My wording, not his
+   error. Worth being literal about which half to delete next time.
+10. **Taught `parametrize` and fixtures.** Parametrize: argnames string, tuple list, one reported
+    test per case, `pytest.param(..., id=...)` for boundary readability, exception classes in the
+    table, accepts and rejects as separate functions, stacking multiplies. Fixtures: explained,
+    then told him **not to write one yet** — the trigger is a second test needing the same setup,
+    not test count. Named `tmp_path`, `capsys`, `caplog`, `conftest.py`.
+11. **Customer answer: `ColumnCountError`.** He decided to bucket wrong-column-count rows into one
+    error and asked the customer to name it. Gave the name, the message shape ("Expected 5 columns,
+    found 4." — counts, because it goes in a firmware ticket), and two facts: a header is always
+    present and a missing one should fail loudly; and **a vendor firmware update once appended a
+    column and rejected 40,000 rows**, which justifies checking against the header rather than a
+    constant. He then moved `NUM_COLUMNS` out of `ParsedLine` and derived it in `parse_lines`.
+    Told him what the change actually bought: appended columns now work, **inserted** columns now
+    silently corrupt instead of loudly failing. His call, made knowingly.
+
+**Review findings given on his code, all his to act on:** `lines[0]` on an `Iterable[str]` (mypy
+flagged), read before the `headers_count` check so `headers_count=0` would take column count from
+a data row, `IndexError` on an empty file, stale `"was missing data"` log string after the rename,
+`test_incorrect_column_counts` missing `-> None`, and **two tautological accepts tests** —
+`validate_timestamp_format(v) == datetime.fromisoformat(v)` cannot fail.
+
+**He decided `inf` is `OutOfRange`, not `NotANumber`** without remarking on it. Pointed out that's
+a spec call and his tests now lock it in.
+
+Ended at "askl;dfjas; im past my time limit" — one-word-reply territory, parked the accepts-side
+assertion for tomorrow. Suite closed at **1 failed, 28 passed**, the failure being the deliberate
+235/238 red.

@@ -22,79 +22,59 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-15 19:01.**
+**Updated 2026-09-16 18:40.**
 
-- Started Wed 2026-09-09. **Week 2 in progress.** **17.65 h logged.** Nominal week 3 (C++) start:
-  Mon Sep 21. Not behind on hours; the boss fight is the thing at risk (see below).
+- Started Wed 2026-09-09. **Week 2 in progress.** **20.05 h logged.** Nominal week 3 (C++) start:
+  Mon Sep 21. Not behind on hours; the boss fight is still the thing at risk.
 - Week 1 done and verified. C++ toolchain installed and verified.
-- Everything through 2026-09-14 is committed (`8f673c9`). The functional core / imperative shell
-  split landed: `analyze_telemetry` in `pipeline.py`, `Analysis` / `RobotAnalysis`, `grouper.py`,
-  `build_report` split from `dump_analysis`.
-- **2026-09-15: exception taxonomy, all his.** New `exceptions.py` with a `TelemetryException`
-  base and per-field classes (`VelocityOutOfRangeError`, `BatteryNotANumberError`, …).
-  `BadReading` now holds the **exception object**, and `to_json` emits both `exception` (class
-  name) and `error` (message). `validate_timestamp_format` converts the stdlib `ValueError` into
-  `TimestampFormatError`. First attempt used a `KNOWN_EXCEPTIONS` set + blind `except Exception`;
-  replaced with the base class after three verified findings (see week-02 session log, and
-  textbook 10). **Verified at close: ruff clean, mypy clean on 15 files, all 9 defects caught with
-  correct kinds.**
-- **He committed the spec ranges himself** (`6d86f4e`): README updated, `validator.py` now
-  inclusive on velocity and `[-40, 150]` on temperature. **The rest is still uncommitted** —
-  5 files plus the new `exceptions.py`; he said he'd commit after me. Do not sweep it into a
-  Claude commit.
-- Textbook through [10](textbook/10-exception-taxonomies.md).
-- **Sample file now has 9 defects, not 8** — added line 363, a three-fault row, at his request.
-  See [telemetry.md](ta-notes/telemetry.md). His `assert == 8` will fail; that's expected.
+- Last commit is `5fb53c2`. **Everything from 09-15 and 09-16 is uncommitted and his** — he said
+  he'd commit after me both nights. Do not sweep it into a Claude commit.
+- **2026-09-16: the test suite, all his.** 29 tests. Parametrized accepts/rejects tables for
+  velocity, battery, temperature, timestamp format, and column count; boundaries at both ends with
+  `pytest.param(id=...)`; `inf` covered. `test_all_defects_caught` now compares a **set of
+  `(line_number, error_name)` pairs** against nine hand-read line numbers — symmetric-difference
+  diff, both directions. Closed at **1 failed, 28 passed**, the red being the deliberate 235/238.
+- **He fixed the `del` bug himself.** Partition verified by running it: 361 in, 353 good, 8 bad,
+  no overlap. It works via a guard that fires a lap late — load-bearing coupling to the
+  attribution bug, which he knows.
+- **`MissingDataError` → `ColumnCountError`**, after a customer answer. `NUM_COLUMNS` moved out of
+  `ParsedLine`; `parse_lines` now derives it from the header row.
+- Textbook through [12](textbook/12-exception-chaining-and-lint-rulesets.md).
 
 ## Next session
 
-1. **Log hours:** run `date` at the opener. He expects to work Wed 2026-09-16 (an off day).
-2. **Two live bugs in `validate_robot_timestamps`** — found by running it 09-15, both inside the
-   rewrite he already knows is coming. He has been told both:
-   - **Wrong row blamed.** The handler attributes to `prev_parsed_line`; the loop walks backwards,
-     so `prev` is the innocent earlier row. Reports 235/261 instead of the actual offenders
-     238/262. Customer wants the row that arrived out of order.
-   - **`del parsed_lines[i]` is unreachable.** Its `except ValueError` is dead code now that the
-     custom exceptions subclass `Exception` and the format error is converted. Flagged rows stay
-     in the valid set and feed `average_velocity` — the report calls a row invalid while including
-     it in the stats. ruff, mypy and the test all stay green on this.
-3. **Multi-error collection per row, his next piece.** `validate_parsed_line` still short-circuits
-   on `Reading(...)` argument evaluation, so only the first fault per row is reported. He plans to
-   do this after reworking the processing order. `MissingDataError` is the deliberate exception —
-   a row that can't be split has nothing to validate. Open: whether it belongs under the same base
-   as the field errors.
-4. **Tests, the week-2 item, still not started.** Upgrade to a **set of line numbers** read off the
-   sample file (identity not count; pytest prints the symmetric difference), plus
-   `pytest.mark.parametrize` per defect kind on inline strings. Warned against deriving the
-   expected set from the validators. Two additions from 09-15: assert the **accepted** count too
-   (that's what would have caught the unreachable `del`), and assert the `UnrecognizedError` count
-   is zero.
-5. **Smaller, all told to him 09-15, none done:**
-   - No `from` on any re-raise — chain is discarded everywhere. Offered enabling ruff's `B` rules
-     (B904 flags each one).
-   - Trailing `\n` from `readlines()` leaks into messages — line 203 renders as `- -273.2\n.`
-   - Line 97's message is `Battery was not number. - ` with nothing after it; "was empty" is what
-     a tech needs.
-   - `NotANumberError("", float_str)` in `validate_float` — the `""` only works because every
-     caller wraps and re-raises. Asked what it's for; version exists where the question disappears.
-   - `UnknownError` is defined but never raised. He decided (09-15) he wants the quarantine
-     bucket, so this needs wiring to a single row-level boundary that logs loudly.
-   - `build_report(...) -> dict` is still a bare `dict`; `"bad_readings"` shares a key namespace
-     with robot ids. Output shape changed on 09-14 and nothing tests it.
-   - Validity limits are magic numbers inline; warning thresholds are constructor-injected. He
-     called config out of scope — agreed, but the asymmetry is worth him noticing.
-   - ~~Valid ranges not in the README~~ — **done**, he committed them (`6d86f4e`) along with the
-     inclusive-velocity and `[-40, 150]` temperature fixes in `validator.py`.
-6. **Stage order, still open (his):** timestamp order check runs before the value check, double
-   parses, and uses an unchecked row as "previous". Last hint: is "first" an earlier pass or
-   earlier in the same iteration? Don't go further unless stuck 30+ min.
-7. Still open, his: `-Infinity` for a robot with no good readings; swapped-pair semantics; column
-   indexes; `headers_count`; `readlines()`.
-8. Rest of week 2: `pdb` (he hit a stray `breakpoint()` 09-15 — tick only after deliberate use),
-   CI after tests, README once modules stop moving. `conftest.py` explained 09-14, not built.
-9. **ruff is in use and he's responding to it** (BLE001 and T100 both drove real fixes 09-15).
-   Offer the `B` ruleset next.
-10. **Boss Fight #1:** target Sun Sep 20, spill into week 3 allowed. Strictly hands-off. **If the
+1. **Log hours:** run `date` at the opener. Session ended 09-16 at 1840.
+2. **The accepts side — his stated next item.** "idk how to test accepts yet", parked deliberately.
+   Nothing in 29 tests asserts anything about the 353 good rows, which is exactly where the `del`
+   bug lived. Start here. He may need the partition invariant restated as a concrete assertion
+   shape, but let him get there.
+3. **`validate_timestamp_order` has no unit tests** and is the next function he rewrites. Three
+   direct tests (ordered pair, out-of-order pair, identical pair) before he touches it. Raised
+   09-16, not done.
+4. **Attribution bug is the live red.** 235/261 blamed instead of 238/262. The test now states it
+   in both directions. This is the fix that turns the suite green.
+5. **Two tautological accepts tests**, told to him 09-16:
+   `validate_timestamp_format(v) == datetime.fromisoformat(v)` and
+   `validate_velocity(v) == float(v)`. Expected values must be hand-written literals.
+6. **ruff config does not exist in the repo.** `uv run ruff check .` passes while his editor
+   extension fires BLE001/T100. Told him 09-16; fix before CI. `select = [...]` in
+   `pyproject.toml`, `B` and `C4` both earning their keep already.
+7. **`parse_lines` findings from 09-16, his to act on:** `lines[0]` on an `Iterable[str]` (mypy
+   flags it), read before the `headers_count` check, `IndexError` on an empty file, stale
+   `"was missing data"` log string, `test_incorrect_column_counts` missing `-> None`, `""` absent
+   from every reject table.
+8. **Multi-error collection**, still his next design piece. `validate_parsed_line` short-circuits
+   on argument evaluation. When it lands, the test's expected shape goes from `line -> error` to
+   `line -> {errors}` — line 363 carries three faults.
+9. **Smaller, all still open:** no `from` outside the field validators; trailing `\n` in messages;
+   `NotANumberError("", ...)` empty first arg; `UnknownError`/`UnrecognizedError` never raised;
+   `build_report -> dict` untyped and untested; magic-number limits vs injected thresholds;
+   `-Infinity`; swapped-pair semantics; `readlines()`.
+10. **Stage order, still open (his).** Last hint given: is "first" an earlier pass or earlier in
+    the same iteration? Don't go further unless stuck 30+ min.
+11. Rest of week 2: `pdb` (not yet used deliberately), CI, README, splitting
+    `test_validations.py` into parser/validator/pipeline files.
+12. **Boss Fight #1:** target Sun Sep 20, spill into week 3 allowed. Strictly hands-off. **If the
     week runs short, slip README and CI, not this.**
 
 ## Standing instructions
