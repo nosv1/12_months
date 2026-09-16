@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from telemetry.exceptions import TelemetryException
 
 
 class Reading:
@@ -20,7 +21,9 @@ class Reading:
 
 
 class BadReading:
-    def __init__(self, line_number: int, unparsed_string: str, exception: Exception):
+    def __init__(
+        self, line_number: int, unparsed_string: str, exception: TelemetryException
+    ):
         self.line_number = line_number
         self.unparsed_string = unparsed_string
         self.exception = exception
