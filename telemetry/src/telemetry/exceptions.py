@@ -26,7 +26,7 @@ class NaNError(TelemetryException):
 ###### EXCEPTIONS FOR INDIVIDUAL LINES   ######
 
 
-class MissingDataError(TelemetryException):
+class ColumnCountError(TelemetryException):
     def __init__(self):
         super().__init__("Data was missing from the input.")
 
