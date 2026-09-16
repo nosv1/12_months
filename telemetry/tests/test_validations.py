@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from telemetry.cli import main as telemetry_main
+from telemetry.exceptions import VelocityWasNaNError
 from telemetry.validator import validate_velocity
 
 
@@ -11,7 +11,7 @@ def test_zero_velocity_line():
 
 
 def test_nan_velocity():
-    with pytest.raises(ValueError):
+    with pytest.raises(VelocityWasNaNError):
         validate_velocity("nan")
 
 

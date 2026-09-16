@@ -5,6 +5,23 @@ import math
 from collections.abc import Iterable
 from datetime import datetime
 
+from telemetry.exceptions import (
+    BatteryNotANumberError,
+    BatteryOutOfRangeError,
+    BatteryWasNaNError,
+    NaNError,
+    NotANumberError,
+    TelemetryException,
+    TemperatureNotANumberError,
+    TemperatureOutOfRangeError,
+    TemperatureWasNaNError,
+    TimestampFormatError,
+    TimestampIdenticalError,
+    TimestampOutOfOrderError,
+    VelocityNotANumberError,
+    VelocityOutOfRangeError,
+    VelocityWasNaNError,
+)
 from telemetry.parser import ParsedLine
 from telemetry.reading import BadReading, Reading
 from telemetry.robot import Robot
@@ -12,45 +29,70 @@ from telemetry.robot import Robot
 logger = logging.getLogger(__name__)
 
 
-def validate_timestamp_format(timestamp_iso_str: str) -> datetime:
-    return datetime.fromisoformat(timestamp_iso_str)
+def validate_timestamp_format(timestamp_str: str) -> datetime:
+    try:
+        return datetime.fromisoformat(timestamp_str)
+    except ValueError:
+        raise TimestampFormatError(timestamp_str)
 
 
 def validate_timestamp_order(timestamp: datetime, prev_timestamp: datetime):
     if timestamp < prev_timestamp:
-        raise ValueError("timestamp is before previous reading's timestamp")
+        raise TimestampOutOfOrderError(timestamp, prev_timestamp)
 
     if timestamp == prev_timestamp:
-        raise ValueError("timestamp equals previous reading's timestamp")
+        raise TimestampIdenticalError(timestamp)
     return True
 
 
 def validate_float(float_str: str) -> float:
-    value = float(float_str)
+    try:
+        value = float(float_str)
+
+    except ValueError:
+        raise NotANumberError("", float_str)
+
     if math.isnan(value):
-        raise ValueError("nan present")
+        raise NaNError("", float_str)
 
     return value
 
 
 def validate_velocity(velocity_str: str) -> float:
-    value = validate_float(velocity_str)
+    try:
+        value = validate_float(velocity_str)
+    except NotANumberError:
+        raise VelocityNotANumberError(velocity_str)
+    except NaNError:
+        raise VelocityWasNaNError(velocity_str)
+
     if not abs(value) <= 2:
-        raise ValueError("velocity is out of maximum range [-2, 2]")
+        raise VelocityOutOfRangeError(velocity_str)
     return value
 
 
 def validate_battery(battery_str: str) -> float:
-    value = validate_float(battery_str)
+    try:
+        value = validate_float(battery_str)
+    except NotANumberError:
+        raise BatteryNotANumberError(battery_str)
+    except NaNError:
+        raise BatteryWasNaNError(battery_str)
+
     if not (0 <= value <= 100):
-        raise ValueError("battery is not within range [0-100]")
+        raise BatteryOutOfRangeError(battery_str)
     return value
 
 
 def validate_temperature(temperature_str: str) -> float:
-    value = validate_float(temperature_str)
+    try:
+        value = validate_float(temperature_str)
+    except NotANumberError:
+        raise TemperatureNotANumberError(temperature_str)
+    except NaNError:
+        raise TemperatureWasNaNError(temperature_str)
     if not (-40 <= value <= 150):
-        raise ValueError("temperature is not reasonable")
+        raise TemperatureOutOfRangeError(temperature_str)
     return value
 
 
@@ -64,9 +106,11 @@ def validate_parsed_line(parsed_line: ParsedLine) -> Reading:
     )
 
 
-def handle_value_error(parsed_line: ParsedLine, ve: ValueError) -> BadReading:
-    logger.warning("Line %d had a value error - %s", parsed_line.line_number, str(ve))
-    return BadReading(parsed_line.line_number, parsed_line.original_line, str(ve))
+def handle_telemetry_exception(
+    parsed_line: ParsedLine, te: TelemetryException
+) -> BadReading:
+    logger.warning("Line %d had an exception - %s", parsed_line.line_number, str(te))
+    return BadReading(parsed_line.line_number, parsed_line.original_line, te)
 
 
 def validate_parsed_line_values(
@@ -78,8 +122,8 @@ def validate_parsed_line_values(
         try:
             readings.append(validate_parsed_line(parsed_line))
 
-        except ValueError as ve:
-            bad_readings.append(handle_value_error(parsed_line, ve))
+        except TelemetryException as te:
+            bad_readings.append(handle_telemetry_exception(parsed_line, te))
 
     return readings, bad_readings
 
@@ -98,19 +142,22 @@ def validate_robot_timestamps(
             try:
                 timestamp = validate_timestamp_format(parsed_line.timestamp_str)
                 valid_timestamp = True
-            except ValueError as ve:
-                bad_readings.append(handle_value_error(parsed_line, ve))
+            except TimestampFormatError as te:
+                bad_readings.append(handle_telemetry_exception(parsed_line, te))
 
             try:
                 prev_timestamp = validate_timestamp_format(
                     prev_parsed_line.timestamp_str
                 )
                 valid_prev_timestamp = True
-            except ValueError as ve:
-                bad_readings.append(handle_value_error(prev_parsed_line, ve))
+            except TimestampFormatError as te:
+                bad_readings.append(handle_telemetry_exception(prev_parsed_line, te))
 
             if valid_timestamp and valid_prev_timestamp:
                 validate_timestamp_order(timestamp, prev_timestamp)
+
+        except (TimestampOutOfOrderError, TimestampIdenticalError) as te:
+            bad_readings.append(handle_telemetry_exception(prev_parsed_line, te))
 
         except ValueError as ve:
             logger.warning(
@@ -119,7 +166,7 @@ def validate_robot_timestamps(
                 ve,
             )
             bad_readings.append(
-                BadReading(parsed_line.line_number, parsed_line.original_line, str(ve))
+                BadReading(parsed_line.line_number, parsed_line.original_line, ve)
             )
             del parsed_lines[i]
         i -= 1

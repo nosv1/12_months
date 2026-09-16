@@ -4,13 +4,10 @@ import logging
 from collections.abc import Iterable
 from dataclasses import dataclass
 
+from telemetry.exceptions import MissingDataError
 from telemetry.reading import BadReading
 
 logger = logging.getLogger(__name__)
-
-
-class MissingDataError(Exception):
-    pass
 
 
 @dataclass
@@ -35,7 +32,7 @@ class ParsedLine:
 def parse_line(line: str, line_number: int) -> ParsedLine:
     parts = line.split(",")
     if len(parts) != ParsedLine.NUM_COLUMNS:
-        raise MissingDataError("line is missing data")
+        raise MissingDataError
 
     return ParsedLine(
         line_number=line_number,
