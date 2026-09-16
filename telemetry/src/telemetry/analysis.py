@@ -22,14 +22,7 @@ class RobotAnalysis:
             "max_temperature": self.max_temperature,
             "min_battery": self.min_battery,
             "warnings": self.warnings,
-            "bad_readings": [
-                {
-                    "line_number": br.line_number,
-                    "line": br.unparsed_string,
-                    "error": br.err,
-                }
-                for br in self.bad_readings
-            ],
+            "bad_readings": [br.to_json() for br in self.bad_readings],
         }
 
 

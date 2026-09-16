@@ -62,7 +62,7 @@ def parse_lines(
 
         except MissingDataError as err:
             logger.warning("Line %d was missing data.", line_number)
-            bad_readings.append(BadReading(line_number, line, str(err)))
+            bad_readings.append(BadReading(line_number, line, err))
             continue
 
     return parsed_lines, bad_readings
