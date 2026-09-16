@@ -159,15 +159,7 @@ def validate_robot_timestamps(
         except (TimestampOutOfOrderError, TimestampIdenticalError) as te:
             bad_readings.append(handle_telemetry_exception(prev_parsed_line, te))
 
-        except ValueError as ve:
-            logger.warning(
-                "Line %s had a value error - %s",
-                parsed_line.line_number,
-                ve,
-            )
-            bad_readings.append(
-                BadReading(parsed_line.line_number, parsed_line.original_line, ve)
-            )
+        if bad_readings and bad_readings[-1].line_number == parsed_line.line_number:
             del parsed_lines[i]
         i -= 1
 
