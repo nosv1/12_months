@@ -15,20 +15,21 @@ class UnknownError(TelemetryException):
 
 class NotANumberError(TelemetryException):
     def __init__(self, field: str, cause: str):
-        super().__init__(f"{field} was not number. - {cause}")
+        cause = cause if len(cause) > 0 else "[no value]"
+        super().__init__(f"{field} was not number. - '{cause}'")
 
 
 class NaNError(TelemetryException):
     def __init__(self, field: str, cause: str):
-        super().__init__(f"{field} was nan. - {cause}")
+        super().__init__(f"{field} was nan. - '{cause}'")
 
 
 ###### EXCEPTIONS FOR INDIVIDUAL LINES   ######
 
 
 class ColumnCountError(TelemetryException):
-    def __init__(self):
-        super().__init__("Data was missing from the input.")
+    def __init__(self, expected: int, actual: int):
+        super().__init__(f"Expected {expected} columns, found {actual}")
 
 
 ######   EXCEPTIONS FOR INDIVIDUAL FIELDS   ######
@@ -38,7 +39,7 @@ class ColumnCountError(TelemetryException):
 class TimestampOutOfOrderError(TelemetryException):
     def __init__(self, timestamp: datetime, prev_timestamp: datetime):
         super().__init__(
-            f"The timestamp is earlier in time than the robot's previous timestamp - {timestamp} <= {prev_timestamp}"
+            f"The timestamp is earlier in time than the robot's previous timestamp - '{timestamp}' <= '{prev_timestamp}'"
         )
 
 
@@ -69,7 +70,7 @@ class VelocityWasNaNError(NaNError):
 
 class VelocityOutOfRangeError(TelemetryException):
     def __init__(self, cause: str):
-        super().__init__(f"The velocity was out of the specified range - {cause}")
+        super().__init__(f"The velocity was out of the specified range - '{cause}'")
 
 
 ###   BATTERY   ###
@@ -85,7 +86,7 @@ class BatteryWasNaNError(NaNError):
 
 class BatteryOutOfRangeError(TelemetryException):
     def __init__(self, cause: str):
-        super().__init__(f"Battery was out of the specified range - {cause}.")
+        super().__init__(f"Battery was out of the specified range - '{cause}'.")
 
 
 ###   TEMPERATURE   ###
@@ -101,4 +102,4 @@ class TemperatureWasNaNError(NaNError):
 
 class TemperatureOutOfRangeError(TelemetryException):
     def __init__(self, cause: str):
-        super().__init__(f"Temperature was out of the specified range - {cause}.")
+        super().__init__(f"Temperature was out of the specified range - '{cause}'.")
