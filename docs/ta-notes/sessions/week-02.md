@@ -104,3 +104,48 @@ Asked at close whether he's behind. He isn't on hours; the boss fight is the exp
 
 Mine: wrote textbook 09, retrofitted pronouns out of 07/08/09 at his request, added it to the
 entry conventions. His code is uncommitted — left it alone.
+
+## 2026-09-15 (Tue) 1706–1901, 1.9 h
+
+All on the exception taxonomy — his idea from the night before. Wrote all of it himself.
+
+1. **Chose distinct exception classes in a new `exceptions.py`.** Confirmed no stdlib collision
+   (`exceptions` was a Python 2 module, gone in 3; absolute imports make it moot anyway).
+2. **`BadReading` now holds the exception object** rather than `str(err)`. Flagged the two
+   consequences: `json.dump` can't serialize it, and exception objects retain `__traceback__` →
+   frames → locals. He landed on emitting both a class name and a message — which is also what
+   the customer asked for, arrived at independently from both ends.
+3. **Chose `Exception` over `ValueError` as the parent.** Warned that `except ValueError` would
+   stop catching and the CLI would crash loudly — good failure, let him hit it.
+4. **Naming.** His draft was `ERRAsFloatError`. Rule given: names the input and the mechanism;
+   test is "could this name survive a rewrite of the code that raises it?" Stdlib convention is
+   subject + what's wrong with it.
+5. **First attempt was a `KNOWN_EXCEPTIONS` set + `except Exception`**, which ruff hit with
+   BLE001. Three findings, all verified by running it: the membership test was instance-vs-class
+   so it was `False` 100% of the time and everything became `UnknownError`; mypy had already said
+   so ten times via `set[Exception]` vs `type[...]`; and the blind except was hiding a `TypeError`
+   from `NaNError(float_str)` that meant **NaN detection was entirely dead**. Answer given: a base
+   class, not a registry. He implemented `TelemetryException` and deleted the set.
+6. **Result verified at close:** ruff clean, mypy clean on 15 files, all 9 defects caught with
+   correct kinds and readable messages. Big step up from `== 8`.
+7. **Two bugs left in `validate_robot_timestamps`**, both found by running it, both in the rewrite
+   he'd already said was coming: attribution moved to `prev_parsed_line` so it blames the innocent
+   earlier row (235/261 instead of 238/262); and `del parsed_lines[i]` is now **unreachable**
+   because its `except ValueError` is dead — flagged rows stay in the valid set and feed
+   `average_velocity`. Report contradicts itself; ruff, mypy and the test all stayed green.
+8. **Fail-fast vs fault-tolerant**, asked as the customer. He reasoned it out himself — crashing
+   means the customer waits for a release, quarantining means they keep working. Correct call;
+   gave him the vocabulary (dead letter queue) and the caveat that it's one boundary with loud
+   logging, not a return to scattered blind excepts.
+
+**Customer answers given (new spec, not previously stated):** velocity `[-2.0, 2.0]`, temperature
+`[-40, 150]`, battery `[0, 100]`, **all inclusive**; sub-zero temperatures are valid (cold-storage
+aisles at −20 °C). Errors per row are a **list**, always. Report carries both a stable error name
+and a plain-words message. `UnrecognizedError` bucket with a count that should always be zero.
+
+**Mine:** appended line 363 to `sample_telemetry.csv` — `2026-09-03T14:02:00.018Z,amr-01,4.812,
+118.4,-41.0`, three faults in one row, appended so nothing renumbers. He asked for it. Wrote
+textbook 10. His code is uncommitted — left it alone.
+
+Closed saying he's not burnt out and looks forward to the evenings, but can't do more than ~2 h of
+"constant thought" at a stretch.

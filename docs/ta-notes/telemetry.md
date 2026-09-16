@@ -57,9 +57,34 @@ customer-voice spec: ISO 8601 UTC, m/s, battery %, °C; **warn battery < 20%, te
 I answer **requirements** questions in character — not design questions. **Answered 2026-09-13, rejected rows:** report needs (1) line number in the original file,
 (2) reason in plain words, (3) the row exactly as it appeared, not rebuilt (for firmware tickets).
 Group under the robot when known; unattributable rows listed separately, no invented robot.
-`-Infinity` in the JSON breaks the customer's dashboard. Candidate requirements
-questions he may raise: does a header always exist; can columns be reordered; should a swapped
-pair flag both rows; are sub-zero temperatures valid (validator rejects `< 0`).
+`-Infinity` in the JSON breaks the customer's dashboard.
+
+**Answered 2026-09-15, valid ranges** (he was right that these were never specified — he'd invented
+`[-2, 2]` and `>= 0` himself). All **inclusive**:
+
+| field | range | rationale given |
+| --- | --- | --- |
+| velocity | `[-2.0, 2.0]` m/s | drive firmware hard-caps at 2.0; reverse same magnitude (docking) |
+| battery | `[0, 100]` % | already specified 09-13 |
+| temperature | `[-40, 150]` °C | motor controller sensor's rated range |
+
+**Sub-zero temperatures are valid** — two sites run cold-storage aisles at −20 °C ambient, and a
+controller parked overnight reads near that. `-273.2` stays rejected. This makes his old `< 0`
+rule wrong, and the inclusive velocity bound exposes an off-by-one in `abs(value) >= 2` that no
+sample row catches (fastest legitimate row is `1.468`).
+
+**Answered 2026-09-15, error reporting:** errors per row are a **list**, always, even at length
+one. Report carries both a stable error *name* (filterable) and a plain-words *message* (goes in
+firmware tickets) — he proposed both, accepted. Unrecognized errors go in an `UnrecognizedError`
+bucket with a count that should always be zero; **quarantine, don't crash** — a shift can't wait
+for a release.
+
+Remaining candidate requirements questions: does a header always exist; can columns be reordered;
+should a swapped pair flag both rows.
+
+**These ranges are not yet in `telemetry/README.md`** — left to him, since the README is his. Boss
+Fight #1 rebuilds from the spec and the sample file, so if they only live in `validator.py` he'll
+re-invent them during the fight.
 
 ### Spoilers: the planted defects
 
@@ -72,7 +97,14 @@ practice — but the boss fight is a rebuild, so skim past if you want it cold.*
 ~12 s. Cross-robot timestamps interleave — normal.
 
 Verified output (week 1 and again after the week-2 redesign): bad rows per robot
-`{unknown: 1, amr-01: 2, amr-02: 2, amr-03: 3}` = all 8. The swapped pair only flags the
+`{unknown: 1, amr-01: 2, amr-02: 2, amr-03: 3}` = all 8.
+
+**Added 2026-09-15 at his request, line 363** (appended, so nothing renumbers):
+`2026-09-03T14:02:00.018Z,amr-01,4.812,118.4,-41.0` — velocity, battery *and* temperature all out
+of range in one row. Timestamp is valid and correctly ordered, so it is purely a value-fault row.
+Three faults, not two: two would let "collect the first two" pass. **Bad rows are now 9, but total
+errors are 11** — those numbers diverging is what proves the errors field is a list. Every other
+planted defect is single-fault, so the sample alone could never have tested multi-error collection. The swapped pair only flags the
 *second-arriving* row — legitimate requirements question if he asks.
 
 ## Boss Fight #1 — rules as stated to him (2026-09-12)

@@ -27,6 +27,7 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 07 | [Circular imports and dependency direction](07-circular-imports.md) | 2 | "Partially initialized module" moving validation out of `ParsedLine` |
 | 08 | [Pipeline stages: order, provenance, and streams](08-pipeline-stages.md) | 2 | A module that wouldn't name, a rebuilt row printed as `'202Z,...'`, and a timestamp parsed twice |
 | 09 | [I/O at the edges, and naming the thing in the middle](09-io-at-the-edges.md) | 2 | A test that asserted nothing, and no name for the function that runs the pipeline |
+| 10 | [Exception taxonomies: base classes, blind excepts, and where to fail loud](10-exception-taxonomies.md) | 2 | A registry that never matched, a blind `except` hiding dead NaN detection, and a `del` that stopped running |
 
 ---
 

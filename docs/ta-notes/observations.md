@@ -40,6 +40,13 @@ there. Check before summarising his work back to him.
   Keep inviting it.
 - **Fatigue signal:** one-word answers ("maybe"), keyboard mashing. Stop asking him to decide
   things; park the question in the week file and wrap up.
+- **~2 h ceiling is decision density, not stamina.** Unprompted 2026-09-15: not burnt out, looks
+  forward to the evenings, but "it's just hard to continuing fixing things for more than 2 hours a
+  time ... if it was smooth sailing, i could prob keep going, it's just constant thought right
+  now." Accurate self-read — that session was ~100%% novel decisions and debugging, zero mechanical
+  work, which is the expensive kind. Don't treat the 2 h as a limit to fix. Two levers if a session
+  needs to run longer: put something mechanical in the middle, or bank a decision for tomorrow
+  rather than making it tired.
 - **Confidence:** answer venting with accuracy, not reassurance ("yes, a little rushed; here's the
   fix"). Point at verified evidence (e.g. "refactor kept all 8 defects caught").
 - Limited evening hours. Lead with the answer.
