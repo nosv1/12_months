@@ -22,60 +22,66 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-16 18:40.**
+**Updated 2026-09-17 21:19.**
 
-- Started Wed 2026-09-09. **Week 2 in progress.** **20.05 h logged.** Nominal week 3 (C++) start:
-  Mon Sep 21. Not behind on hours; the boss fight is still the thing at risk.
-- Week 1 done and verified. C++ toolchain installed and verified.
-- Last commit is `5fb53c2`. **Everything from 09-15 and 09-16 is uncommitted and his** — he said
-  he'd commit after me both nights. Do not sweep it into a Claude commit.
-- **2026-09-16: the test suite, all his.** 29 tests. Parametrized accepts/rejects tables for
-  velocity, battery, temperature, timestamp format, and column count; boundaries at both ends with
-  `pytest.param(id=...)`; `inf` covered. `test_all_defects_caught` now compares a **set of
-  `(line_number, error_name)` pairs** against nine hand-read line numbers — symmetric-difference
-  diff, both directions. Closed at **1 failed, 28 passed**, the red being the deliberate 235/238.
-- **He fixed the `del` bug himself.** Partition verified by running it: 361 in, 353 good, 8 bad,
-  no overlap. It works via a guard that fires a lap late — load-bearing coupling to the
-  attribution bug, which he knows.
-- **`MissingDataError` → `ColumnCountError`**, after a customer answer. `NUM_COLUMNS` moved out of
-  `ParsedLine`; `parse_lines` now derives it from the header row.
-- Textbook through [12](textbook/12-exception-chaining-and-lint-rulesets.md).
+- Started Wed 2026-09-09. **Week 2 in progress.** **22.05 h logged.** Nominal week 3 (C++) start:
+  Mon Sep 21.
+- **Boss Fight #1 starts Saturday Sep 19**, his call, agreed. To pay for it, README, CI, `pdb`,
+  the `test_validations.py` split and all the cosmetic smalls are **cut into week 3**. Friday is
+  multi-error collection only, hard stop Friday night.
+- **The fight's permitted input is [docs/telemetry-requirements.md](telemetry-requirements.md)**
+  (new, 09-17) — customer voice, requirements only. `telemetry/README.md` is **not** readable during
+  the fight: Architecture and Design decisions sit directly under the ranges table.
+- **Suite is green: 37 passed.** The attribution bug is fixed and the accepts side exists.
+- **He rewrote the timestamp stage and deleted `validate_robot_timestamps`.** Order checking now
+  lives in `validate_parsed_line_values`, comparing against the previous *accepted* reading. That
+  closed the double format parse, the unvalidated "previous" row, the triple-reported malformed
+  timestamp, and the mid-iteration `del` — all in one change.
+- **`Reading` now carries `line_number`.** His call, knowingly: cheap now, revisit at week 11 when
+  readings arrive off a topic and the identity has to be a *source*, not a line.
+- **The accepts side found silent data loss** — `headers_count` (a column count) used as a count of
+  header rows to skip, discarding four valid rows. All 29 rejects tests passed over it.
+- Textbook through [14](textbook/14-partition-invariants-and-where-tests-go.md).
+- He asked me to **hold the project-manager voice** — he's playing PM himself. Customer voice on
+  request, as before.
 
-## Next session
+## Next session (Friday 09-18 — one item, then stop)
 
-1. **Log hours:** run `date` at the opener. Session ended 09-16 at 1840.
-2. **The accepts side — his stated next item.** "idk how to test accepts yet", parked deliberately.
-   Nothing in 29 tests asserts anything about the 353 good rows, which is exactly where the `del`
-   bug lived. Start here. He may need the partition invariant restated as a concrete assertion
-   shape, but let him get there.
-3. **`validate_timestamp_order` has no unit tests** and is the next function he rewrites. Three
-   direct tests (ordered pair, out-of-order pair, identical pair) before he touches it. Raised
-   09-16, not done.
-4. **Attribution bug is the live red.** 235/261 blamed instead of 238/262. The test now states it
-   in both directions. This is the fix that turns the suite green.
-5. **Two tautological accepts tests**, told to him 09-16:
-   `validate_timestamp_format(v) == datetime.fromisoformat(v)` and
-   `validate_velocity(v) == float(v)`. Expected values must be hand-written literals.
-6. **ruff config does not exist in the repo.** `uv run ruff check .` passes while his editor
-   extension fires BLE001/T100. Told him 09-16; fix before CI. `select = [...]` in
-   `pyproject.toml`, `B` and `C4` both earning their keep already.
-7. **`parse_lines` findings from 09-16, his to act on:** `lines[0]` on an `Iterable[str]` (mypy
-   flags it), read before the `headers_count` check, `IndexError` on an empty file, stale
-   `"was missing data"` log string, `test_incorrect_column_counts` missing `-> None`, `""` absent
-   from every reject table.
-8. **Multi-error collection**, still his next design piece. `validate_parsed_line` short-circuits
-   on argument evaluation. When it lands, the test's expected shape goes from `line -> error` to
-   `line -> {errors}` — line 363 carries three faults.
-9. **Smaller, all still open:** no `from` outside the field validators; trailing `\n` in messages;
-   `NotANumberError("", ...)` empty first arg; `UnknownError`/`UnrecognizedError` never raised;
-   `build_report -> dict` untyped and untested; magic-number limits vs injected thresholds;
-   `-Infinity`; swapped-pair semantics; `readlines()`.
-10. **Stage order, still open (his).** Last hint given: is "first" an earlier pass or earlier in
-    the same iteration? Don't go further unless stuck 30+ min.
-11. Rest of week 2: `pdb` (not yet used deliberately), CI, README, splitting
-    `test_validations.py` into parser/validator/pipeline files.
-12. **Boss Fight #1:** target Sun Sep 20, spill into week 3 allowed. Strictly hands-off. **If the
-    week runs short, slip README and CI, not this.**
+1. **Log hours:** run `date` at the opener.
+2. **Multi-error collection. The only Friday item.** Parked mid-design; his own estimate is 30–45
+   min of thinking and coding. He's circling a `field → validator` map iterated over `ParsedLine`.
+   Four things put to him, none answered — don't answer them for him:
+   - import direction: validator already imports parser, so parser → validator closes the
+     textbook-07 cycle
+   - does the map belong to the data or to the validating stage
+   - it fits the four field validators but **not** the relational order check, which needs a valid
+     timestamp before it can run at all
+   - `Reading(...)` short-circuits on left-to-right **argument evaluation** — so that function can
+     no longer be one expression. **The return type is the design.**
+3. **Then stop.** If Friday's item overruns, it goes to week 3 too. Saturday is the fight.
+4. **Boss Fight #1, Sat Sep 19.** Strictly hands-off, rubber-duck only. Rules in
+   [telemetry.md](ta-notes/telemetry.md). Spill into week 3 allowed.
+
+## Open, his, not blocking the fight
+
+- **No `py.typed` marker** in the package, so his annotations are invisible to mypy from outside
+  the source tree. Found 09-17. Packaging, so it matters for the fight.
+- `validate_timestamp_order` **returns `True`** — a constant, so the accepts test asserts nothing.
+  Every other validator returns the parsed value. Told him 09-17.
+- **conftest runs the pipeline twice**: `sample_parsed_lines` and `sample_bad_readings` each call
+  `get_parsed_lines_and_bad_readings` and discard half, so the partition test compares two
+  independent runs. Passes by determinism, not construction. Told him 09-17.
+- **`robot_id` has no validator at all.** Noticed 09-17, not raised with him.
+- Every fixture is the sample file; no small hand-made inputs. `parse_lines` has no test for empty
+  or headerless input.
+- Smaller, still open: `list(lines)[0]` materialises the whole iterable; trailing `\n` in messages;
+  `NotANumberError("", ...)` empty first arg; `UnknownError`/`UnrecognizedError` never raised;
+  `build_report -> dict` untyped and untested; magic-number limits vs injected thresholds (and the
+  same `20`/`60` duplicated in conftest); `-Infinity`; `readlines()`.
+- **Customer questions still unanswered**, in §8 of the requirements doc: can columns be reordered;
+  should a swapped pair flag both rows. His to ask.
+- Done since 09-16: ruff config landed (`select = ["E4","E7","E9","F","B","C4"]`), stale
+  `"was missing data"` log string gone, `validate_timestamp_order` has three unit tests.
 
 ## Standing instructions
 

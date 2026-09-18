@@ -15,6 +15,7 @@
 20260914 1637 - 1829 (1.75 hours -- functional core/imperative shell split; first real assertion in the test suite; textbook 09)
 20260915 1706 - 1901 (1.9 hours -- exception taxonomy: base class, per-field error types; customer spec for valid ranges; textbook 10)
 20260916 1614 - 1840 (2.4 hours -- test suite: parametrized accepts/rejects tables, defect set by line number; ColumnCountError; ruff B/C4; textbook 11 and 12)
+20260917 1903 - 2119 (2.0 hours -- accepts-side partition tests found silent data loss in parse_lines; timestamp-order stage rewritten, validate_robot_timestamps deleted; suite green at 37; customer requirements doc; textbook 13 and 14; 15 min phone excluded)
 
 ### Estimated Task Times
 

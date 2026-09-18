@@ -2,7 +2,7 @@
 
 Single source of truth. Update every Sunday.
 
-**Started:** Wed 2026 Sep 9   **Current week:** 2   **Hours logged:** 20.05
+**Started:** Wed 2026 Sep 9   **Current week:** 2   **Hours logged:** 22.05
 
 ---
 

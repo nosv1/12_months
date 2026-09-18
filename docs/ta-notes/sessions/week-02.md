@@ -222,3 +222,96 @@ a spec call and his tests now lock it in.
 Ended at "askl;dfjas; im past my time limit" — one-word-reply territory, parked the accepts-side
 assertion for tomorrow. Suite closed at **1 failed, 28 passed**, the failure being the deliberate
 235/238 red.
+
+---
+
+## 2026-09-17 (Thu) 1903–2119, 2.0 h (15 min phone excluded) — accepts side, and the timestamp rewrite
+
+Opened with a schedule question, not code: he wants to **start Boss Fight #1 on Saturday Sep 19**
+rather than Sunday, worried the week won't fit. Told him yes, and that ta-notes item 12 already
+said how to pay for it — slip README and CI, not the fight. Plan given: Thursday for the attribution
+red plus the accepts side, Friday for multi-error collection, hard stop Friday night. Cut into week
+3: README, CI, `pdb`, splitting `test_validations.py`, ruff config, and all of the item-9 smalls.
+
+1. **Wrote [docs/telemetry-requirements.md](../../telemetry-requirements.md)** — the customer spec as
+   a standalone contract, requirements only, no design and no defect list. It's the permitted input
+   for the fight; the README can't be, because Architecture and Design decisions sit right below the
+   ranges table. He asked for the customer voice and explicitly asked me to **hold the project-manager
+   voice until needed** — he's playing PM himself for now. Honour that.
+2. **I repeated a stale note and he caught it.** Said the ranges weren't in the README; they are, since
+   `6d86f4e`. The claim came from telemetry.md and I didn't verify it. Note corrected. Verify before
+   advising applies to my own notes, not just his "done".
+3. **Fixture name mismatch.** `pytest ./` gave `fixture 'telemetry_lines' not found`; he read the
+   trailing `use 'pytest --fixtures'` hint as "conftest wasn't discovered" and believed pytest strips
+   a `sample_` prefix. No such rule — exact-name lookup, `@pytest.fixture(name=...)` the only
+   indirection. Taught conftest discovery and directory scope, and **ERROR vs FAILED**: the suite read
+   `31 passed, 2 errors`, which is 31 right and 2 *unknown* — the attribution red wasn't running at
+   all. [Textbook 13](../../textbook/13-fixture-resolution-and-reading-errors.md).
+4. **The accepts side, his, and it paid immediately.** He raised the right objection himself
+   (rows ≠ errors, so a length comparison counts the wrong thing) and the right second one ("no way
+   in hell am I listing every line number besides the errored ones"). Restated the partition
+   invariant — nothing vanishes, nothing is on both sides — and warned against deriving the expected
+   set from the output under test. He built it as a set of line numbers with `.remove()`.
+5. **Found silent data loss in the happy path.** `if i < headers_count: continue` in `parse_lines` —
+   `headers_count` counts **columns** (5), used as a count of **header rows to skip**. Header plus
+   the first four valid data rows discarded before validation. Analysis ran on 349 rows instead of
+   353, report looked healthy, and **all 29 rejects tests passed** because nothing was wrongly
+   rejected — the rows were never considered. Gave him the direction (five missing, contiguous from
+   line 1, four of them good data, go read the top of that loop); he found it himself and fixed it.
+6. **`Reading` had no `line_number`** and he spotted why that was correct, not a hole — provenance is
+   a fact about a file, not about a robot. Gave the three doors and the week-11 cost. **His call:
+   `line_number` on `Reading` now, revisit at week 11.** Named the tradeoff he was buying: what
+   replaces it later is a *source* identity (file+line → topic+seq → sensor+time), so `int` makes it
+   a rename at every read site.
+7. **`{1,2,3,4,5} == {}`** — no empty-set literal in Python; `{}` is a dict, so `set() == {}` is
+   False and that assertion could never pass. Also flagged `assert found and line_number is not None`
+   (two claims in one, one clause dead) and `--showlocals` as the tool that answers "which item",
+   while noting a set diff makes it unnecessary.
+8. **Reviewed conftest bluntly on request.** Real finding: `sample_parsed_lines` and
+   `sample_bad_readings` each call the pipeline *independently* and discard half, so the partition
+   test compared run A's good rows against run B's bad rows — passing by determinism, not by
+   construction. Landmine: `validate_robot_timestamps` did `del parsed_lines[i]` in place, so
+   `get_validated_robots` mutated the `sample_parsed_lines` fixture. Gap: every fixture is the sample
+   file. He got fixture *scope* right on his own — `sample_known_bad_readings` stayed in test_parser.py.
+9. **I mislabelled that gap and he called it.** I said "no fixture that builds a small hand-made
+   input", then two messages later told him datetime pairs should be parametrize, not a fixture.
+   Real gap, wrong noun — almost none of my three examples wanted a fixture. He asked "why would the
+   datetime pairs be a fixture and not parametrized?" unprompted, which is the right instinct.
+   Fixture = arrange, one value, justified by sharing or expense. Parametrize = the cases.
+10. **He rewrote the timestamp stage and deleted `validate_robot_timestamps` entirely.** Order
+    checking moved into `validate_parsed_line_values`, comparing `readings[-1]` against `readings[-2]`
+    — the previous *accepted* reading — and popping on failure. This closed four items open since
+    09-13 in one change: the double format parse, an unvalidated row used as "previous", the
+    triple-reported malformed timestamp, and the mid-iteration `del`. It also killed the conftest
+    mutation landmine from item 8 for free. **He wrote the three `validate_timestamp_order` unit
+    tests before the rewrite**, as asked on 09-16.
+11. **Verified his `261 → 262` test edit rather than trusting it.** Lines 261/262 are an exact
+    duplicate pair (`uniq -c` = 2), and 238 is the amr-03 row at 14:01:17.040 arriving after a later
+    amr-03 timestamp. Both defects now blame the **second-arriving** row. That consistency is the
+    real result; green is the side effect. **Suite closed at 37 passed, 0 failed.**
+12. **His own best line of the night**, unprompted: *"i had all my tests written for the functions
+    that work, but i need to write the test for the function that is about to work."* Built it out
+    into the coverage table — 29 tests on four pure functions that all worked, zero on the three
+    stateful ones holding every open bug — and the mechanism: a test is cheapest to write where you
+    already know the answer, so coverage flows toward confidence, which maps where bugs *aren't*.
+    [Textbook 14](../../textbook/14-partition-invariants-and-where-tests-go.md).
+13. **`type[Exception]` vs `Exception`.** He tried annotating `expected_error` and got
+    `No overload variant of "raises" matches argument type "Exception"`. Reproduced it. Explained
+    instance-vs-class, why the message names `BaseException` (pytest's TypeVar is bound to it, since
+    `SystemExit`/`KeyboardInterrupt` aren't `Exception` subclasses), and recommended
+    `type[TelemetryException]` — verified clean, and tight enough that a stray `ValueError` in a
+    param table becomes a type error. **New finding:** mypy also reports the package has **no
+    `py.typed` marker**, so his own annotations are invisible from outside the source tree. Packaging,
+    so it matters for Saturday.
+14. **Multi-error collection — parked mid-design, his estimate 30–45 min more.** He's circling a
+    `field → validator` map iterated over `ParsedLine`. Gave mechanics (`dataclasses.fields()`,
+    `vars()`, explicit tuples; the `_IDX` class attrs aren't fields since they're unannotated) and
+    four questions, no answers: the import direction (validator already imports parser, so
+    parser → validator closes the textbook-07 cycle); whether the map belongs to the data or the
+    stage; that the map fits four field validators but not the relational order check, which needs a
+    valid timestamp first; and the structural one — `Reading(...)` short-circuits on left-to-right
+    **argument evaluation**, so collecting all errors means that function can no longer be one
+    expression. **The return type is the design.** `robot_id` has no validator at all; unraised.
+
+Ended cleanly, not in one-word territory — "going to keep rolling tho, even tho it's getting passed
+time limit", then paused on his own call with an estimate attached. Good sign.
