@@ -4,6 +4,7 @@ import logging
 import math
 from collections.abc import Iterable
 from datetime import datetime
+from typing import Literal
 
 from telemetry.exceptions import (
     BatteryNotANumberError,
@@ -36,12 +37,16 @@ def validate_timestamp_format(timestamp_str: str) -> datetime:
         raise TimestampFormatError(timestamp_str) from ve
 
 
-def validate_timestamp_order(timestamp: datetime, prev_timestamp: datetime) -> None:
+def validate_timestamp_order(
+    timestamp: datetime, prev_timestamp: datetime
+) -> Literal[True]:
     if timestamp < prev_timestamp:
         raise TimestampOutOfOrderError(timestamp, prev_timestamp)
 
     if timestamp == prev_timestamp:
         raise TimestampIdenticalError(timestamp)
+
+    return True
 
 
 def validate_float(float_str: str) -> float:
