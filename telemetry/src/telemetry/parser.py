@@ -51,9 +51,9 @@ def parse_lines(lines: Iterable[str]) -> tuple[list[ParsedLine], list[BadReading
         return parsed_lines, bad_readings
 
     header_parts = list(lines)[0].split(",")
-    headers_count = len(header_parts)
     for i, line in enumerate(lines):
-        if i < headers_count:
+        # customer verified every file will have one header line
+        if i < 1:
             continue
         line_number = i + 1
         try:
