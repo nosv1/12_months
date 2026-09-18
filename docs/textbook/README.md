@@ -32,6 +32,7 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 12 | [`raise X from Y`, and letting a linter teach you](12-exception-chaining-and-lint-rulesets.md) | 2 | Bugbear's B904 acted on backwards, and an editor linting rules the terminal had never heard of |
 | 13 | [Fixture resolution, and reading a pytest error from the top](13-fixture-resolution-and-reading-errors.md) | 2 | A fixture name mismatch read as a missing `conftest.py`, and two tests that errored instead of failing |
 | 14 | [Partition invariants, and where tests actually go](14-partition-invariants-and-where-tests-go.md) | 2 | 29 green tests that never looked at the 353 good rows, and a column count used as a row count |
+| 15 | [Testing void functions, and noticing what you hold fixed](15-void-functions-and-what-you-hold-fixed.md) | 2 | `assert None`, mypy's `func-returns-value`, and four commits that ended where they started |
 
 ---
 

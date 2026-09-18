@@ -78,7 +78,7 @@ He reads these notes too. Write them so that's fine.
   `NotANumberError("", ...)` empty first arg; `UnknownError`/`UnrecognizedError` never raised;
   `build_report -> dict` untyped and untested; magic-number limits vs injected thresholds (and the
   same `20`/`60` duplicated in conftest); `-Infinity`; `readlines()`.
-- **Customer questions still unanswered**, in §8 of the requirements doc: can columns be reordered;
+- **Customer questions still unanswered**, in §9 of the requirements doc: can columns be reordered;
   should a swapped pair flag both rows. His to ask.
 - Done since 09-16: ruff config landed (`select = ["E4","E7","E9","F","B","C4"]`), stale
   `"was missing data"` log string gone, `validate_timestamp_order` has three unit tests.

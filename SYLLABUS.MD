@@ -114,6 +114,8 @@ you've misread this part.
 
 ### Week 2 — Testing, structure, and a real deliverable
 
+- [ ] **Project setup from an empty directory, unaided** — `uv init`, `pyproject.toml`,
+      `src/` layout, `__init__.py`, `py.typed`, editable install, a console script on the path
 - [ ] `pytest`: fixtures, parametrize, what's worth testing
 - [ ] Debugging with `pdb` / debugger — not print statements
 - [ ] Separating I/O from logic (why it makes things testable)

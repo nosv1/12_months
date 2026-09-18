@@ -90,6 +90,13 @@ Handling *new* columns gracefully is explicitly not required yet, but don't buil
 makes it impossible. (TA note: deriving the count fixes appended columns and turns *inserted*
 columns from a loud failure into silent field-shifting corruption. He was told; his call.)
 
+**Answered 2026-09-18, how it is run** (§8 of the requirements doc, new): the ops box at end of
+shift, not his laptop and not from inside the source tree; whoever is on shift types one command and
+passes it a file. So it installs and installing puts a command on the path — no venv activation, no
+`PYTHONPATH`, no "cd here first". Deliberately says nothing about *which* build tool. Added at his
+request so the fight's only permitted input actually covers the packaging half of the test; the
+matching syllabus week-2 checklist item went in the same commit.
+
 Remaining candidate requirements questions: can columns be reordered; should a swapped pair flag
 both rows.
 
@@ -108,15 +115,23 @@ practice — but the boss fight is a rebuild, so skim past if you want it cold.*
 `ERR`. By design: amr-02 battery drops to ~16%, amr-03 overheats to ~66 °C, amr-01 parks (v=0)
 ~12 s. Cross-robot timestamps interleave — normal.
 
-Verified output (week 1 and again after the week-2 redesign): bad rows per robot
-`{unknown: 1, amr-01: 2, amr-02: 2, amr-03: 3}` = all 8.
+Verified output (week 1, and again after the week-2 redesign): bad rows per robot
+`{unknown: 1, amr-01: 2, amr-02: 2, amr-03: 3}` = all 8. Superseded twice since — see the two
+additions below; current is 10 rows / 12 errors.
+
+**Added 2026-09-18 by him, line 2** (edited in place, no renumbering):
+`2026--03T14:00:00.016Z` — a malformed timestamp, closing the `# no timestamp format error?` gap in
+his own `sample_known_bad_readings` fixture. It is amr-01's *first* row, so it also exercises the
+order-check seed: amr-01's earliest *accepted* reading is now its second row, and no order check
+runs until its third. **Bad rows are now 10, errors 12.** Verified 09-18:
+`{unknown: 1, amr-01: 4, amr-02: 2, amr-03: 3}`.
 
 **Added 2026-09-15 at his request, line 363** (appended, so nothing renumbers):
 `2026-09-03T14:02:00.018Z,amr-01,4.812,118.4,-41.0` — velocity, battery *and* temperature all out
 of range in one row. Timestamp is valid and correctly ordered, so it is purely a value-fault row.
-Three faults, not two: two would let "collect the first two" pass. **Bad rows are now 9, but total
-errors are 11** — those numbers diverging is what proves the errors field is a list. Every other
-planted defect is single-fault, so the sample alone could never have tested multi-error collection. The swapped pair only flags the
+Three faults, not two: two would let "collect the first two" pass. Rows and errors diverging (see
+above) is what proves the errors field is a list — every other planted defect is single-fault, so the
+sample alone could never have tested multi-error collection. The swapped pair only flags the
 *second-arriving* row — legitimate requirements question if he asks.
 
 ## Boss Fight #1 — rules as stated to him (2026-09-12)

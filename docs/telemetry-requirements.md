@@ -151,7 +151,22 @@ say the count was zero, but don't hand us a token our parser dies on.
 The report needs, per robot: its warnings, and its rejected rows. Plus the rejected rows that
 couldn't be attributed to any robot, and the unrecognized-failure count.
 
-## 8. Not yet specified
+## 8. How we run it
+
+We run this at the end of a shift, on the ops box — not on your laptop, and not from inside your
+source tree. Whoever is on shift types one command, points it at the file, and gets the report.
+They are not going to activate a virtual environment, set `PYTHONPATH`, or remember which
+directory to stand in.
+
+So: it installs, and installing it puts a command on the path. Install it, type its name, hand it a
+file. If the answer to "how do I run it" is "cd into this folder and run python on that file", that
+doesn't work for us.
+
+Nothing here is about which tool you use to build it. That's yours.
+
+*Asked and answered 2026-09-18.*
+
+## 9. Not yet specified
 
 Ask us before assuming an answer to these. We haven't decided, and a wrong guess is cheaper to fix
 now than after it ships.
