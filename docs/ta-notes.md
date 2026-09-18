@@ -92,6 +92,8 @@ He reads these notes too. Write them so that's fine.
 - **Commits I make are authored as Claude** (`--author="Claude <noreply@anthropic.com>"`). Don't
   sweep his uncommitted edits into my commits.
 - **Verify before advising** — his "done" and my own summaries both. Run it.
+- **Never approximate a time.** Run `date`, every time. Said "~18:50" when it was 18:44 and burned
+  six minutes of his evening on paper. He is pacing against these numbers. Told me 09-18.
 - **Reformat any markdown freely**, his READMEs included. Formatting only; keep his wording.
 - **`scratchpad.md` is background, not a prompt.** Read at session start; don't raise entries
   unprompted. Discuss when he asks.
