@@ -5,6 +5,7 @@ from telemetry.exceptions import (
     BatteryOutOfRangeError,
     ColumnCountError,
     TemperatureOutOfRangeError,
+    TimestampFormatError,
     TimestampIdenticalError,
     TimestampOutOfOrderError,
     VelocityNotANumberError,
@@ -20,7 +21,7 @@ from telemetry.telemetry_warning import TelemetryWarning
 @pytest.fixture
 def sample_known_bad_readings() -> set[tuple[int, str]]:
     known_bad_readings: set[tuple[int, str]] = {
-        # no timestamp format error?
+        (2, TimestampFormatError.__name__),
         (39, VelocityWasNaNError.__name__),
         (97, BatteryNotANumberError.__name__),
         (142, BatteryOutOfRangeError.__name__),
