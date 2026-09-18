@@ -70,7 +70,7 @@ def test_timestamp_format_rejects(
     ],
 )
 def test_timestamp_order_accepts(timestamp: datetime, prev_timestamp: datetime) -> None:
-    assert validate_timestamp_order(timestamp, prev_timestamp) == None
+    assert validate_timestamp_order(timestamp, prev_timestamp) is None
 
 
 @pytest.mark.parametrize(
