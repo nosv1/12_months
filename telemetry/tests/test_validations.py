@@ -44,7 +44,7 @@ def test_incorrect_column_counts(value, expected_error):
 
 ###   TIMESTAMP   ###
 @pytest.mark.parametrize("value", [pytest.param("2026-09-03T14:00:00.016Z")])
-def test_timestamp_format_accepts(value) -> None:
+def test_timestamp_format_accepts(value: str) -> None:
     assert validate_timestamp_format(value) == datetime(
         2026, 9, 3, 14, 0, 0, 16000, tzinfo=timezone.utc
     )
@@ -53,7 +53,9 @@ def test_timestamp_format_accepts(value) -> None:
 @pytest.mark.parametrize(
     "value, expected_error", [("2060903T14:00:00.016Z", TimestampFormatError)]
 )
-def test_timestamp_format_rejects(value, expected_error) -> None:
+def test_timestamp_format_rejects(
+    value: str, expected_error: type[TelemetryException]
+) -> None:
     with pytest.raises(expected_error):
         validate_timestamp_format(value)
 
@@ -106,7 +108,7 @@ def test_timestamp_order_rejects(
         pytest.param("0.0", 0.0, id="zero"),
     ],
 )
-def test_velocity_accepts(value, expected) -> None:
+def test_velocity_accepts(value: str, expected: float) -> None:
     assert validate_velocity(value) == expected
 
 
@@ -121,7 +123,7 @@ def test_velocity_accepts(value, expected) -> None:
         ("nan", VelocityWasNaNError),
     ],
 )
-def test_velocity_rejects(value, expected_error) -> None:
+def test_velocity_rejects(value: str, expected_error: type[TelemetryException]) -> None:
     with pytest.raises(expected_error):
         validate_velocity(value)
 
@@ -137,7 +139,7 @@ def test_velocity_rejects(value, expected_error) -> None:
         pytest.param("50", 50.0, id="fifty"),
     ],
 )
-def test_battery_accepts(value, expected) -> None:
+def test_battery_accepts(value: str, expected: float) -> None:
     assert validate_battery(value) == expected
 
 
@@ -152,7 +154,7 @@ def test_battery_accepts(value, expected) -> None:
         ("nan", BatteryWasNaNError),
     ],
 )
-def test_battery_rejects(value, expected_error) -> None:
+def test_battery_rejects(value: str, expected_error: type[TelemetryException]) -> None:
     with pytest.raises(expected_error):
         validate_battery(value)
 
@@ -168,7 +170,7 @@ def test_battery_rejects(value, expected_error) -> None:
         pytest.param("0.0", 0.0, id="zero"),
     ],
 )
-def test_temperature_accepts(value, expected) -> None:
+def test_temperature_accepts(value: str, expected: float) -> None:
     assert validate_temperature(value) == expected
 
 
@@ -183,6 +185,8 @@ def test_temperature_accepts(value, expected) -> None:
         ("nan", TemperatureWasNaNError),
     ],
 )
-def test_temperature_rejects(value, expected_error) -> None:
+def test_temperature_rejects(
+    value: str, expected_error: type[TelemetryException]
+) -> None:
     with pytest.raises(expected_error):
         validate_temperature(value)
