@@ -27,7 +27,7 @@ def sample_defined_warnings() -> list[TelemetryWarning]:
 @pytest.fixture
 def sample_telemetry_lines() -> list[str]:
     file_dir = Path(__file__).resolve().parent
-    data_dir = file_dir / "../data"
+    data_dir = file_dir / ".." / "data"
     telemetry_file_path = data_dir / "sample_telemetry.csv"
     telemetry_lines = read_file(telemetry_file_path)
     return telemetry_lines
