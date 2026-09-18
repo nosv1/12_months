@@ -7,10 +7,13 @@ from telemetry.exceptions import (
     BatteryOutOfRangeError,
     BatteryWasNaNError,
     ColumnCountError,
+    TelemetryException,
     TemperatureNotANumberError,
     TemperatureOutOfRangeError,
     TemperatureWasNaNError,
     TimestampFormatError,
+    TimestampIdenticalError,
+    TimestampOutOfOrderError,
     VelocityNotANumberError,
     VelocityOutOfRangeError,
     VelocityWasNaNError,
@@ -20,6 +23,7 @@ from telemetry.validator import (
     validate_battery,
     validate_temperature,
     validate_timestamp_format,
+    validate_timestamp_order,
     validate_velocity,
 )
 
@@ -52,6 +56,43 @@ def test_timestamp_format_accepts(value) -> None:
 def test_timestamp_format_rejects(value, expected_error) -> None:
     with pytest.raises(expected_error):
         validate_timestamp_format(value)
+
+
+@pytest.mark.parametrize(
+    "timestamp, prev_timestamp",
+    [
+        (
+            datetime(2026, 9, 3, 14, 0, 0, 16000, tzinfo=timezone.utc),
+            datetime(2026, 9, 3, 14, 0, 0, 15000, tzinfo=timezone.utc),
+        )
+    ],
+)
+def test_timestamp_order_accepts(timestamp: datetime, prev_timestamp: datetime) -> None:
+    assert validate_timestamp_order(timestamp, prev_timestamp)
+
+
+@pytest.mark.parametrize(
+    "timestamp, prev_timestamp, expected_error",
+    [
+        (
+            datetime(2026, 9, 3, 14, 0, 0, 16000, tzinfo=timezone.utc),
+            datetime(2026, 9, 3, 14, 0, 0, 17000, tzinfo=timezone.utc),
+            TimestampOutOfOrderError,
+        ),
+        (
+            datetime(2026, 9, 3, 14, 0, 0, 16000, tzinfo=timezone.utc),
+            datetime(2026, 9, 3, 14, 0, 0, 16000, tzinfo=timezone.utc),
+            TimestampIdenticalError,
+        ),
+    ],
+)
+def test_timestamp_order_rejects(
+    timestamp: datetime,
+    prev_timestamp: datetime,
+    expected_error: type[TelemetryException],
+) -> None:
+    with pytest.raises(expected_error):
+        validate_timestamp_order(timestamp, prev_timestamp)
 
 
 ###   VELOCITY   ###

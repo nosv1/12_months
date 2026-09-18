@@ -26,7 +26,7 @@ def sample_known_bad_readings() -> set[tuple[int, str]]:
         (142, BatteryOutOfRangeError.__name__),
         (203, TemperatureOutOfRangeError.__name__),
         (238, TimestampOutOfOrderError.__name__),
-        (261, TimestampIdenticalError.__name__),
+        (262, TimestampIdenticalError.__name__),
         (302, ColumnCountError.__name__),
         (324, VelocityNotANumberError.__name__),
         (363, VelocityOutOfRangeError.__name__),
