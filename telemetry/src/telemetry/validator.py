@@ -125,46 +125,17 @@ def validate_parsed_line_values(
 
         except TelemetryException as te:
             bad_readings.append(handle_telemetry_exception(parsed_line, te))
+            continue
+
+        try:
+            if len(readings) > 1:
+                validate_timestamp_order(readings[-1].timestamp, readings[-2].timestamp)
+
+        except TelemetryException as te:
+            readings.pop()
+            bad_readings.append(handle_telemetry_exception(parsed_line, te))
 
     return readings, bad_readings
-
-
-def validate_robot_timestamps(
-    parsed_lines: list[ParsedLine],
-) -> tuple[list[ParsedLine], list[BadReading]]:
-    bad_readings: list[BadReading] = []
-    i = len(parsed_lines) - 1
-    while i > 0:
-        parsed_line = parsed_lines[i]
-        prev_parsed_line = parsed_lines[i - 1]
-        try:
-            valid_timestamp = False
-            valid_prev_timestamp = False
-            try:
-                timestamp = validate_timestamp_format(parsed_line.timestamp_str)
-                valid_timestamp = True
-            except TimestampFormatError as te:
-                bad_readings.append(handle_telemetry_exception(parsed_line, te))
-
-            try:
-                prev_timestamp = validate_timestamp_format(
-                    prev_parsed_line.timestamp_str
-                )
-                valid_prev_timestamp = True
-            except TimestampFormatError as te:
-                bad_readings.append(handle_telemetry_exception(prev_parsed_line, te))
-
-            if valid_timestamp and valid_prev_timestamp:
-                validate_timestamp_order(timestamp, prev_timestamp)
-
-        except (TimestampOutOfOrderError, TimestampIdenticalError) as te:
-            bad_readings.append(handle_telemetry_exception(prev_parsed_line, te))
-
-        if bad_readings and bad_readings[-1].line_number == parsed_line.line_number:
-            del parsed_lines[i]
-        i -= 1
-
-    return parsed_lines, bad_readings
 
 
 def validate_parsed_robots(
@@ -173,13 +144,7 @@ def validate_parsed_robots(
     robots_dict: dict[str, Robot] = {}
     for robot_id, parsed_lines in parsed_robots.items():
         robot = Robot(robot_id)
-        validated_timestamp_lines, robot.bad_readings = validate_robot_timestamps(
-            parsed_lines
-        )
-
-        robot.readings, new_bad_readings = validate_parsed_line_values(
-            validated_timestamp_lines
-        )
+        robot.readings, new_bad_readings = validate_parsed_line_values(parsed_lines)
         robot.bad_readings += new_bad_readings
         robots_dict[robot_id] = robot
 
