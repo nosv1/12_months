@@ -93,9 +93,10 @@ columns from a loud failure into silent field-shifting corruption. He was told; 
 Remaining candidate requirements questions: can columns be reordered; should a swapped pair flag
 both rows.
 
-**These ranges are not yet in `telemetry/README.md`** — left to him, since the README is his. Boss
-Fight #1 rebuilds from the spec and the sample file, so if they only live in `validator.py` he'll
-re-invent them during the fight.
+**The ranges and warn thresholds are in `telemetry/README.md`** (his, `6d86f4e`). But the README
+also carries the stage pipeline and the design-decisions section, so it is *not* readable during
+Boss Fight #1. The permitted input is [docs/telemetry-requirements.md](../telemetry-requirements.md)
+— requirements only, customer voice, no design and no defect list. Extracted 2026-09-17.
 
 ### Spoilers: the planted defects
 
