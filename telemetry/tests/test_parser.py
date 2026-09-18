@@ -1,8 +1,5 @@
-from pathlib import Path
-
 import pytest
 
-from telemetry.analysis import Analysis
 from telemetry.exceptions import (
     BatteryNotANumberError,
     BatteryOutOfRangeError,
@@ -15,29 +12,13 @@ from telemetry.exceptions import (
     VelocityWasNaNError,
 )
 from telemetry.pipeline import analyze_telemetry
-from telemetry.reader import read_file
-from telemetry.telemetry_warning import BatteryWarning, TemperatureWarning
-
-### ANALYSIS
+from telemetry.reading import BadReading
+from telemetry.robot import Robot
+from telemetry.telemetry_warning import TelemetryWarning
 
 
 @pytest.fixture
-def sample_analysis() -> Analysis:
-    file_dir = Path(__file__).resolve().parent
-    data_dir = file_dir / "../data"
-    telemetry_file_path = data_dir / "sample_telemetry.csv"
-    telemetry_lines = read_file(telemetry_file_path)
-
-    defined_warnings = [
-        BatteryWarning(min_battery=20),
-        TemperatureWarning(max_temperature=60),
-    ]
-
-    analysis = analyze_telemetry(telemetry_lines, defined_warnings)
-    return analysis
-
-
-def test_all_defects_caught(sample_analysis: Analysis) -> None:
+def sample_known_bad_readings() -> set[tuple[int, str]]:
     known_bad_readings: set[tuple[int, str]] = {
         # no timestamp format error?
         (39, VelocityWasNaNError.__name__),
@@ -50,6 +31,16 @@ def test_all_defects_caught(sample_analysis: Analysis) -> None:
         (324, VelocityNotANumberError.__name__),
         (363, VelocityOutOfRangeError.__name__),
     }
+    return known_bad_readings
+
+
+def test_all_defects_caught(
+    sample_telemetry_lines: list[str],
+    sample_defined_warnings: list[TelemetryWarning],
+    sample_known_bad_readings: set[tuple[int, str]],
+) -> None:
+
+    sample_analysis = analyze_telemetry(sample_telemetry_lines, sample_defined_warnings)
     found_bad_readings: set[tuple[int, str]] = set()
 
     for ra in sample_analysis.robot_analyses.values():
@@ -58,8 +49,37 @@ def test_all_defects_caught(sample_analysis: Analysis) -> None:
     for br in sample_analysis.bad_readings:
         found_bad_readings.add((br.line_number, br.exception.__class__.__name__))
 
-    assert found_bad_readings == known_bad_readings
+    assert found_bad_readings == sample_known_bad_readings
 
 
-def test_all_valid_lines_found(sample_analysis: Analysis) -> None:
-    pass
+def test_all_valid_lines_found(
+    sample_known_bad_readings: set[tuple[int, str]],
+    sample_validated_robots: dict[str, Robot],
+) -> None:
+    known_bad_line_numbers = {br[0] for br in sample_known_bad_readings}
+    for validated_robot in sample_validated_robots.values():
+        for reading in validated_robot.readings:
+            assert reading.line_number not in known_bad_line_numbers
+
+
+def test_all_line_numbers_accounted_for(
+    sample_telemetry_lines: list[str],
+    sample_validated_robots: dict[str, Robot],
+    sample_bad_readings: list[BadReading],
+) -> None:
+    # each file will have 1 header line, so our range of line numbers is 2:len(lines)
+    line_numbers = {ln + 1 for ln in range(1, len(sample_telemetry_lines))}
+    assert len(line_numbers) == len(sample_telemetry_lines) - 1
+    assert 2 in line_numbers and len(sample_telemetry_lines) in line_numbers
+
+    for validated_robot in sample_validated_robots.values():
+        for reading in validated_robot.readings:
+            line_numbers.remove(reading.line_number)
+
+        for bad_reading in validated_robot.bad_readings:
+            line_numbers.remove(bad_reading.line_number)
+
+    for bad_reading in sample_bad_readings:
+        line_numbers.remove(bad_reading.line_number)
+
+    assert line_numbers == set()

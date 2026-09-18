@@ -8,12 +8,14 @@ from telemetry.exceptions import TelemetryException
 class Reading:
     def __init__(
         self,
+        line_number: int,
         robot_id: str,
         timestamp: datetime,
         velocity: float,
         battery: float,
         temperature: float,
     ):
+        self.line_number = line_number
         self.robot_id = robot_id
         self.timestamp = timestamp
         self.velocity = velocity  # m/s

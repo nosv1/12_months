@@ -98,6 +98,7 @@ def validate_temperature(temperature_str: str) -> float:
 
 def validate_parsed_line(parsed_line: ParsedLine) -> Reading:
     return Reading(
+        line_number=parsed_line.line_number,
         robot_id=parsed_line.robot_id,
         timestamp=validate_timestamp_format(parsed_line.timestamp_str),
         velocity=validate_velocity(parsed_line.velocity_str),
