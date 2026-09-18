@@ -30,6 +30,7 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 10 | [Exception taxonomies: base classes, blind excepts, and where to fail loud](10-exception-taxonomies.md) | 2 | A registry that never matched, a blind `except` hiding dead NaN detection, and a `del` that stopped running |
 | 11 | [Writing tests: what a test claims, and why counting isn't one](11-writing-tests.md) | 2 | `assert 9 == 8`, a tautological accepts test, and a count that balanced while the wrong rows were blamed |
 | 12 | [`raise X from Y`, and letting a linter teach you](12-exception-chaining-and-lint-rulesets.md) | 2 | Bugbear's B904 acted on backwards, and an editor linting rules the terminal had never heard of |
+| 13 | [Fixture resolution, and reading a pytest error from the top](13-fixture-resolution-and-reading-errors.md) | 2 | A fixture name mismatch read as a missing `conftest.py`, and two tests that errored instead of failing |
 
 ---
 
