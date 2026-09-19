@@ -2,8 +2,14 @@ from pathlib import Path
 
 import pytest
 
-from telemetry_boss_fight.parser import ParsedLine, parse_header, parse_line
+from telemetry_boss_fight.parser import (
+    ParsedLine,
+    parse_header,
+    parse_line,
+    parse_telemetry_lines,
+)
 from telemetry_boss_fight.reader import read_telemetry_file
+from telemetry_boss_fight.rejected_reading import RejectedReading
 
 
 @pytest.fixture
@@ -47,11 +53,31 @@ def sample_line() -> str:
 
 
 @pytest.fixture
-def sample_parsed_line(
-    sample_line: list[str], sample_header_parts: list[str]
-) -> ParsedLine:
+def sample_parsed_line(sample_line: str, sample_header_parts: list[str]) -> ParsedLine:
     return ParsedLine(
-        1,
-        sample_line,
-        {sample_header_parts[i]: v for i, v in enumerate(parse_line(sample_line))},
+        line_number=1,
+        original_line=sample_line,
+        line_parts=parse_line(sample_line, sample_header_parts),
+        header_parts=sample_header_parts,
     )
+
+
+@pytest.fixture
+def sample_parsed_lines(
+    sample_telemetry_lines: list[str],
+) -> list[ParsedLine]:
+    parsed_lines, _rejected_readings = parse_telemetry_lines(sample_telemetry_lines)
+    return parsed_lines
+
+
+@pytest.fixture
+def sample_rejected_readings(
+    sample_telemetry_lines: list[str],
+) -> list[RejectedReading]:
+    _parsed_lines, rejected_readings = parse_telemetry_lines(sample_telemetry_lines)
+    return rejected_readings
+
+
+@pytest.fixture
+def sample_known_robot_ids() -> set[str]:
+    return {"amr-01", "amr-02", "amr-03"}

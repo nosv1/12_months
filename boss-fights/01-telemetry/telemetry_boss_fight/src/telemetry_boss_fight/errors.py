@@ -13,7 +13,7 @@ class InconsistentHeaderError(TelemetryException):
     def __init__(
         self,
         expected_parts: list[str],
-        actual_parts: str,
+        actual_parts: list[str],
         missing: list[str],
         extra: list[str],
     ) -> None:

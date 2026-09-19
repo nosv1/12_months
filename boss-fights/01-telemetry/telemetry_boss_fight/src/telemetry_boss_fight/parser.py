@@ -1,6 +1,3 @@
-# If the tool hits a failure it doesn't have a category for, put it in an **unrecognized** bucket with a count, and report that count every time — it should always be zero.
-# **Quarantine the row, don't crash.** A
-
 from __future__ import annotations
 
 import logging
@@ -70,7 +67,7 @@ def parse_telemetry_lines(
         return parsed_lines, rejected_readings
 
     for i, line in enumerate(telemetry_lines[1:]):
-        line_number = i + 1
+        line_number = i + 2
 
         try:
             parsed_lines.append(
@@ -86,7 +83,5 @@ def parse_telemetry_lines(
             handle_telemetry_exception(line_number, te)
             rejected_readings.append(RejectedReading(line_number, line, [te]))
             continue
-
-        #######    DO SOMETHING WITH PARSED LINE NOW    #############
 
     return parsed_lines, rejected_readings

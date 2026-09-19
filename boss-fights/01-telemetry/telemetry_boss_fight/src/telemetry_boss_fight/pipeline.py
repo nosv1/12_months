@@ -8,5 +8,5 @@ from telemetry_boss_fight.robot import Robot
 
 def pipeline(telemetry_path: Path) -> dict[str, Robot]:
     telemetry_lines = read_telemetry_file(telemetry_path)
-    parsed_lines, rejected_readings = parse_telemetry_lines(telemetry_lines)
-    parsed_robots = group_parsed_lines_by_robot(parsed_lines)
+    parsed_lines, _rejected_readings = parse_telemetry_lines(telemetry_lines)
+    _parsed_robots = group_parsed_lines_by_robot(parsed_lines)
