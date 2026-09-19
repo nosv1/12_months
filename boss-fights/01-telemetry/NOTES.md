@@ -52,8 +52,10 @@ layout, `__init__.py`, `py.typed`, a console script on the path — and the test
 Fill this in as you go — especially what went wrong.
 
 **Estimated:**
+6h
 
 **Started:**
+7:10
 
 **Stopped:**
 
