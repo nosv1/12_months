@@ -10,9 +10,9 @@ from telemetry.telemetry_warning import TelemetryWarning
 @dataclass
 class RobotAnalysis:
     # *Output:* average velocity, max temperature, min battery, warnings
-    average_velocity: float | None = 0.0
-    max_temperature: float = -float("inf")
-    min_battery: float = float("inf")
+    average_velocity: float | None = None
+    max_temperature: float | None = None
+    min_battery: float | None = None
     warnings: list[str] = field(default_factory=list)
     bad_readings: list[BadReading] = field(default_factory=list)
 
@@ -38,21 +38,25 @@ def analyze_robot(
     robot_analysis = RobotAnalysis()
     robot_analysis.bad_readings = robot.bad_readings
     sum_velocities: float = 0
+
+    if not robot.readings:
+        return robot_analysis
+
+    running_max_temp = float("-inf")
+    running_min_battery = float("inf")
     for r in robot.readings:
         sum_velocities += r.velocity
-        robot_analysis.max_temperature = max(
-            robot_analysis.max_temperature, r.temperature
-        )
-        robot_analysis.min_battery = min(robot_analysis.min_battery, r.battery)
+        running_max_temp = max(r.temperature, running_max_temp)
+        running_min_battery = min(r.battery, running_min_battery)
 
         for warning in defined_warnings:
             warning_msg = warning.detect_warning(r)
             if warning_msg:
                 robot_analysis.warnings.append(f"{warning_msg}")
 
-    robot_analysis.average_velocity = (
-        (sum_velocities / len(robot.readings)) if robot.readings else None
-    )
+    robot_analysis.max_temperature = running_max_temp
+    robot_analysis.min_battery = running_min_battery
+    robot_analysis.average_velocity = sum_velocities / len(robot.readings)
 
     return robot_analysis
 
