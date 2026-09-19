@@ -25,16 +25,21 @@ class Reading:
 
 class BadReading:
     def __init__(
-        self, line_number: int, unparsed_string: str, exception: TelemetryException
+        self,
+        line_number: int,
+        unparsed_string: str,
+        exceptions: list[TelemetryException],
     ):
         self.line_number = line_number
         self.unparsed_string = unparsed_string
-        self.exception = exception
+        self.exceptions = exceptions
 
     def to_json(self):
         return {
             "line_number": self.line_number,
             "line": self.unparsed_string,
-            "exception": self.exception.__class__.__name__,
-            "error": str(self.exception),
+            "exceptions": [
+                {"exception": e.__class__.__name__, "error": str(e)}
+                for e in self.exceptions
+            ],
         }

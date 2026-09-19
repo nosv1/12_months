@@ -4,7 +4,6 @@ import logging
 import math
 from collections.abc import Iterable
 from datetime import datetime
-from typing import Literal
 
 from telemetry.exceptions import (
     BatteryNotANumberError,
@@ -96,22 +95,53 @@ def validate_temperature(temperature_str: str) -> float:
     return value
 
 
-def validate_parsed_line(parsed_line: ParsedLine) -> Reading:
+def validate_parsed_line(parsed_line: ParsedLine) -> Reading | list[TelemetryException]:
+
+    exceptions: list[TelemetryException] = []
+    try:
+        timestamp = validate_timestamp_format(parsed_line.timestamp_str)
+    except TelemetryException as te:
+        exceptions.append(te)
+
+    try:
+        velocity = validate_velocity(parsed_line.velocity_str)
+    except TelemetryException as te:
+        exceptions.append(te)
+
+    try:
+        battery = validate_battery(parsed_line.battery_str)
+    except TelemetryException as te:
+        exceptions.append(te)
+
+    try:
+        temperature = validate_temperature(parsed_line.temperature_str)
+    except TelemetryException as te:
+        exceptions.append(te)
+
+    if len(exceptions) > 0:
+        return exceptions
+
     return Reading(
         line_number=parsed_line.line_number,
         robot_id=parsed_line.robot_id,
-        timestamp=validate_timestamp_format(parsed_line.timestamp_str),
-        velocity=validate_velocity(parsed_line.velocity_str),
-        battery=validate_battery(parsed_line.battery_str),
-        temperature=validate_temperature(parsed_line.temperature_str),
+        timestamp=timestamp,
+        velocity=velocity,
+        battery=battery,
+        temperature=temperature,
     )
 
 
 def handle_telemetry_exception(
-    parsed_line: ParsedLine, te: TelemetryException
+    parsed_line: ParsedLine, telemetry_exceptions: list[TelemetryException]
 ) -> BadReading:
-    logger.warning("Line %d had an exception - %s", parsed_line.line_number, str(te))
-    return BadReading(parsed_line.line_number, parsed_line.original_line, te)
+    logger.warning(
+        "Line %d had a/an exception(s) - %s",
+        parsed_line.line_number,
+        ",".join([str(te) for te in telemetry_exceptions]),
+    )
+    return BadReading(
+        parsed_line.line_number, parsed_line.original_line, telemetry_exceptions
+    )
 
 
 def validate_parsed_line_values(
@@ -120,11 +150,17 @@ def validate_parsed_line_values(
     readings: list[Reading] = []
     bad_readings: list[BadReading] = []
     for parsed_line in parsed_lines:
-        try:
-            readings.append(validate_parsed_line(parsed_line))
+        reading_or_exceptions: Reading | list[TelemetryException] = (
+            validate_parsed_line(parsed_line)
+        )
 
-        except TelemetryException as te:
-            bad_readings.append(handle_telemetry_exception(parsed_line, te))
+        if isinstance(reading_or_exceptions, Reading):
+            readings.append(reading_or_exceptions)
+
+        elif type(reading_or_exceptions) is list:
+            bad_readings.append(
+                handle_telemetry_exception(parsed_line, reading_or_exceptions)
+            )
             continue
 
         try:
@@ -133,7 +169,7 @@ def validate_parsed_line_values(
 
         except TelemetryException as te:
             readings.pop()
-            bad_readings.append(handle_telemetry_exception(parsed_line, te))
+            bad_readings.append(handle_telemetry_exception(parsed_line, [te]))
 
     return readings, bad_readings
 

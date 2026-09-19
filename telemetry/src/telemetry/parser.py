@@ -65,7 +65,7 @@ def parse_lines(lines: Iterable[str]) -> tuple[list[ParsedLine], list[BadReading
                 line_number,
                 str(err),
             )
-            bad_readings.append(BadReading(line_number, line, err))
+            bad_readings.append(BadReading(line_number, line, [err]))
             continue
 
     return parsed_lines, bad_readings
