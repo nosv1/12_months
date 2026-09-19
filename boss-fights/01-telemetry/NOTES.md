@@ -57,6 +57,12 @@ Fill this in as you go — especially what went wrong.
 **Started:**
 7:10
 
+**Paused:**
+- 09:22 → _(resume time)_ — away briefly. Status at pause: 7/7 tests green; package imports
+  resolved after the `01_telemetry` → `telemetry_boss_fight` rename. Uncommitted: 8 modified,
+  4 new (`main.py`, `validator.py`, `test/test_parser.py`, `debug.sh`). Open loose end: `data/`
+  sits outside the project root. Elapsed so far: 2h12m.
+
 **Stopped:**
 
 ### What went wrong
