@@ -202,17 +202,20 @@ def test_parsed_line_accepts(sample_valid_parsed_line: ParsedLine) -> None:
 
 
 @pytest.mark.parametrize(
-    "value, expected",
+    "value, expected_exception_type, expected_exception_count",
     [
-        ("2026--03T14:00:00.016Z,amr-01,0.927,95.9,31.2", list[TelemetryException]),
-        ("2026-09-03T14:02:00.018Z,amr-01,4.812,118.4,-41.0", list[TelemetryException]),
+        ("2026--03T14:00:00.016Z,amr-01,0.927,95.9,31.2", TelemetryException, 1),
+        ("2026-09-03T14:02:00.018Z,amr-01,4.812,118.4,-41.0", TelemetryException, 3),
     ],
 )
-def test_parsed_line_rejects(value: str, expected: list[TelemetryException]) -> None:
+def test_parsed_line_rejects(
+    value: str, expected_exception_type: type, expected_exception_count: int
+) -> None:
     parts = value.split(",")
     num_columns = len(parts)
     parsed_line = parse_line(value, 2, num_columns)
     readings_or_exceptions = validate_parsed_line(parsed_line)
     assert type(readings_or_exceptions) is list
+    assert len(readings_or_exceptions) == expected_exception_count
     for e in readings_or_exceptions:
-        assert isinstance(e, TelemetryException)
+        assert isinstance(e, expected_exception_type)
