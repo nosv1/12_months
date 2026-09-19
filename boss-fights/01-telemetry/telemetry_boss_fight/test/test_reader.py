@@ -1,8 +1,7 @@
 from pathlib import Path
 
-import pytest
-from telemetry_boss_fight.reader import read_file
+from telemetry_boss_fight.reader import read_telemetry_lines
 
 
 def test_read_file_accepts(sample_telemetry_path: Path) -> list[str]:
-    assert read_file(sample_telemetry_path) is list
+    assert type(read_telemetry_lines(sample_telemetry_path)) is list
