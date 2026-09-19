@@ -22,66 +22,69 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-17 21:19.**
+**Updated 2026-09-18 20:12.**
 
-- Started Wed 2026-09-09. **Week 2 in progress.** **22.05 h logged.** Nominal week 3 (C++) start:
-  Mon Sep 21.
-- **Boss Fight #1 starts Saturday Sep 19**, his call, agreed. To pay for it, README, CI, `pdb`,
-  the `test_validations.py` split and all the cosmetic smalls are **cut into week 3**. Friday is
-  multi-error collection only, hard stop Friday night.
-- **The fight's permitted input is [docs/telemetry-requirements.md](telemetry-requirements.md)**
-  (new, 09-17) — customer voice, requirements only. `telemetry/README.md` is **not** readable during
-  the fight: Architecture and Design decisions sit directly under the ranges table.
-- **Suite is green: 37 passed.** The attribution bug is fixed and the accepts side exists.
-- **He rewrote the timestamp stage and deleted `validate_robot_timestamps`.** Order checking now
-  lives in `validate_parsed_line_values`, comparing against the previous *accepted* reading. That
-  closed the double format parse, the unvalidated "previous" row, the triple-reported malformed
-  timestamp, and the mid-iteration `del` — all in one change.
-- **`Reading` now carries `line_number`.** His call, knowingly: cheap now, revisit at week 11 when
-  readings arrive off a topic and the identity has to be a *source*, not a line.
-- **The accepts side found silent data loss** — `headers_count` (a column count) used as a count of
-  header rows to skip, discarding four valid rows. All 29 rejects tests passed over it.
-- Textbook through [14](textbook/14-partition-invariants-and-where-tests-go.md).
+- Started Wed 2026-09-09. **Week 2.** **24.25 h logged.** Nominal week 3 (C++) start: Mon Sep 21.
+- **Boss Fight #1 starts Saturday Sep 19.** Directory scaffolded at
+  `boss-fights/01-telemetry/NOTES.md` — rules, permitted inputs, and an empty log. No code, by
+  design. **`docs/ta-notes/telemetry.md` is now explicitly out** during the fight: it is a design
+  summary plus the defect list, so it's out for the same reason the README is. Told him 09-18.
+- **Multi-error collection shipped.** `validate_parsed_line -> Reading | list[TelemetryException]`,
+  `BadReading` holds the list, one record per row. **Suite green at 40**, mypy and ruff clean.
+- **He changed course on the record granularity mid-design.** His plan was one `BadReading` per
+  *value*; §6 says one record per row with a list inside. He took the contract's reading — which also
+  left the partition invariant intact.
+- **He dropped "exceptions carry line numbers"** after the import-cycle consequence was named.
+  `exceptions.py` still imports nothing.
+- **`-Infinity` requirements violation found and fixed** (§7). `±inf` seeds now live in loop locals
+  with an early return, so they can't reach the dataclass. Verified with
+  `json.dumps(..., allow_nan=False)`.
+- **Requirements doc gains §8 "How we run it"** (installable, console script on the path) at his
+  request, so the packaging half of the fight has a requirement behind it. "Not yet specified" is now
+  §9. Matching syllabus week-2 checklist item added.
+- Textbook through [16](textbook/16-folds-sentinels-and-where-missing-leaks.md).
 - He asked me to **hold the project-manager voice** — he's playing PM himself. Customer voice on
   request, as before.
 
-## Next session (Friday 09-18 — one item, then stop)
+## Next session (Saturday 09-19 — Boss Fight #1)
 
 1. **Log hours:** run `date` at the opener.
-2. **Multi-error collection. The only Friday item.** Parked mid-design; his own estimate is 30–45
-   min of thinking and coding. He's circling a `field → validator` map iterated over `ParsedLine`.
-   Four things put to him, none answered — don't answer them for him:
-   - import direction: validator already imports parser, so parser → validator closes the
-     textbook-07 cycle
-   - does the map belong to the data or to the validating stage
-   - it fits the four field validators but **not** the relational order check, which needs a valid
-     timestamp before it can run at all
-   - `Reading(...)` short-circuits on left-to-right **argument evaluation** — so that function can
-     no longer be one expression. **The return type is the design.**
-3. **Then stop.** If Friday's item overruns, it goes to week 3 too. Saturday is the fight.
-4. **Boss Fight #1, Sat Sep 19.** Strictly hands-off, rubber-duck only. Rules in
-   [telemetry.md](ta-notes/telemetry.md). Spill into week 3 allowed.
+2. **Strictly hands-off.** Rubber-duck only: questions back, no answers, no architecture, no module
+   names, no "have you considered". Rules in [telemetry.md](ta-notes/telemetry.md) and in the fight's
+   own NOTES.md. **Do not open telemetry.md in his presence** — quoting it leaks the design.
+3. **If he asks me to just write it**, remind him once what the exercise is for, then respect the
+   call.
+4. **Spill into week 3 is allowed.** Cut into week 3 already: README, CI, `pdb`, the
+   `test_validations.py` split, and the cosmetic smalls.
 
 ## Open, his, not blocking the fight
 
-- **No `py.typed` marker** in the package, so his annotations are invisible to mypy from outside
-  the source tree. Found 09-17. Packaging, so it matters for the fight.
-- `validate_timestamp_order` **returns `True`** — a constant, so the accepts test asserts nothing.
-  Every other validator returns the parsed value. Told him 09-17.
+- **No test for the `-Infinity` fix.** The bug is fixed; nothing pins it. Needs a robot with zero
+  valid readings — two lines of input. `json.dumps(report, allow_nan=False)` is the oracle.
+- **`test_parsed_line_rejects` asserts almost nothing**: `len(errors) > 0` and `isinstance(errors[0],
+  TelemetryException)`. Passes with one error, so it does not test the feature it was written for.
+  Two parametrize rows share one `expected` although one row has 1 error and the other has 3. Told
+  him 09-18; the `sample_known_bad_readings` set-comparison is the pattern to copy.
+- **§6's unrecognized-failure count is absent from the report.** Top-level keys are `robots` and
+  `bad_readings` only. Requirements gap, not raised with him yet.
+- **No `py.typed` marker**, so his annotations are invisible to mypy from outside the source tree.
+  Now on the syllabus week-2 checklist and in the fight's scope.
 - **conftest runs the pipeline twice**: `sample_parsed_lines` and `sample_bad_readings` each call
   `get_parsed_lines_and_bad_readings` and discard half, so the partition test compares two
   independent runs. Passes by determinism, not construction. Told him 09-17.
-- **`robot_id` has no validator at all.** Noticed 09-17, not raised with him.
-- Every fixture is the sample file; no small hand-made inputs. `parse_lines` has no test for empty
-  or headerless input.
-- Smaller, still open: `list(lines)[0]` materialises the whole iterable; trailing `\n` in messages;
-  `NotANumberError("", ...)` empty first arg; `UnknownError`/`UnrecognizedError` never raised;
-  `build_report -> dict` untyped and untested; magic-number limits vs injected thresholds (and the
-  same `20`/`60` duplicated in conftest); `-Infinity`; `readlines()`.
-- **Customer questions still unanswered**, in §9 of the requirements doc: can columns be reordered;
-  should a swapped pair flag both rows. His to ask.
-- Done since 09-16: ruff config landed (`select = ["E4","E7","E9","F","B","C4"]`), stale
-  `"was missing data"` log string gone, `validate_timestamp_order` has three unit tests.
+- **`robot_id` has no validator at all.** Noticed 09-17, still not raised.
+- Fixtures: `sample_valid_line` (09-18) is the **first hand-made input** in the suite. The rest are
+  still the sample file. `parse_lines` has no test for empty or headerless input.
+- Smaller, still open: `seed_max_temp` names the running value, not the seed; `list(lines)[0]`
+  materialises the whole iterable; trailing `\n` in messages (arguably correct per §6); `"had a/an
+  exception(s)"` log string; `",".join` with no space; `NotANumberError("", ...)` empty first arg;
+  `UnknownError`/`UnrecognizedError` never raised; `build_report -> dict` untyped and untested;
+  magic-number limits vs injected thresholds (same `20`/`60` duplicated in conftest); `readlines()`;
+  `description = "Add your description here"` still in `pyproject.toml`.
+- **Customer questions still unanswered**, §9: can columns be reordered; should a swapped pair flag
+  both rows. His to ask.
+- Resolved 09-18: `validate_timestamp_order` no longer returns a constant (`a57b142`, his), stray
+  `Literal` import gone, `set_analysis_to_none` gone.
 
 ## Standing instructions
 

@@ -16,6 +16,7 @@
 20260915 1706 - 1901 (1.9 hours -- exception taxonomy: base class, per-field error types; customer spec for valid ranges; textbook 10)
 20260916 1614 - 1840 (2.4 hours -- test suite: parametrized accepts/rejects tables, defect set by line number; ColumnCountError; ruff B/C4; textbook 11 and 12)
 20260917 1903 - 2119 (2.0 hours -- accepts-side partition tests found silent data loss in parse_lines; timestamp-order stage rewritten, validate_robot_timestamps deleted; suite green at 37; customer requirements doc; textbook 13 and 14; 15 min phone excluded)
+20260918 1759 - 2012 (2.2 hours -- multi-error collection shipped: validate_parsed_line returns Reading | list[TelemetryException], BadReading holds the list, suite green at 40; -Infinity requirements violation found and fixed; requirements doc gains §8; textbook 15 and 16)
 
 ### Estimated Task Times
 

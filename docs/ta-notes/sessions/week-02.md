@@ -315,3 +315,80 @@ red plus the accepts side, Friday for multi-error collection, hard stop Friday n
 
 Ended cleanly, not in one-word territory — "going to keep rolling tho, even tho it's getting passed
 time limit", then paused on his own call with an estimate attached. Good sign.
+
+---
+
+## Friday 2026-09-18, 17:59 – 20:12 (2.2 h) — multi-error collection shipped
+
+Opened with *"we have a monster, we've muted my confusing relationship, and we are ready for friday
+night."* Friday had exactly one item on it by his own plan, and it landed.
+
+1. **He proposed two designs and pre-emptively vetoed one of them on my behalf** — "you'd prob get
+   mad at me for that" about `Reading | list[errors]`. Told him to drop that filter: pick on a named
+   property, not on a guess about my preference. He then named the real reason he disliked it
+   (`if type(x) == Reading` is hand-rolled type dispatch) which was a better argument than the one he
+   attributed to me.
+2. **Aggregate-exception design, talked through and abandoned by him.** `MultipleErrorsInLineError`
+   subclassing `TelemetryException` would have cost zero downstream changes; *not* subclassing spends
+   that advantage, because `BadReading.exception` is annotated `TelemetryException`. Named the
+   uncomfortable part: an exception raised one frame down and caught unconditionally one frame up is
+   a return value in a costume — the same fork, moved from the type system into the exception
+   channel. He went back to the union.
+3. **`Literal[True]` detour — 27 minutes, four commits, ended where it started.** `aea7374` had
+   removed `return True`; the accepts test still said `assert validate_timestamp_order(...)`, so the
+   suite was **red at session start** (36/1) despite the last notes saying green. He tried
+   `assert ... is None`, mypy rejected it with `func-returns-value`, and holding the `assert` fixed
+   left only one exit: make the function return something. Reproduced all three variants to confirm
+   mypy rejects both assert forms and accepts the bare call. He committed
+   *"remove the assert and the return True lol"* before I finished writing it up.
+   [Textbook 15](../../textbook/15-void-functions-and-what-you-hold-fixed.md).
+4. **Held the contract on record granularity.** His plan was one `BadReading` per *value*; §6 says
+   one record per row carrying a list. Raised it as the customer before he wrote it — three sibling
+   JSON entries with the same line number is three tickets, which is the exact failure §6 describes.
+   He took the contract's reading immediately ("easy enough"), which also left
+   `test_all_line_numbers_accounted_for` intact instead of breaking it.
+5. **Named the import-cycle consequence, didn't solve it.** He then said exceptions would carry the
+   line number and parsed line. `exceptions.py` imports nothing — it's the leaf — so holding a
+   `ParsedLine` closes a textbook-07 cycle, and the field validators take a `str` and have no line
+   number to give. He dropped the idea and kept `BadReading` as the owner. Only change to
+   `exceptions.py` all evening was a `-> None`.
+6. **`type(x) is Base` vs `isinstance`.** His new rejects test failed on
+   `assert type(errors[0]) is TelemetryException`. Explained identity vs the inheritance chain, and
+   that `type(x) is list` two lines above is legitimate. **Then the more important point:** the test
+   asserts `len > 0` and the base type of element zero, so it passes with one error — it does not
+   test multi-error collection, and both parametrize rows share one `expected` although one row has
+   1 error and the other 3. Pointed at his own `sample_known_bad_readings` set-comparison. Not fixed.
+7. **Found the `-Infinity` violation** (§7) by reading `analysis.py` after he asked how to test JSON
+   output. `±inf` seeds in `RobotAnalysis` defaults survive into the report for a robot with zero
+   valid readings. Reproduced in two lines of input. 40 green tests never saw it — every fixture is
+   the one sample file, and every robot in it has good rows.
+8. **`max(..., default=)` — genuine new knowledge.** "omg, i've been using - and + infinity forever."
+   He then wrote `max(running, r.temperature, default=None)` and hit the overload error; the fix was
+   the *form*, not the annotation. Taught reading mypy's "Possible overload variants" list by finding
+   `default` in each variant. Also had to own using "fold or reduce" as if they were two things —
+   they're synonyms; the real distinction is running-accumulator vs one-call-over-the-sequence.
+   He took the accumulator option and moved the sentinels into loop locals. Verified with
+   `json.dumps(..., allow_nan=False)`.
+   [Textbook 16](../../textbook/16-folds-sentinels-and-where-missing-leaks.md).
+9. **"the amount of close i am, and im not getting it, is gonna ruin me XD"** — answered with the
+   distinction that mattered: he understood `default=` on first contact and missed a calling
+   convention. Conceptual gaps compound, API trivia doesn't. He was also stuck on a *decision*, which
+   is why more effort wasn't helping.
+10. **Told me off for approximating the time** — I said "~18:50" when `date` said 18:44. Added as a
+    standing instruction; he is pacing the evening against these numbers.
+11. **Counted the deliverable at his request:** 661 src + 378 tests + 26 pyproject = 1065 lines. His
+    "1000 or so" guess was dead on, which is worth noting — size intuition is calibrated, time
+    estimates are ~3× out. Used tonight as the evidence against "it'll come down to how fast I can
+    type": ~40 lines of net change, nearly two hours, all of it decisions.
+12. **Copilot for the fight — raised by him, closed by him** ("but it's whatever"). Said once that
+    it's off for the same reason I am, and worse here, since a telemetry CSV parser is squarely in
+    its muscle memory. Didn't labour it.
+13. **Boss-fight prep: told him the highest-value thing was not to rehearse.** Gave him the line —
+    thinking about the session is planning, thinking about the code is the thing being measured — and
+    flagged that `ta-notes/telemetry.md`, which he reads routinely, is a design summary plus the
+    defect list and is therefore out.
+
+Ended by asking me to log hours and scaffold the fight directory, and "good job getting me here."
+Sharp the whole evening, self-corrected twice without prompting ("i know i know it's not 1000 or so
+lines, it's a handful of concepts"), and shipped the item inside his own estimate once the
+`Literal[True]` detour is discounted.
