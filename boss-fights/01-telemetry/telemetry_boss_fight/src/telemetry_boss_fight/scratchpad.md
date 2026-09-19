@@ -1,0 +1,1 @@
+cli -> read file -> parse lines -> group_robots -> validate lines -> analyze -> report

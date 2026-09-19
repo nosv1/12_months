@@ -1,5 +1,5 @@
 [project]
-name = "01-telemetry"
+name = "telemetry-boss-fight"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.scripts]
-01-telemetry = "01_telemetry:main"
+telemetry-boss-fight = "telemetry_boss_fight:cli"
 
 [build-system]
 requires = ["uv_build>=0.12.12,<0.13.0"]
