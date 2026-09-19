@@ -31,6 +31,8 @@ def sample_known_bad_readings() -> set[tuple[int, str]]:
         (302, ColumnCountError.__name__),
         (324, VelocityNotANumberError.__name__),
         (363, VelocityOutOfRangeError.__name__),
+        (363, BatteryOutOfRangeError.__name__),
+        (363, TemperatureOutOfRangeError.__name__),
     }
     return known_bad_readings
 
@@ -42,15 +44,20 @@ def test_all_defects_caught(
 ) -> None:
 
     sample_analysis = analyze_telemetry(sample_telemetry_lines, sample_defined_warnings)
-    found_bad_readings: set[tuple[int, str]] = set()
+    found_exception: set[tuple[int, str]] = set()
 
     for ra in sample_analysis.robot_analyses.values():
-        for br in ra.bad_readings:
-            found_bad_readings.add((br.line_number, br.exception.__class__.__name__))
-    for br in sample_analysis.bad_readings:
-        found_bad_readings.add((br.line_number, br.exception.__class__.__name__))
+        for bad_reading in ra.bad_readings:
+            for exception in bad_reading.exceptions:
+                found_exception.add(
+                    (bad_reading.line_number, exception.__class__.__name__)
+                )
 
-    assert found_bad_readings == sample_known_bad_readings
+    for bad_reading in sample_analysis.bad_readings:
+        for exception in bad_reading.exceptions:
+            found_exception.add((bad_reading.line_number, exception.__class__.__name__))
+
+    assert found_exception == sample_known_bad_readings
 
 
 def test_all_valid_lines_found(

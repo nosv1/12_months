@@ -18,9 +18,11 @@ from telemetry.exceptions import (
     VelocityOutOfRangeError,
     VelocityWasNaNError,
 )
-from telemetry.parser import parse_line
+from telemetry.parser import ParsedLine, parse_line
+from telemetry.reading import Reading
 from telemetry.validator import (
     validate_battery,
+    validate_parsed_line,
     validate_temperature,
     validate_timestamp_format,
     validate_timestamp_order,
@@ -190,3 +192,27 @@ def test_temperature_rejects(
 ) -> None:
     with pytest.raises(expected_error):
         validate_temperature(value)
+
+
+###   PARSED LINE   ###
+
+
+def test_parsed_line_accepts(sample_valid_parsed_line: ParsedLine) -> None:
+    assert type(validate_parsed_line(sample_valid_parsed_line)) is Reading
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        ("2026--03T14:00:00.016Z,amr-01,0.927,95.9,31.2", list[TelemetryException]),
+        ("2026-09-03T14:02:00.018Z,amr-01,4.812,118.4,-41.0", list[TelemetryException]),
+    ],
+)
+def test_parsed_line_rejects(value: str, expected: list[TelemetryException]) -> None:
+    parts = value.split(",")
+    num_columns = len(parts)
+    parsed_line = parse_line(value, 2, num_columns)
+    readings_or_exceptions = validate_parsed_line(parsed_line)
+    assert type(readings_or_exceptions) is list
+    for e in readings_or_exceptions:
+        assert isinstance(e, TelemetryException)

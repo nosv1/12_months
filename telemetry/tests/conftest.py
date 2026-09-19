@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from telemetry.parser import ParsedLine
+from telemetry.parser import ParsedLine, parse_line
 from telemetry.pipeline import get_parsed_lines_and_bad_readings, get_validated_robots
 from telemetry.reader import read_file
 from telemetry.reading import BadReading
@@ -53,3 +53,15 @@ def sample_bad_readings(sample_telemetry_lines: list[str]) -> list[BadReading]:
 def sample_validated_robots(sample_parsed_lines: list[ParsedLine]) -> dict[str, Robot]:
     validated_robots = get_validated_robots(sample_parsed_lines)
     return validated_robots
+
+
+@pytest.fixture
+def sample_valid_line() -> str:
+    return "2026-09-03T14:00:00.026Z,amr-02,1.366,57.7,34.1"
+
+
+@pytest.fixture
+def sample_valid_parsed_line(sample_valid_line: str) -> ParsedLine:
+    parts = sample_valid_line.split(",")
+    num_columns = len(parts)
+    return parse_line(sample_valid_line, 2, num_columns)
