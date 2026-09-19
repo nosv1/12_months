@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.scripts]
-telemetry-boss-fight = "telemetry_boss_fight:cli"
+telemetry_boss_fight = "telemetry_boss_fight:cli"
 
 [build-system]
 requires = ["uv_build>=0.12.12,<0.13.0"]
