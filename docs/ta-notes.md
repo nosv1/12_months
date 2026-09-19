@@ -61,14 +61,11 @@ He reads these notes too. Write them so that's fine.
 
 - **No test for the `-Infinity` fix.** The bug is fixed; nothing pins it. Needs a robot with zero
   valid readings — two lines of input. `json.dumps(report, allow_nan=False)` is the oracle.
-- **`test_parsed_line_rejects` asserts almost nothing**: `len(errors) > 0` and `isinstance(errors[0],
-  TelemetryException)`. Passes with one error, so it does not test the feature it was written for.
-  Two parametrize rows share one `expected` although one row has 1 error and the other has 3. Told
-  him 09-18; the `sample_known_bad_readings` set-comparison is the pattern to copy.
 - **§6's unrecognized-failure count is absent from the report.** Top-level keys are `robots` and
   `bad_readings` only. Requirements gap, not raised with him yet.
-- **No `py.typed` marker**, so his annotations are invisible to mypy from outside the source tree.
-  Now on the syllabus week-2 checklist and in the fight's scope.
+- `test_parsed_line_rejects` now pins the **count** (1 and 3) — verified to fail against a
+  short-circuiting `validate_parsed_line`. Still only checks the *base* type, so three wrong error
+  classes would pass. Naming the classes is the stronger version; told him, not blocking.
 - **conftest runs the pipeline twice**: `sample_parsed_lines` and `sample_bad_readings` each call
   `get_parsed_lines_and_bad_readings` and discard half, so the partition test compares two
   independent runs. Passes by determinism, not construction. Told him 09-17.
@@ -84,7 +81,9 @@ He reads these notes too. Write them so that's fine.
 - **Customer questions still unanswered**, §9: can columns be reordered; should a swapped pair flag
   both rows. His to ask.
 - Resolved 09-18: `validate_timestamp_order` no longer returns a constant (`a57b142`, his), stray
-  `Literal` import gone, `set_analysis_to_none` gone.
+  `Literal` import gone, `set_analysis_to_none` gone. **`py.typed` added and verified** — a consumer
+  outside the tree now gets real type errors instead of `import-untyped`, and `uv build` ships the
+  marker in the wheel without any `pyproject.toml` entry.
 
 ## Standing instructions
 
@@ -93,7 +92,9 @@ He reads these notes too. Write them so that's fine.
   `docs/background-threads/week-NN.md`, bump **Hours logged** in `00-dashboard.md`, commit as
   Claude. No sign-off → ask for the end time next session. Don't guess.
 - **Commits I make are authored as Claude** (`--author="Claude <noreply@anthropic.com>"`). Don't
-  sweep his uncommitted edits into my commits.
+  sweep his uncommitted edits into my commits. **Mechanism: stage explicit paths. Never `git add -A`
+  or `git add .`** — a clean tree at session start is no guarantee it's clean twenty minutes later.
+  Broke this 09-18 (swept his `test_validations.py` into a docs commit); he caught it.
 - **Verify before advising** — his "done" and my own summaries both. Run it.
 - **Never approximate a time.** Run `date`, every time. Said "~18:50" when it was 18:44 and burned
   six minutes of his evening on paper. He is pacing against these numbers. Told me 09-18.
