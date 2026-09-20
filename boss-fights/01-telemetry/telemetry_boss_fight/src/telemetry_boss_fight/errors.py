@@ -6,7 +6,17 @@ class TelemetryException(Exception):
         super().__init__(*args)
 
 
-##########           TEMPERATURE           ##########
+##########           FLOAT           ##########
+
+
+class ValueOutOfRangeError(TelemetryException):
+    def __init__(self, field: str, value: float, range: tuple[float, float]):
+        super().__init__(
+            f"{field}'s value ({value}) was out its range: [{range[0]}, {range[1]}]"
+        )
+
+
+##########           HEADER           ##########
 
 
 class InconsistentHeaderError(TelemetryException):
@@ -42,3 +52,8 @@ class RowColumnCountError(TelemetryException):
 class TemperatureIsNotNumberError(TelemetryException):
     def __init__(self, value_str: str) -> None:
         super().__init__(f"Temperature value is not a number - {value_str}")
+
+
+class TemperatureOutOfRangeError(ValueOutOfRangeError):
+    def __init__(self, field: str, value: float, range: tuple[float, float]):
+        super().__init__(field, value, range)
