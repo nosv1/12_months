@@ -73,6 +73,61 @@ it.** The heterogeneous dict is scaffolding for the loop that builds the record.
 be what the loop returns. Convert at the boundary — parse into the dict, construct the typed record
 from it, and let everything after that see only the record.
 
+### The counter-argument, which is half right
+
+The author's reason for the dict, stated afterwards: *a reading shouldn't know exactly what it is
+carrying other than that it carries a list of fields — `reading.battery` feels too absolute when
+headers could change.*
+
+That is a real design position, and where the column set is genuinely open it wins: a new column
+touches config and one lookup table instead of five modules.
+
+It does not win **here**, and the reason is worth seeing. The column set is not open. Four other
+places already know the fields by name:
+
+- `validate_velocity`, `validate_battery`, `validate_temperature` — named functions per field
+- `EXPECTED_HEADERS` — five members, each with its own type and range
+- `DEFINED_WARNINGS` — battery and temperature, explicitly
+- `validate_header_parts` — **rejects** any unrecognized column as `InconsistentHeaderError`
+
+An unknown column is a hard error, not a passthrough. So a new column cannot arrive without someone
+writing a validator, a range, and a decision about whether it warns. The dict buys flexibility that
+the surrounding design has already spent, and charges a union type for it.
+
+The distinction that resolves it: **open at the edges, closed in the core.** Parsing is the edge —
+iterate the header, look up a validator, stay data-driven. But a row that has been *accepted* has a
+known schema by definition, because it passed a check that enumerates the fields. A typed record
+isn't claiming the columns can never change; it is the record of a row that matched the schema in
+force when it was parsed.
+
+There is also a shape that satisfies both positions, because the union comes from three *types*
+sharing one dict, not from the fields being named:
+
+```python
+timestamp: datetime
+robot_id: str
+values: dict[str, float]   # still header-driven, still generic
+```
+
+`values["battery"]` is a `float` with no narrowing and nothing to fabricate, and a new numeric
+column still touches only config. The two fields kept separate are the two that are structural
+rather than measured — the ones every consumer special-cases anyway.
+
+### The requirement nobody asked about
+
+The stated motivation was "headers could change," traced back to §9: *"Can columns be reordered? We
+have only ever sent them in the order above. We have not promised that."*
+
+That is a question about **order**, not about which columns exist. It was read as a hint to
+generalize over the header set, which is a different and much larger claim — the customer has said
+nothing about adding or removing columns. §9's whole instruction is *"Ask us before assuming an
+answer to these."*
+
+Designing for the unasked version of a requirement is how speculative generality gets in: the cost
+is paid immediately, in a union type and an `isinstance` at every use, while the benefit is
+hypothetical. If the answer comes back "yes, we will add columns," the dict is correct and the
+typed record is the wrong call. **Ask first; the answer changes which design is right.**
+
 ### The rule worth keeping
 
 **Never let a type-narrowing branch invent a value.** When `isinstance` fails, there are exactly two
