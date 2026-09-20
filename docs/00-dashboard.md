@@ -2,7 +2,7 @@
 
 Single source of truth. Update every Sunday.
 
-**Started:** Wed 2026 Sep 9   **Current week:** 2   **Hours logged:** 24.25
+**Started:** Wed 2026 Sep 9   **Current week:** 2   **Hours logged:** 34.75
 
 ---
 
@@ -41,7 +41,7 @@ The real progress metric. Each is a blank-page rebuild — no tutorial, no copyi
 
 | # | Week | Challenge | Passed |
 | --- | --- | --- | --- |
-| 1 | 2 | Rebuild telemetry analyzer from empty dir | ☐ |
+| 1 | 2 | Rebuild telemetry analyzer from empty dir | ◐ |
 | 2 | 7 | Add a sensor type without touching the core | ☐ |
 | 3 | 10 | Drive forward → detect obstacle → stop | ☐ |
 | 4 | 15 | Three-node ROS system, correct interfaces | ☐ |
@@ -54,6 +54,14 @@ The real progress metric. Each is a blank-page rebuild — no tutorial, no copyi
 | 11 | 42 | Policy survives environment change | ☐ |
 | 12 | 45 | System survives a killed component | ☐ |
 | 👑 | 52 | Ambiguous brief, empty repo, one week | ☐ |
+
+**#1, 2026-09-19/20 — built in 9h38m against a 6h estimate, not yet passed.** Rebuilt from an empty
+directory: reader, parser, validator, grouper, report, console script, 38 tests. §1-§6 largely hold,
+including multi-error rows and correct unattributed rejects. Open against the contract: the shipped
+artifact is a stale `uv tool install` copy that prints a dict repr rather than JSON (§8), a bad
+header silently discards the whole file, and the `20`/`60` thresholds still require a source edit
+plus reinstall (§5). Review in
+[boss-fights/01-telemetry/NOTES.md](../boss-fights/01-telemetry/NOTES.md).
 
 ## Deliverables
 

@@ -22,42 +22,49 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-18 20:12.**
+**Updated 2026-09-20 12:14.**
 
-- Started Wed 2026-09-09. **Week 2.** **24.25 h logged.** Nominal week 3 (C++) start: Mon Sep 21.
-- **Boss Fight #1 starts Saturday Sep 19.** Directory scaffolded at
-  `boss-fights/01-telemetry/NOTES.md` — rules, permitted inputs, and an empty log. No code, by
-  design. **`docs/ta-notes/telemetry.md` is now explicitly out** during the fight: it is a design
-  summary plus the defect list, so it's out for the same reason the README is. Told him 09-18.
-- **Multi-error collection shipped.** `validate_parsed_line -> Reading | list[TelemetryException]`,
-  `BadReading` holds the list, one record per row. **Suite green at 40**, mypy and ruff clean.
-- **He changed course on the record granularity mid-design.** His plan was one `BadReading` per
-  *value*; §6 says one record per row with a list inside. He took the contract's reading — which also
-  left the partition invariant intact.
-- **He dropped "exceptions carry line numbers"** after the import-cycle consequence was named.
-  `exceptions.py` still imports nothing.
-- **`-Infinity` requirements violation found and fixed** (§7). `±inf` seeds now live in loop locals
-  with an early return, so they can't reach the dataclass. Verified with
-  `json.dumps(..., allow_nan=False)`.
-- **Requirements doc gains §8 "How we run it"** (installable, console script on the path) at his
-  request, so the packaging half of the fight has a requirement behind it. "Not yet specified" is now
-  §9. Matching syllabus week-2 checklist item added.
-- Textbook through [16](textbook/16-folds-sentinels-and-where-missing-leaks.md).
+- Started Wed 2026-09-09. **Week 2 ends today.** **34.75 h logged.** Week 3 (C++) starts Mon Sep 21;
+  he wants **a light day tomorrow** first.
+- **Boss Fight #1 is over.** Built 09-19 (6h29m) and 09-20 (3h09m) — **9h38m against a 6h
+  estimate, 1.6x**. Backing out ~1h of header work beyond the original scope gives ~1.4x on
+  equivalent scope. That is a different regime from the 3x factor he'd been applying; one data
+  point, not a recalibration.
+- **Dashboard marks it ◐, not passed.** He hasn't been asked to accept or dispute that — it's his
+  call and it's still open.
+- **Fight result:** rebuilt from empty — reader, parser, validator, grouper, robot, report, console
+  script, 38 tests. §1-§6 largely hold: multi-error rows, original line numbers, raw `original_line`,
+  the truncated row correctly unattributed, order-independent header parsing.
+- **Review written into `boss-fights/01-telemetry/NOTES.md`**, six findings, all verified by
+  running the tool. He fixed #1 (robots were anonymous in the report) during the session. **Still
+  open: #2 the installed artifact is a stale `uv tool install` copy printing a dict repr instead of
+  JSON, so §8 currently fails; #3 a bad header silently discards the whole file, exit 0; #4 an empty
+  `robot_id` becomes a robot; #5 `to_json` substitutes `datetime.now()` and `-1` when an isinstance
+  check fails; #6 a missing input file exits with a raw traceback.** Plus §5's `20`/`60` still
+  needing a source edit and reinstall.
+- **Textbook 17 and 18** written at his request — installed artifacts as snapshots, and union-typed
+  fields / who owns exception context. 18 came from two design questions he raised himself, both
+  good.
+- He planned to spend a hypothetical extra day on "the gross bits". Told him I'd reorder that:
+  correctness first, shape sixth. Not re-litigated.
+- **Hands-off held** through the fight, with one slip: read "ty" as "type" and handed him
+  `type[...]` when he'd already thanked me for the hint. Offered to log the assist; he moved on.
 - He asked me to **hold the project-manager voice** — he's playing PM himself. Customer voice on
   request, as before.
+- **`docs/ta-notes/telemetry.md` is back in bounds** now the fight is done.
 
-## Next session (Saturday 09-19 — Boss Fight #1)
+## Next session (Mon 09-21 or whenever he returns — light day)
 
 1. **Log hours:** run `date` at the opener.
-2. **Strictly hands-off.** Rubber-duck only: questions back, no answers, no architecture, no module
-   names, no "have you considered". Rules in [telemetry.md](ta-notes/telemetry.md) and in the fight's
-   own NOTES.md. **Do not open telemetry.md in his presence** — quoting it leaks the design.
-3. **If he asks me to just write it**, remind him once what the exercise is for, then respect the
-   call.
-4. **Spill into week 3 is allowed.** Cut into week 3 already: README, CI, `pdb`, the
-   `test_validations.py` split, and the cosmetic smalls.
+2. **Normal rules resume.** The fight is over; critique, review and explanation are all back on.
+   Still his design, still no implementation code for the week's learning objective.
+3. **A light day has a natural shape:** finish the fight's open findings (#2 and #3 first), or
+   close week 2's spillover (README, CI, the `pdb` item), or start week 3 gently. His pick — don't
+   stack all three.
+4. **Week 3 is C++.** First genuinely new material since the year started, and the first place the
+   confidence gap will show up. Be accurate about difficulty rather than reassuring.
 
-## Open, his, not blocking the fight
+## Open, his — the week-2 `telemetry/` project (not the fight rebuild)
 
 - **No test for the `-Infinity` fix.** The bug is fixed; nothing pins it. Needs a robot with zero
   valid readings — two lines of input. `json.dumps(report, allow_nan=False)` is the oracle.

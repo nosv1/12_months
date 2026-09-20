@@ -34,6 +34,8 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 14 | [Partition invariants, and where tests actually go](14-partition-invariants-and-where-tests-go.md) | 2 | 29 green tests that never looked at the 353 good rows, and a column count used as a row count |
 | 15 | [Testing void functions, and noticing what you hold fixed](15-void-functions-and-what-you-hold-fixed.md) | 2 | `assert None`, mypy's `func-returns-value`, and four commits that ended where they started |
 | 16 | [Folds, sentinel seeds, and where "missing" leaks](16-folds-sentinels-and-where-missing-leaks.md) | 2 | `-Infinity` in the report, and `max(None, 31.2)` refusing to guess |
+| 17 | [Installed artifacts are snapshots](17-installed-artifacts-are-snapshots.md) | 2 | A module named `01_telemetry` that could never be imported, and a `uv tool install` copy that printed a dict repr instead of JSON |
+| 18 | [Union-typed fields, and who owns exception context](18-union-fields-and-who-owns-context.md) | 2 | `else -1` invented a battery reading, and `"unknown"` as a robot id forced a nested `try` to rebuild every error |
 
 ---
 
