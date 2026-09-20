@@ -58,10 +58,17 @@ He reads these notes too. Write them so that's fine.
 1. **Log hours:** run `date` at the opener.
 2. **Normal rules resume.** The fight is over; critique, review and explanation are all back on.
    Still his design, still no implementation code for the week's learning objective.
-3. **A light day has a natural shape:** finish the fight's open findings (#2 and #3 first), or
-   close week 2's spillover (README, CI, the `pdb` item), or start week 3 gently. His pick — don't
-   stack all three.
-4. **Week 3 is C++.** First genuinely new material since the year started, and the first place the
+3. **Plan agreed 09-20 evening: README + CI, both against `telemetry/`.** Decided: CI targets
+   `telemetry/` only, since the fight rebuild is a fixed artifact and CI protects code that still
+   changes. **CI is mine to write** (config, not a learning objective) — scaffold it, he reviews,
+   ~30 min of his time. **The README is his** and is the higher-value half; don't write it.
+   Estimate given: README 45min-1h, CI review 30min.
+4. **He said the fight rebuild "feels like a mess" next to `telemetry/`.** Told him the comparison
+   isn't like-for-like: `telemetry/` is ~24h *with review cycles between sittings*, the fight is
+   9h38m with no review until it ended. The fight's defects are concentrated (parser nesting,
+   triplicated validators, untested report); `telemetry/`'s are spread thinner across more files.
+   Concentrated reads worse and is usually cheaper to fix.
+5. **Week 3 is C++.** First genuinely new material since the year started, and the first place the
    confidence gap will show up. Be accurate about difficulty rather than reassuring.
 
 ## Open, his — the week-2 `telemetry/` project (not the fight rebuild)
