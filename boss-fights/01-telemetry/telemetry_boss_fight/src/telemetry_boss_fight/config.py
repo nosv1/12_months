@@ -1,15 +1,8 @@
 # these are the known header values, not the known header order
-
-from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
 
-
-@dataclass(frozen=True)
-class Header:
-    header: str
-    type: type
-    range: None | tuple[float, float]
+from telemetry_boss_fight.header import Header
 
 
 class EXPECTED_HEADERS(Enum):

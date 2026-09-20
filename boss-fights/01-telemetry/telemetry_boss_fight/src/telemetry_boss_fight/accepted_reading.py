@@ -14,4 +14,9 @@
 # | battery | `0` to `100` % | it's a percentage. |
 # | temperature | `-40` to `150` °C | the rated range of the motor controller's sensor. Outside it, the number means nothing. |
 
+from datetime import datetime
 
+
+class AcceptedReading:
+    def __init__(self, fields: dict[str, datetime | str | float]):
+        self.fields = fields

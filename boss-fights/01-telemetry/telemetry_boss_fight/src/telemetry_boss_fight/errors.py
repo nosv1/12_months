@@ -6,6 +6,11 @@ class TelemetryException(Exception):
         super().__init__(*args)
 
 
+class UnknownError(TelemetryException):
+    def __init__(self, field: str, value_str: str) -> None:
+        super().__init__(f"{field} had an UNKNOWN error caused by '{value_str}'")
+
+
 ##########           FLOAT           ##########
 
 
@@ -14,6 +19,12 @@ class ValueOutOfRangeError(TelemetryException):
         super().__init__(
             f"{field}'s value ({value}) was out its range: [{range[0]}, {range[1]}]"
         )
+
+
+class ValueStrNotANumber(TelemetryException):
+    def __init__(self, field: str, value_str: str):
+        value_str = "[no value]" if len(value_str) == 0 else value_str
+        super().__init__(f"{field}'s was not a number - {value_str}")
 
 
 ##########           HEADER           ##########
@@ -46,12 +57,48 @@ class RowColumnCountError(TelemetryException):
         )
 
 
+##########           TIMESTAMP           ##########
+
+
+class TimestampFormatError(TelemetryException):
+    def __init__(self, timestamp_str: str):
+        super().__init__(
+            f"Timestamp is not in the ISO 8601, UTC format - {timestamp_str}"
+        )
+
+
+##########           VELOCITY           ##########
+
+
+class VelocityIsNotNumberError(ValueStrNotANumber):
+    def __init__(self, field: str, value_str: str) -> None:
+        super().__init__(field, value_str)
+
+
+class VelocityOutOfRangeError(ValueOutOfRangeError):
+    def __init__(self, field: str, value: float, range: tuple[float, float]):
+        super().__init__(field, value, range)
+
+
+##########           BATTERY           ##########
+
+
+class BatteryIsNotNumberError(ValueStrNotANumber):
+    def __init__(self, field: str, value_str: str) -> None:
+        super().__init__(field, value_str)
+
+
+class BatteryOutOfRangeError(ValueOutOfRangeError):
+    def __init__(self, field: str, value: float, range: tuple[float, float]):
+        super().__init__(field, value, range)
+
+
 ##########           TEMPERATURE           ##########
 
 
-class TemperatureIsNotNumberError(TelemetryException):
-    def __init__(self, value_str: str) -> None:
-        super().__init__(f"Temperature value is not a number - {value_str}")
+class TemperatureIsNotNumberError(ValueStrNotANumber):
+    def __init__(self, field: str, value_str: str) -> None:
+        super().__init__(field, value_str)
 
 
 class TemperatureOutOfRangeError(ValueOutOfRangeError):

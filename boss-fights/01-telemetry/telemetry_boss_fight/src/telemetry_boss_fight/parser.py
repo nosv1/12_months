@@ -2,15 +2,18 @@ from __future__ import annotations
 
 import logging
 
+from telemetry_boss_fight.accepted_reading import AcceptedReading
 from telemetry_boss_fight.errors import (
     InconsistentHeaderError,
     RowColumnCountError,
     TelemetryException,
 )
 from telemetry_boss_fight.rejected_reading import RejectedReading
+from telemetry_boss_fight.robot import Robot
 from telemetry_boss_fight.validator import (
     validate_header_parts,
     validate_line_parts_count,
+    validate_parsed_line,
 )
 
 logger = logging.getLogger(__name__)
@@ -85,3 +88,35 @@ def parse_telemetry_lines(
             continue
 
     return parsed_lines, rejected_readings
+
+
+def validate_parsed_robots(
+    parsed_robots: dict[str, list[ParsedLine]],
+) -> dict[str, Robot]:
+    robots: dict[str, Robot] = {}
+
+    for robot_id, parsed_lines in parsed_robots.items():
+        robots[robot_id] = Robot(robot_id, [], [])
+
+        for parsed_line in parsed_lines:
+            accepted_or_rejected_reading = validate_parsed_line(
+                parsed_line.fields,
+                RejectedReading(
+                    line_number=parsed_line.line_number,
+                    original_line=parsed_line.original_line,
+                    errors=[],
+                ),
+            )
+
+            if isinstance(accepted_or_rejected_reading, AcceptedReading):
+                robots[robot_id].accepted_readings.append(accepted_or_rejected_reading)
+
+            else:
+                for err in accepted_or_rejected_reading.errors:
+                    handle_telemetry_exception(parsed_line.line_number, err)
+                robots[robot_id].rejected_readings.append(accepted_or_rejected_reading)
+                continue
+
+            # validate timestamp order
+
+    return robots

@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pytest
 
+from telemetry_boss_fight.grouper import group_parsed_lines_by_robot
 from telemetry_boss_fight.parser import (
     ParsedLine,
     parse_header,
@@ -53,11 +54,30 @@ def sample_line() -> str:
 
 
 @pytest.fixture
+def sample_line_out_of_range_temperature() -> str:
+    return "2026-09-03T14:00:00.026Z,amr-02,1.366,57.7,1234.1"
+
+
+@pytest.fixture
 def sample_parsed_line(sample_line: str, sample_header_parts: list[str]) -> ParsedLine:
     return ParsedLine(
-        line_number=1,
+        line_number=0,
         original_line=sample_line,
         line_parts=parse_line(sample_line, sample_header_parts),
+        header_parts=sample_header_parts,
+    )
+
+
+@pytest.fixture
+def sample_parsed_line_out_of_range_temperature(
+    sample_line_out_of_range_temperature: str, sample_header_parts: list[str]
+) -> ParsedLine:
+    return ParsedLine(
+        line_number=0,
+        original_line=sample_line_out_of_range_temperature,
+        line_parts=parse_line(
+            sample_line_out_of_range_temperature, sample_header_parts
+        ),
         header_parts=sample_header_parts,
     )
 
@@ -71,6 +91,15 @@ def sample_parsed_lines(
 
 
 @pytest.fixture
+def sample_rejected_reading(sample_parsed_line: ParsedLine) -> RejectedReading:
+    return RejectedReading(
+        line_number=sample_parsed_line.line_number,
+        original_line=sample_parsed_line.original_line,
+        errors=[],
+    )
+
+
+@pytest.fixture
 def sample_rejected_readings(
     sample_telemetry_lines: list[str],
 ) -> list[RejectedReading]:
@@ -81,3 +110,10 @@ def sample_rejected_readings(
 @pytest.fixture
 def sample_known_robot_ids() -> set[str]:
     return {"amr-01", "amr-02", "amr-03"}
+
+
+@pytest.fixture
+def sample_grouped_parsed_robots(
+    sample_parsed_lines: list[ParsedLine],
+) -> dict[str, list[ParsedLine]]:
+    return group_parsed_lines_by_robot(sample_parsed_lines)
