@@ -1,7 +1,14 @@
 import pytest
 
-from telemetry_boss_fight.errors import InconsistentHeaderError, RowColumnCountError
+from telemetry_boss_fight.accepted_reading import AcceptedReading
+from telemetry_boss_fight.errors import (
+    InconsistentHeaderError,
+    RowColumnCountError,
+    TelemetryException,
+)
 from telemetry_boss_fight.parser import ParsedLine, parse_header, parse_line
+from telemetry_boss_fight.rejected_reading import RejectedReading
+from telemetry_boss_fight.validator import validate_parsed_line
 
 ##########           HEADER           ##########
 
@@ -43,7 +50,7 @@ def test_parsed_line_accepts(sample_line: str, sample_header_parts: list[str]) -
     ],
 )
 def test_parsed_line_rejects(
-    value: str, expected_error, sample_header_parts: list[str]
+    value: str, expected_error: type[TelemetryException], sample_header_parts: list[str]
 ) -> None:
     with pytest.raises(expected_error):
         parse_line(value, sample_header_parts)
@@ -61,3 +68,28 @@ def test_parser_counts_match_line_counts(sample_telemetry_lines: list[str]) -> N
 
 
 ##########           LINE           ##########
+
+
+def test_validate_parsed_line_accept(
+    sample_parsed_line: ParsedLine, sample_rejected_reading: RejectedReading
+) -> None:
+    assert isinstance(
+        validate_parsed_line(
+            sample_parsed_line.fields,
+            sample_rejected_reading,
+        ),
+        AcceptedReading,
+    )
+
+
+def test_validate_parsed_line_reject(
+    sample_parsed_line_out_of_range_temperature: ParsedLine,
+    sample_rejected_reading: RejectedReading,
+) -> None:
+    assert isinstance(
+        validate_parsed_line(
+            sample_parsed_line_out_of_range_temperature.fields,
+            sample_rejected_reading,
+        ),
+        RejectedReading,
+    )
