@@ -1,12 +1,16 @@
 from __future__ import annotations
 
 import logging
+from datetime import datetime
 
 from telemetry_boss_fight.accepted_reading import AcceptedReading
+from telemetry_boss_fight.config import EXPECTED_HEADERS
 from telemetry_boss_fight.errors import (
     InconsistentHeaderError,
     RowColumnCountError,
     TelemetryException,
+    TimestampIdenticalError,
+    TimestampsOutOfOrderError,
 )
 from telemetry_boss_fight.rejected_reading import RejectedReading
 from telemetry_boss_fight.robot import Robot
@@ -14,6 +18,7 @@ from telemetry_boss_fight.validator import (
     validate_header_parts,
     validate_line_parts_count,
     validate_parsed_line,
+    validate_timestamp_order,
 )
 
 logger = logging.getLogger(__name__)
@@ -99,6 +104,7 @@ def validate_parsed_robots(
         robots[robot_id] = Robot(robot_id, [], [])
 
         for parsed_line in parsed_lines:
+            # VALIDATE PARSED LINE
             accepted_or_rejected_reading = validate_parsed_line(
                 parsed_line.fields,
                 RejectedReading(
@@ -117,6 +123,46 @@ def validate_parsed_robots(
                 robots[robot_id].rejected_readings.append(accepted_or_rejected_reading)
                 continue
 
-            # validate timestamp order
+            # VALIDATE TIMESTAMP ORDER
+            if len(robots[robot_id].accepted_readings) > 1:
+                timestamp = (
+                    robots[robot_id]
+                    .accepted_readings[-1]
+                    .fields[EXPECTED_HEADERS.TIMESTAMP.value.header]
+                )
+                prev_timestamp = (
+                    robots[robot_id]
+                    .accepted_readings[-2]
+                    .fields[EXPECTED_HEADERS.TIMESTAMP.value.header]
+                )
+                if isinstance(timestamp, datetime) and isinstance(
+                    prev_timestamp, datetime
+                ):
+
+                    # i know this is disgusting
+                    try:
+                        try:
+                            validate_timestamp_order(
+                                timestamp=timestamp, prev_timestamp=prev_timestamp
+                            )
+                        except TimestampIdenticalError as err:
+                            raise TimestampIdenticalError(
+                                robot_id, timestamp, prev_timestamp
+                            ) from err
+                        except TimestampsOutOfOrderError as err:
+                            raise TimestampsOutOfOrderError(
+                                robot_id, timestamp, prev_timestamp
+                            ) from err
+                    except (
+                        TimestampIdenticalError,
+                        TimestampsOutOfOrderError,
+                    ) as err:
+                        handle_telemetry_exception(parsed_line.line_number, err)
+                        robots[robot_id].reject_accepted_reading(
+                            parsed_line.line_number, parsed_line.original_line, err
+                        )
+
+                else:
+                    raise TypeError("THE TIMESTAMPS ARE NOT DATETIMES")
 
     return robots

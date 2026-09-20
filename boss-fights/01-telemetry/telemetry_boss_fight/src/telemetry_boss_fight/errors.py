@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import datetime
+
 
 class TelemetryException(Exception):
     def __init__(self, *args) -> None:
@@ -64,6 +66,20 @@ class TimestampFormatError(TelemetryException):
     def __init__(self, timestamp_str: str):
         super().__init__(
             f"Timestamp is not in the ISO 8601, UTC format - {timestamp_str}"
+        )
+
+
+class TimestampsOutOfOrderError(TelemetryException):
+    def __init__(self, robot_id: str, timestamp: datetime, prev_timestamp: datetime):
+        super().__init__(
+            f"{robot_id}'s had a timestamp appear out of order - current: {timestamp}, previous: {prev_timestamp}"
+        )
+
+
+class TimestampIdenticalError(TelemetryException):
+    def __init__(self, robot_id: str, timestamp: datetime, prev_timestamp: datetime):
+        super().__init__(
+            f"{robot_id} had matching timestamps - {timestamp} = {prev_timestamp}"
         )
 
 

@@ -16,6 +16,8 @@ from telemetry_boss_fight.errors import (
     TemperatureIsNotNumberError,
     TemperatureOutOfRangeError,
     TimestampFormatError,
+    TimestampIdenticalError,
+    TimestampsOutOfOrderError,
     UnknownError,
     ValueOutOfRangeError,
     ValueStrNotANumber,
@@ -83,6 +85,14 @@ def validate_timestamp(timestamp_str: str) -> datetime:
 
     except Exception as err:
         raise UnknownError(header.header, timestamp_str) from err
+
+
+def validate_timestamp_order(timestamp: datetime, prev_timestamp: datetime) -> None:
+    if timestamp == prev_timestamp:
+        raise TimestampIdenticalError("unknown", timestamp, prev_timestamp)
+
+    if prev_timestamp > timestamp:
+        raise TimestampsOutOfOrderError("unknown", timestamp, prev_timestamp)
 
 
 ##########           VELOCITY           ##########

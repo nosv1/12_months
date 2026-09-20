@@ -5,6 +5,8 @@ import pytest
 from telemetry_boss_fight.errors import (
     TelemetryException,
     TimestampFormatError,
+    TimestampIdenticalError,
+    TimestampsOutOfOrderError,
     ValueOutOfRangeError,
     ValueStrNotANumber,
 )
@@ -12,6 +14,7 @@ from telemetry_boss_fight.validator import (
     validate_battery,
     validate_temperature,
     validate_timestamp,
+    validate_timestamp_order,
     validate_velocity,
 )
 
@@ -42,6 +45,30 @@ def test_timestamp_format_rejects(
 ) -> None:
     with pytest.raises(expected_error):
         validate_timestamp(value_str)
+
+
+@pytest.mark.parametrize(
+    ("timestamp, prev_timestamp, expected_error"),
+    [
+        (
+            datetime(2026, 9, 3, 14, 0, 0, 26000, tzinfo=UTC),  # current
+            datetime(2026, 9, 3, 15, 0, 0, 26000, tzinfo=UTC),  # previous
+            TimestampsOutOfOrderError,
+        ),
+        (
+            datetime(2026, 9, 3, 14, 0, 0, 26000, tzinfo=UTC),  # current
+            datetime(2026, 9, 3, 14, 0, 0, 26000, tzinfo=UTC),  # previous
+            TimestampIdenticalError,
+        ),
+    ],
+)
+def test_timestamp_order_rejects(
+    timestamp: datetime,
+    prev_timestamp: datetime,
+    expected_error: type[TelemetryException],
+) -> None:
+    with pytest.raises(expected_error):
+        validate_timestamp_order(timestamp, prev_timestamp)
 
 
 ##########           VELOCITY           ##########
