@@ -29,7 +29,7 @@ def generate_report(
 ) -> dict:
     # {robots: [robot: {warnings: [], rejected_readings: []}], rejected_readings: [], unrecognized_failures: 0}
     report: dict = {
-        "robots": [r.to_json(defined_warnings) for r in robots.values()],
+        "robots": [{r.robot_id: r.to_json(defined_warnings) for r in robots.values()}],
         "rejected_readings": [rr.to_json() for rr in rejected_readings],
         "unrecognized_failures": 0,
     }
