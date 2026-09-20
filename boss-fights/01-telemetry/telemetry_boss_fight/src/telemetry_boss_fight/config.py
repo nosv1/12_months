@@ -3,6 +3,11 @@ from datetime import datetime
 from enum import Enum
 
 from telemetry_boss_fight.header import Header
+from telemetry_boss_fight.telemetry_warnings import (
+    BatteryWarning,
+    TelemetryWarning,
+    TemperatureWarning,
+)
 
 
 class EXPECTED_HEADERS(Enum):
@@ -15,3 +20,13 @@ class EXPECTED_HEADERS(Enum):
     @staticmethod
     def as_str_set() -> set[str]:
         return {member.value.header for member in EXPECTED_HEADERS}
+
+
+DEFINED_WARNINGS: list[TelemetryWarning] = [
+    BatteryWarning(
+        field=EXPECTED_HEADERS.BATTERY.value.header, units="%", min_value=20
+    ),
+    TemperatureWarning(
+        field=EXPECTED_HEADERS.TEMPERATURE.value.header, units="C", max_value=60
+    ),
+]
