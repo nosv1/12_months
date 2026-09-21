@@ -16,6 +16,7 @@ He reads these notes too. Write them so that's fine.
 | [ta-notes/observations.md](ta-notes/observations.md) | pushback or confidence conversations; Sunday review |
 | [ta-notes/telemetry.md](ta-notes/telemetry.md) | reviewing telemetry code; answering as the customer; Boss Fight #1 rules |
 | [ta-notes/decisions.md](ta-notes/decisions.md) | before proposing a process, tooling, or convention change |
+| [ta-notes/estimates.md](ta-notes/estimates.md) | giving any time estimate (log it); sign-off (fill actuals); Sunday review (ratios) |
 | [ta-notes/sessions/](ta-notes/sessions/) | a thread from a past session comes back up (`week-NN.md`) |
 
 ---
@@ -115,6 +116,9 @@ He reads these notes too. Write them so that's fine.
 - **Reformat any markdown freely**, his READMEs included. Formatting only; keep his wording.
 - **`scratchpad.md` is background, not a prompt.** Read at session start; don't raise entries
   unprompted. Discuss when he asks.
+- **Log every time estimate** in [ta-notes/estimates.md](ta-notes/estimates.md), his and mine, when
+  given; fill actuals from `date`/commits at sign-off. Never revise an estimate after the fact.
+  Asked for 2026-09-21: my numbers were priors, not measurements of him.
 - **Textbook entry whenever a real lesson is given.**
 - **I play the customer** for telemetry requirements questions — see telemetry.md.
 

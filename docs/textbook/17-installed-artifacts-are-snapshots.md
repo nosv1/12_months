@@ -76,6 +76,35 @@ That property is the whole point of it, and it is exactly what bit here.
 
 ---
 
+## The procedure: ship it, then test what you shipped
+
+The rules above, in the order you actually do them. Added 2026-09-21. The rules alone weren't
+enough to tell him *how* to ship and test the fight.
+
+```bash
+# 1. Ship: from the directory holding pyproject.toml
+uv tool install --reinstall .       # --reinstall: take a fresh snapshot even if one exists
+uv tool list                        # confirm the name and version on the path
+
+# 2. Test as the customer: somewhere else, no venv, command by name, absolute path in
+cd ~
+deactivate 2>/dev/null              # harmless if nothing was active
+which <command>                     # should be ~/.local/bin/<command>, not a .venv path
+<command> /abs/path/to/sample.csv | python3 -m json.tool
+echo "exit: ${PIPESTATUS[0]}"       # the tool's exit code, not json.tool's
+```
+
+**Pass** means `json.tool` pretty-prints the output *and* the tool's exit code is the one the
+requirements specify. A `JSONDecodeError` from `json.tool` means the output isn't JSON, and that's a
+real §7/§8 failure, not a tooling problem.
+
+**Every time the source changes, step 1 runs again before anyone says "it works."** Without that,
+steps 2 onward test an old copy.
+
+To remove it: `uv tool uninstall <name>`. To see where the copy lives: `uv tool dir`.
+
+---
+
 ## Why a smoke test is the real fix
 
 Reinstalling by hand works exactly as long as you remember. The durable version is a test that
