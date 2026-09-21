@@ -36,6 +36,7 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 16 | [Folds, sentinel seeds, and where "missing" leaks](16-folds-sentinels-and-where-missing-leaks.md) | 2 | `-Infinity` in the report, and `max(None, 31.2)` refusing to guess |
 | 17 | [Installed artifacts are snapshots](17-installed-artifacts-are-snapshots.md) | 2 | A module named `01_telemetry` that could never be imported, and a `uv tool install` copy that printed a dict repr instead of JSON |
 | 18 | [Union-typed fields, and who owns exception context](18-union-fields-and-who-owns-context.md) | 2 | `else -1` invented a battery reading, and `"unknown"` as a robot id forced a nested `try` to rebuild every error |
+| 19 | [Debugging with `pdb`: stop the world and look](19-debugging-with-pdb.md) | 2 | A checklist item with no record of use, and `breakpoint()` + `n` as the whole toolkit |
 
 ---
 

@@ -392,3 +392,37 @@ Ended by asking me to log hours and scaffold the fight directory, and "good job 
 Sharp the whole evening, self-corrected twice without prompting ("i know i know it's not 1000 or so
 lines, it's a handful of concepts"), and shipped the item inside his own estimate once the
 `Literal[True]` detour is discounted.
+
+---
+
+## 2026-09-21 (Mon) 17:02–18:44, 1.7 h — week-2 deliverable closed
+
+Calendar week 3, but week-2 work, so it's logged here per the 09-12 decision.
+
+1. **Opened by questioning my estimates:** "idk if you actually have a grasp for time yet." He's
+   right: they were priors, not measurements. Started `ta-notes/estimates.md` (his and mine, kind
+   tags, never revised). Backfill from week 2 was mostly "not recorded". The ~3x factor he'd been
+   applying rested on no written basis.
+2. **Textbook 17 lacked a procedure.** He'd looked for how to ship and test the fight and found only
+   rules. Added a step-by-step procedure section. He pasted it into the README verbatim with
+   `<command>` placeholders, and it didn't fit a tool that writes to a file. Two review rounds
+   fixed it.
+3. **"i want to go fix the existing telemetry code"** partway through the README. Pushed back:
+   README deferred a week already, and documenting code while changing it goes stale. Suggested
+   turning the urge into the "What's next" section. He did, with a good target data-flow diagram of
+   his own.
+4. **README, 62 min.** Second pass was good: real schema, "What broke" section with the circular
+   import and `-Infinity`. He fixed the last three content issues himself after I reformatted.
+   Also removed `matplotlib` and the dead `Robot.plot` unprompted.
+5. **CI:** I wrote it; he reviewed against five questions. #1 (`--fix`) and #5 (Python source)
+   missed, #2 (`--locked`) and #3 (`paths:`) half-right, #4 (editable vs installed) right on the
+   second prompt, in his words: "running what i'd run as a developer, not as a customer."
+   **First run failed on my unverified `setup-uv@v10` tag**; fixed with `@v10.2.0`, green on
+   `e4bf63b`.
+6. **My miss, first:** set him a ship task based on `uv tool list` being empty. He'd already done
+   it on 09-20 and uninstalled after. Checked history, not him, too late.
+7. **Ticks, at his call, Monday:** pytest, pdb, I/O, README, CI. Setup-from-empty left open (no
+   `py.typed` in the fight). On pdb I first said "no record" too definitely; he knows
+   `breakpoint()` + `n` + inspection. Textbook 19 written for the rest.
+
+Called it "nice easy day". Upbeat throughout; "woo! green check!"

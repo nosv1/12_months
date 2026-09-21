@@ -20,6 +20,7 @@
 20260919 0710 - 1710 (6.5 hours -- Boss Fight #1 day 1: uv init, package rename after 01_telemetry proved un-importable, reader/parser/validator/grouper/robot modules, 38-test suite under way; 3h20m away excluded)
 20260920 0815 - 1124 (3.15 hours -- Boss Fight #1 day 2: report module, console script installed and run outside the source tree (§8), fight stopped at 9h38m total against a 6h estimate)
 20260920 1124 - 1214 (0.85 hours -- post-fight review against §1-§9: six findings incl. anonymous robots in the report and a stale uv tool install emitting a dict repr; robot_id fix; textbook 17 and 18)
+20260921 1702 - 1844 (1.7 hours -- week-2 deliverable closed: telemetry/ README rewritten against the code, CI green on GitHub Actions (ruff, mypy, pytest, sample run); estimates log started; textbook 19)
 
 ### Estimated Task Times
 

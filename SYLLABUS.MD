@@ -116,11 +116,11 @@ you've misread this part.
 
 - [ ] **Project setup from an empty directory, unaided** — `uv init`, `pyproject.toml`,
       `src/` layout, `__init__.py`, `py.typed`, editable install, a console script on the path
-- [ ] `pytest`: fixtures, parametrize, what's worth testing
-- [ ] Debugging with `pdb` / debugger — not print statements
-- [ ] Separating I/O from logic (why it makes things testable)
-- [ ] README writing
-- [ ] A CI run on GitHub Actions
+- [x] `pytest`: fixtures, parametrize, what's worth testing
+- [x] Debugging with `pdb` / debugger — not print statements
+- [x] Separating I/O from logic (why it makes things testable)
+- [x] README writing
+- [x] A CI run on GitHub Actions
 
 ### Deliverable — Telemetry Toolkit
 

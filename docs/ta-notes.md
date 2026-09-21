@@ -23,54 +23,38 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-20 12:14.**
+**Updated 2026-09-21 18:44.**
 
-- Started Wed 2026-09-09. **Week 2 ends today.** **34.75 h logged.** Week 3 (C++) starts Mon Sep 21;
-  he wants **a light day tomorrow** first.
-- **Boss Fight #1 is over.** Built 09-19 (6h29m) and 09-20 (3h09m) — **9h38m against a 6h
-  estimate, 1.6x**. Backing out ~1h of header work beyond the original scope gives ~1.4x on
-  equivalent scope. That is a different regime from the 3x factor he'd been applying; one data
-  point, not a recalibration.
-- **Dashboard marks it ◐, not passed.** He hasn't been asked to accept or dispute that — it's his
-  call and it's still open.
-- **Fight result:** rebuilt from empty — reader, parser, validator, grouper, robot, report, console
-  script, 38 tests. §1-§6 largely hold: multi-error rows, original line numbers, raw `original_line`,
-  the truncated row correctly unattributed, order-independent header parsing.
-- **Review written into `boss-fights/01-telemetry/NOTES.md`**, six findings, all verified by
-  running the tool. He fixed #1 (robots were anonymous in the report) during the session. **Still
-  open: #2 the installed artifact is a stale `uv tool install` copy printing a dict repr instead of
-  JSON, so §8 currently fails; #3 a bad header silently discards the whole file, exit 0; #4 an empty
-  `robot_id` becomes a robot; #5 `to_json` substitutes `datetime.now()` and `-1` when an isinstance
-  check fails; #6 a missing input file exits with a raw traceback.** Plus §5's `20`/`60` still
-  needing a source edit and reinstall.
-- **Textbook 17 and 18** written at his request — installed artifacts as snapshots, and union-typed
-  fields / who owns exception context. 18 came from two design questions he raised himself, both
-  good.
-- He planned to spend a hypothetical extra day on "the gross bits". Told him I'd reorder that:
-  correctness first, shape sixth. Not re-litigated.
-- **Hands-off held** through the fight, with one slip: read "ty" as "type" and handed him
-  `type[...]` when he'd already thanked me for the hint. Offered to log the assist; he moved on.
-- He asked me to **hold the project-manager voice** — he's playing PM himself. Customer voice on
-  request, as before.
-- **`docs/ta-notes/telemetry.md` is back in bounds** now the fight is done.
+- Started Wed 2026-09-09. **36.45 h logged.** Calendar week 3 began today; the evening went on
+  closing week 2's deliverable, as planned. **Week 3 (C++) starts next session.**
+- **Week-2 deliverable closed 09-21.** `telemetry/` README rewritten by him against the code over two
+  review rounds (62 min). CI (`.github/workflows/telemetry.yml`, mine) green on GitHub Actions:
+  `uv sync --locked`, ruff (no `--fix`), mypy, pytest, one sample run. He answered four of five
+  review questions; #4 (editable vs installed) he got on the second prompt, cleanly.
+- **Syllabus ticks — at his call, Monday rather than Sunday:** pytest, pdb, I/O separation, README,
+  CI. **Left open: "project setup from empty, unaided"**, because the fight has no `py.typed`. His
+  debugger use is his account (`breakpoint()` + `n` + inspecting); textbook 19 covers `s`/`w`/`u`,
+  `pytest --pdb`, and conditional breakpoints. First real use of `--pdb` will be worth noting.
+- **Estimates log started** at his request: [ta-notes/estimates.md](ta-notes/estimates.md). Tonight:
+  README 1.2x mine / 2.1x his; CI review 0.6x mine. Too few entries to conclude anything.
+- **Boss Fight #1 still ◐ on the dashboard**; he hasn't accepted or disputed it. Fight finding #2
+  (stale artifact): he reinstalled, checked the output and uninstalled on 09-20 (his account, shell
+  history agrees). #3–#6 open in `boss-fights/01-telemetry/NOTES.md`.
+- **Two misses of mine tonight, same shape:** gave him a ship task he'd already done (checked
+  `uv tool list`, not history), and pinned `setup-uv@v10`, a tag that doesn't exist, which failed
+  CI's first run. Both came from checking something *near* the fact instead of the fact itself.
 
-## Next session (Mon 09-21 or whenever he returns — light day)
+## Next session
 
-1. **Log hours:** run `date` at the opener.
-2. **Normal rules resume.** The fight is over; critique, review and explanation are all back on.
-   Still his design, still no implementation code for the week's learning objective.
-3. **Plan agreed 09-20 evening: README + CI, both against `telemetry/`.** Decided: CI targets
-   `telemetry/` only, since the fight rebuild is a fixed artifact and CI protects code that still
-   changes. **CI is mine to write** (config, not a learning objective) — scaffold it, he reviews,
-   ~30 min of his time. **The README is his** and is the higher-value half; don't write it.
-   Estimate given: README 45min-1h, CI review 30min.
-4. **He said the fight rebuild "feels like a mess" next to `telemetry/`.** Told him the comparison
-   isn't like-for-like: `telemetry/` is ~24h *with review cycles between sittings*, the fight is
-   9h38m with no review until it ended. The fight's defects are concentrated (parser nesting,
-   triplicated validators, untested report); `telemetry/`'s are spread thinner across more files.
-   Concentrated reads worse and is usually cheaper to fix.
-5. **Week 3 is C++.** First genuinely new material since the year started, and the first place the
-   confidence gap will show up. Be accurate about difficulty rather than reassuring.
+1. **Log hours:** run `date` at the opener. Log any estimate given in `estimates.md`.
+2. **Optional, ~10 min of his:** add the customer step to CI (`uv tool install .`, `cd` out, run
+   `telemetry` by name, `json.tool` the written `output.json`). Offered; he may prefer to start C++.
+3. **Week 3 is C++.** First genuinely new material of the year, and the first place the
+   confidence gap will show up. Be accurate about difficulty rather than reassuring. He called
+   `#include` "kinda wild" — feed that (`g++ -E`, the link stage). `gdb` maps straight onto
+   textbook 19's pdb vocabulary.
+4. He wants to fix `telemetry/` with ideas from the fight. His README's "What's next" section holds
+   that list now. Don't let it eat C++ time, but don't block it either.
 
 ## Open, his — the week-2 `telemetry/` project (not the fight rebuild)
 
@@ -91,8 +75,9 @@ He reads these notes too. Write them so that's fine.
   materialises the whole iterable; trailing `\n` in messages (arguably correct per §6); `"had a/an
   exception(s)"` log string; `",".join` with no space; `NotANumberError("", ...)` empty first arg;
   `UnknownError`/`UnrecognizedError` never raised; `build_report -> dict` untyped and untested;
-  magic-number limits vs injected thresholds (same `20`/`60` duplicated in conftest); `readlines()`;
-  `description = "Add your description here"` still in `pyproject.toml`.
+  magic-number limits vs injected thresholds (same `20`/`60` duplicated in conftest); `readlines()`.
+  Resolved 09-21: `pyproject.toml` description filled in; `matplotlib` and the
+  dead `Robot.plot` removed.
 - **Customer questions still unanswered**, §9: can columns be reordered; should a swapped pair flag
   both rows. His to ask.
 - Resolved 09-18: `validate_timestamp_order` no longer returns a constant (`a57b142`, his), stray
