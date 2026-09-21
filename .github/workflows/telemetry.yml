@@ -1,0 +1,40 @@
+# CI for telemetry/: the same checks as debug.sh, minus the prompts and minus --fix.
+# CI reports problems; it never edits code.
+name: telemetry
+
+on:
+  push:
+    paths:
+      - "telemetry/**"
+      - ".github/workflows/telemetry.yml"
+  pull_request:
+    paths:
+      - "telemetry/**"
+      - ".github/workflows/telemetry.yml"
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: telemetry
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@v10
+        # Python comes from telemetry/.python-version; uv installs it.
+
+      - name: Install (locked)
+        run: uv sync --locked    # fail if uv.lock is out of date with pyproject.toml
+
+      - name: ruff
+        run: uv run ruff check
+
+      - name: mypy
+        run: uv run mypy ./ --check-untyped-defs
+
+      - name: pytest
+        run: uv run pytest
+
+      - name: Run on the sample data
+        run: uv run telemetry data/sample_telemetry.csv "$RUNNER_TEMP/report"
