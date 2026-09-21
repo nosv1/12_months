@@ -31,7 +31,7 @@ into measurements.
 | wk 2 | README | prose | 0.5h | — | 62 min (done 09-21) | 2.1x | Same task as the 09-20 row below. |
 | 09-20 | `telemetry/` README he'd hand a new teammate | prose | — | 45–60 min | 62 min (17:08–18:10, 09-21) | 1.2x | Also closes his wk-2 README row: 0.5h → 62 min, 2.1x. Included two review rounds from me. |
 | 09-20 | Review my CI scaffold for `telemetry/` | review | — | 30 min | | | |
-| 09-21 | Fight artifact shipped: installed tool's output parses as JSON from `~`, snapshot demo done | ops | — | 15 min | not started | — | He went to the README instead. Still open. |
+| 09-21 | Fight artifact shipped: installed tool's output parses as JSON from `~`, snapshot demo done | ops | — | 15 min | done before the estimate, untimed | — | Estimate was void: he'd already reinstalled after textbook 17 (09-20), checked the output in `less`, then uninstalled (shell history). I checked `uv tool list` and not history, so I gave him a task he'd already done. Snapshot demo (step 3) not done. |
 
 ## Ratios by kind
 
