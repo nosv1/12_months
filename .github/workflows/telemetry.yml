@@ -38,3 +38,18 @@ jobs:
 
       - name: Run on the sample data
         run: uv run telemetry data/sample_telemetry.csv "$RUNNER_TEMP/report"
+
+      # Everything above tests the source tree through the dev venv (an editable install).
+      # §8 is about the installed artifact, so install it and run it the way ops would.
+      - name: Install as a tool
+        run: |
+          uv tool install .
+          echo "$(uv tool dir --bin)" >> "$GITHUB_PATH"   # on PATH for the steps below
+
+      - name: Run as the customer
+        working-directory: ${{ runner.temp }}   # outside the repo, no venv
+        run: |
+          which telemetry
+          telemetry "$GITHUB_WORKSPACE/telemetry/data/sample_telemetry.csv" customer-report
+          # Strict parse: json.tool and json.loads both accept -Infinity/NaN, which §7's dashboard doesn't.
+          python3 -c "import json, sys; json.load(open(sys.argv[1]), parse_constant=lambda c: sys.exit(f'not valid JSON: {c}'))" customer-report/output.json
