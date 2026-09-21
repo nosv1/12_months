@@ -27,10 +27,10 @@ into measurements.
 | 09-17 | Multi-error collection shipped | code-change | 30–45 min | — | within estimate | ~1x | Per 09-18 session notes, once the 27-min `Literal[True]` detour is discounted. Commits 19:37–20:11 (34 min). |
 | 09-19 | Boss Fight #1: §1–§8 from empty | code-new | 6h (earlier "4–6h or maybe 2h") | — | 9h38m | 1.6x | ~1h of header work beyond original scope; ~1.4x on like-for-like. |
 | wk 2 | I/O separation | code-change | 1h | — | not recorded | — | Date given not recorded. Happened (textbook 09, 09-14) but not timed separately. |
-| wk 2 | CI, once there's something worth running | ops | 1h | — | not started | — | Carried into week 3; now mine to scaffold. |
+| wk 2 | CI, once there's something worth running | ops | 1h | — | green 09-21 | — | Not comparable: I wrote the config, he reviewed. See the 09-20 review row. |
 | wk 2 | README | prose | 0.5h | — | 62 min (done 09-21) | 2.1x | Same task as the 09-20 row below. |
 | 09-20 | `telemetry/` README he'd hand a new teammate | prose | — | 45–60 min | 62 min (17:08–18:10, 09-21) | 1.2x | Also closes his wk-2 README row: 0.5h → 62 min, 2.1x. Included two review rounds from me. |
-| 09-20 | Review my CI scaffold for `telemetry/` | review | — | 30 min | | | |
+| 09-20 | Review my CI scaffold for `telemetry/` | review | — | 30 min | 19 min (18:20–18:39, 09-21, to first green run) | 0.6x | Five review questions: 4 answered, #4 (editable vs installed) answered well on the second prompt. Includes a failed run caused by my unverified `setup-uv@v10` tag. |
 | 09-21 | Fight artifact shipped: installed tool's output parses as JSON from `~`, snapshot demo done | ops | — | 15 min | done before the estimate, untimed | — | Estimate was void: he'd already reinstalled after textbook 17 (09-20), checked the output in `less`, then uninstalled (shell history). I checked `uv tool list` and not history, so I gave him a task he'd already done. Snapshot demo (step 3) not done. |
 
 ## Ratios by kind
