@@ -1,12 +1,10 @@
 [project]
 name = "telemetry"
 version = "0.1.0"
-description = "Add your description here"
+description = "A toy problem: import a telemetry CSV file, then parse, validate, analyze, and report on that data."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [
-    "matplotlib>=3.11.2",
-]
+dependencies = []
 
 [project.scripts]
 telemetry = "telemetry:cli"
