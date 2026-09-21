@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.2.0   # setup-uv publishes exact tags only; no floating v10
         # Python comes from telemetry/.python-version; uv installs it.
 
       - name: Install (locked)
