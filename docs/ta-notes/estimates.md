@@ -28,10 +28,10 @@ into measurements.
 | 09-19 | Boss Fight #1: §1–§8 from empty | code-new | 6h (earlier "4–6h or maybe 2h") | — | 9h38m | 1.6x | ~1h of header work beyond original scope; ~1.4x on like-for-like. |
 | wk 2 | I/O separation | code-change | 1h | — | not recorded | — | Date given not recorded. Happened (textbook 09, 09-14) but not timed separately. |
 | wk 2 | CI, once there's something worth running | ops | 1h | — | not started | — | Carried into week 3; now mine to scaffold. |
-| wk 2 | README | prose | 0.5h | — | not started | — | Note his 0.5h vs my 45–60 min below. |
-| 09-20 | `telemetry/` README he'd hand a new teammate | prose | — | 45–60 min | | | |
+| wk 2 | README | prose | 0.5h | — | 62 min (done 09-21) | 2.1x | Same task as the 09-20 row below. |
+| 09-20 | `telemetry/` README he'd hand a new teammate | prose | — | 45–60 min | 62 min (17:08–18:10, 09-21) | 1.2x | Also closes his wk-2 README row: 0.5h → 62 min, 2.1x. Included two review rounds from me. |
 | 09-20 | Review my CI scaffold for `telemetry/` | review | — | 30 min | | | |
-| 09-21 | Fight artifact shipped: installed tool's output parses as JSON from `~`, snapshot demo done | ops | — | 15 min | | | |
+| 09-21 | Fight artifact shipped: installed tool's output parses as JSON from `~`, snapshot demo done | ops | — | 15 min | not started | — | He went to the README instead. Still open. |
 
 ## Ratios by kind
 
