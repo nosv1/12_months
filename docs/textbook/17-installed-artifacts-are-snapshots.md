@@ -98,6 +98,19 @@ echo "exit: ${PIPESTATUS[0]}"       # the tool's exit code, not json.tool's
 requirements specify. A `JSONDecodeError` from `json.tool` means the output isn't JSON, and that's a
 real §7/§8 failure, not a tooling problem.
 
+> **Correction, 2026-09-21: `json.tool` is too lenient.** It accepts `-Infinity`, `Infinity` and
+> `NaN`, which Python writes by default and which strict JSON parsers (§7's dashboard) reject. It
+> catches a dict repr, but not [textbook 16](16-folds-sentinels-and-where-missing-leaks.md)'s bug.
+> The strict check:
+>
+> ```bash
+> python3 -c "import json, sys; json.load(open(sys.argv[1]), parse_constant=lambda c: sys.exit(f'not valid JSON: {c}'))" report.json
+> ```
+>
+> `parse_constant` is called only for those three tokens, so it turns them into a failure. The
+> writer-side equivalent is `json.dump(..., allow_nan=False)`, which raises instead of emitting them.
+> Found while writing the `telemetry/` CI customer step.
+
 **Every time the source changes, step 1 runs again before anyone says "it works."** Without that,
 steps 2 onward test an old copy.
 
@@ -112,7 +125,7 @@ shells out to the installed command:
 
 - run the console script by name, as a subprocess, with `cwd` set to a temp directory
 - feed it a fixture file by absolute path
-- assert the exit code, and assert `json.loads(stdout)` **parses**
+- assert the exit code, and assert the output **parses strictly** (see the correction above: plain `json.loads` accepts `-Infinity`)
 
 That last assertion is the one that catches this class of bug. `json.loads` on a Python dict repr
 raises immediately — single quotes aren't valid JSON. A test that only checked "did it print
