@@ -32,6 +32,7 @@ into measurements.
 | 09-20 | `telemetry/` README he'd hand a new teammate | prose | — | 45–60 min | 62 min (17:08–18:10, 09-21) | 1.2x | Also closes his wk-2 README row: 0.5h → 62 min, 2.1x. Included two review rounds from me. |
 | 09-20 | Review my CI scaffold for `telemetry/` | review | — | 30 min | 19 min (18:20–18:39, 09-21, to first green run) | 0.6x | Five review questions: 4 answered, #4 (editable vs installed) answered well on the second prompt. Includes a failed run caused by my unverified `setup-uv@v10` tag. |
 | 09-21 | Fight artifact shipped: installed tool's output parses as JSON from `~`, snapshot demo done | ops | — | 15 min | done before the estimate, untimed | — | Estimate was void: he'd already reinstalled after textbook 17 (09-20), checked the output in `less`, then uninstalled (shell history). I checked `uv tool list` and not history, so I gave him a task he'd already done. Snapshot demo (step 3) not done. |
+| 09-21 | Review CI customer step; green run on push | review | — | 10 min | 6 min (18:46–18:52) | 0.6x | Two questions, both right in substance; corrected "more global PATH" and "separate machine". |
 
 ## Ratios by kind
 

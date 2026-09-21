@@ -395,7 +395,7 @@ lines, it's a handful of concepts"), and shipped the item inside his own estimat
 
 ---
 
-## 2026-09-21 (Mon) 17:02–18:44, 1.7 h — week-2 deliverable closed
+## 2026-09-21 (Mon) 17:02–18:52, 1.8 h — week-2 deliverable closed
 
 Calendar week 3, but week-2 work, so it's logged here per the 09-12 decision.
 
@@ -424,5 +424,11 @@ Calendar week 3, but week-2 work, so it's logged here per the 09-12 decision.
 7. **Ticks, at his call, Monday:** pytest, pdb, I/O, README, CI. Setup-from-empty left open (no
    `py.typed` in the fight). On pdb I first said "no record" too definitely; he knows
    `breakpoint()` + `n` + inspection. Textbook 19 written for the rest.
+
+8. **Reopened 18:46 for the CI customer step** ("wait wait"). Install as a tool, run by name from
+   `$RUNNER_TEMP`, strict parse. Testing it found `json.tool` accepts `-Infinity`; textbook 17
+   corrected. His answers: `$GITHUB_PATH` "more global" (really: persists across per-step shells);
+   dev vs customer failures, right, but framed as "separate machine" rather than source vs artifact.
+   Green on `4bbcef2`, 6 min. Asked how I read Actions status — curl on the public API; suggested `gh`.
 
 Called it "nice easy day". Upbeat throughout; "woo! green check!"

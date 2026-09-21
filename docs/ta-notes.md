@@ -23,13 +23,14 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-21 18:44.**
+**Updated 2026-09-21 18:52.**
 
-- Started Wed 2026-09-09. **36.45 h logged.** Calendar week 3 began today; the evening went on
+- Started Wed 2026-09-09. **36.55 h logged.** Calendar week 3 began today; the evening went on
   closing week 2's deliverable, as planned. **Week 3 (C++) starts next session.**
 - **Week-2 deliverable closed 09-21.** `telemetry/` README rewritten by him against the code over two
   review rounds (62 min). CI (`.github/workflows/telemetry.yml`, mine) green on GitHub Actions:
-  `uv sync --locked`, ruff (no `--fix`), mypy, pytest, one sample run. He answered four of five
+  `uv sync --locked`, ruff (no `--fix`), mypy, pytest, one sample run via `uv run`, then **§8 as the
+  customer**: `uv tool install .`, run by name from `$RUNNER_TEMP`, strict JSON parse (`4bbcef2`, green). He answered four of five
   review questions; #4 (editable vs installed) he got on the second prompt, cleanly.
 - **Syllabus ticks — at his call, Monday rather than Sunday:** pytest, pdb, I/O separation, README,
   CI. **Left open: "project setup from empty, unaided"**, because the fight has no `py.typed`. His
@@ -40,6 +41,8 @@ He reads these notes too. Write them so that's fine.
 - **Boss Fight #1 still ◐ on the dashboard**; he hasn't accepted or disputed it. Fight finding #2
   (stale artifact): he reinstalled, checked the output and uninstalled on 09-20 (his account, shell
   history agrees). #3–#6 open in `boss-fights/01-telemetry/NOTES.md`.
+- **`json.tool` and `json.loads` accept `-Infinity`** — found writing the CI customer step; textbook 17
+  corrected. Worth remembering for the `-Infinity` test still open below.
 - **Two misses of mine tonight, same shape:** gave him a ship task he'd already done (checked
   `uv tool list`, not history), and pinned `setup-uv@v10`, a tag that doesn't exist, which failed
   CI's first run. Both came from checking something *near* the fact instead of the fact itself.
@@ -47,13 +50,11 @@ He reads these notes too. Write them so that's fine.
 ## Next session
 
 1. **Log hours:** run `date` at the opener. Log any estimate given in `estimates.md`.
-2. **Optional, ~10 min of his:** add the customer step to CI (`uv tool install .`, `cd` out, run
-   `telemetry` by name, `json.tool` the written `output.json`). Offered; he may prefer to start C++.
-3. **Week 3 is C++.** First genuinely new material of the year, and the first place the
+2. **Week 3 is C++.** First genuinely new material of the year, and the first place the
    confidence gap will show up. Be accurate about difficulty rather than reassuring. He called
    `#include` "kinda wild" — feed that (`g++ -E`, the link stage). `gdb` maps straight onto
    textbook 19's pdb vocabulary.
-4. He wants to fix `telemetry/` with ideas from the fight. His README's "What's next" section holds
+3. He wants to fix `telemetry/` with ideas from the fight. His README's "What's next" section holds
    that list now. Don't let it eat C++ time, but don't block it either.
 
 ## Open, his — the week-2 `telemetry/` project (not the fight rebuild)
