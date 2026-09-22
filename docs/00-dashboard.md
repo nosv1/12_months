@@ -118,4 +118,4 @@ Weeks missed and why. Not for guilt — for spotting patterns before they become
 
 | Week | What happened | Recovered? |
 |---|---|---|
-| | | |
+| 2 | Ran 10 days instead of 7 and 27.3h against a 10-12h budget (~2.5x). Boss Fight #1 took 9.65h vs a 6h estimate; the rest went to first-time engineering setup — pytest suite, GitHub Actions, `pyproject.toml`, `py.typed`, `uv tool install`, first debugger session. Calendar slip: 3 days. | Partially — hours are above budget, not below, so the deficit is output per hour, not effort. Watch whether week 3 also lands near 1.6x before treating it as a trend. |
