@@ -36,9 +36,34 @@ into measurements.
 | 09-22 | Week 3 complete: all six syllabus checklist items | read | — | 11–13h | open | — | Given at the start of week 3, before any C++ was written. Sequenced as five steps of ~2h each. |
 | 09-22 | Week 3 steps 1–4 (build stages, headers/TU/ODR, CMake, ctors/dtors) | read | — | ~7.5h (2 + 2 + 1.5 + 2) | 2.05h | 0.27x | **My estimate was 3.7x too high.** Caveat: the session was heavily guided — I diagnosed the ODR bug from his files, supplied out-of-line member syntax, and found the file-scope `static`. Not a clean measurement of him working alone. Step 5 (references/pointers/values, const) untouched, and no C++ written outside a toy. |
 
+## Working hypothesis — his, 2026-09-22
+
+> *"there wasn't design decisions it was follow instructions, so we're fast at guided sessions, and
+> slow at design, in relative terms"*
+
+The five timed entries split cleanly and do not overlap:
+
+| Character of the work | Entries | Ratio |
+| --- | --- | --- |
+| Reactive — review, follow instructions, absorb | `review` ×2, `read` ×1 | 0.27–0.6x |
+| Generative — blank page, decide the shape | `code-new` ×1, `prose` ×1 | 1.6–2.1x |
+
+So **`kind` is doing more work than any global factor**, which is what the column was added to
+detect. Read Sunday's table through this split rather than averaging across it; a single ratio for
+"him" would be meaningless at a ~3x spread.
+
+Two consequences worth holding:
+
+- **The slow hours are the valuable ones.** Guided work is cheap per hour *and* cheap in value —
+  nothing in it was his to invent. The expensive hours are where the interface gets decided. Pace
+  should be judged on what fraction of a week was generative, not on hours logged.
+- **A guided session can be made arbitrarily fast by me doing more of it.** 0.27x on 09-22 partly
+  measures how much I supplied. Speed on reactive work is not evidence about the boss fight.
+
 ## Ratios by kind
 
-Fill on Sundays. Too few entries to say anything yet (2026-09-21).
+Fill on Sundays. Too few entries to say anything yet (2026-09-21). Split by reactive/generative
+before averaging — see the hypothesis above.
 
 | Kind | Entries | His median ratio | My median ratio |
 | --- | --- | --- | --- |
