@@ -50,12 +50,38 @@ He reads these notes too. Write them so that's fine.
 ## Next session
 
 1. **Log hours:** run `date` at the opener. Log any estimate given in `estimates.md`.
-2. **Week 3 is C++.** First genuinely new material of the year, and the first place the
-   confidence gap will show up. Be accurate about difficulty rather than reassuring. He called
-   `#include` "kinda wild" — feed that (`g++ -E`, the link stage). `gdb` maps straight onto
-   textbook 19's pdb vocabulary.
-3. He wants to fix `telemetry/` with ideas from the fight. His README's "What's next" section holds
+2. **Week 3 step 5 is next: references vs pointers vs values, and `const` correctness.** The only
+   untouched checklist item, and the hardest — it is where copies, dangling references and `const`
+   actually bite. Everything else in week 3 was covered 09-22. Make copies *visible* (a printing
+   copy constructor) the same way destructors made lifetime visible; that framing worked.
+3. **No real C++ has been written yet.** Everything so far is a toy `Reading` in untracked
+   `cpp_test/`. The week-3 vehicle — a thin telemetry port, one file, one struct, one summary —
+   is still unwritten, and that is where any of this consolidates. Scope cap matters: week 2 was
+   eaten by exactly that kind of growth.
+4. **Do not let him conclude week 3 is done.** He noticed the pace himself ("kinda changes the
+   timeline"). Steps 1–4 took 2.05h against my ~7.5h, but the session was guided throughout — the
+   ODR diagnosis, the out-of-line syntax and the `static` catch were all mine. Recognition is not
+   recall; boss fight #2 (week 7) is the honest test.
+5. He wants to fix `telemetry/` with ideas from the fight. His README's "What's next" section holds
    that list now. Don't let it eat C++ time, but don't block it either.
+
+## 2026-09-22 — what worked
+
+- **He named the failure mode himself:** *"this was a teacher showing commands and their outputs and
+  a student being like mmm yes, interesting, it's hard to make sense of it without a reason to make
+  sense of it."* Correct, and it was the turning point of the session. Demos → a build he had to
+  make work. Everything good after that came from tasks with a predict-before-you-run step.
+- **"mmmm interesting" is his tell for passive watching.** He used the phrase twice; the second time
+  naming it back to him converted the moment into a 30-second action. Watch for it.
+- **Predict-then-run is the format that works.** Every real insight tonight came from a wrong
+  prediction: the constructor undefined reference, `static` hiding the linker error, `goodbye c`
+  never printing, LIFO destruction order. He is not precious about being wrong when he wrote the
+  guess down first.
+- **Environment papercuts: just fix them.** The Windows Caps Lock OSD was Logi Options+, found in
+  30 seconds via `powershell.exe Get-Process` from WSL. He responded "omg tysm". That is the
+  correct division of labor and he feels it.
+- **I over-estimated the clock three times** (19:05, 19:15 when it was 19:09). Run `date`. Every
+  time. Standing instruction, broken three times in one session.
 
 ## Open, his — the week-2 `telemetry/` project (not the fight rebuild)
 
