@@ -48,6 +48,10 @@ this week's skill, and week 2 ran ~2.5x budget by growing exactly this way.
 
 If something feels like it wants to be added, write it down instead of building it.
 
+### Want to add
+
+- config! i don't want wild paths, just a config that says exactly where it is in absolution or in relation to main
+
 ---
 
 ## The three design questions
