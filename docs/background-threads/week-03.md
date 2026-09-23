@@ -16,5 +16,7 @@
 
 20260923 1058 - 1307 (2.15 hours -- cpp_telemetry started: CMake, Reading struct with member initializer list, to_string via ostringstream, CSV read into vector<vector<string>>, strong types (Timestamp/RobotID/Velocity/Battery/Temperature) adopted unprompted. Hit and diagnosed: most vexing parse, uncaught std::invalid_argument found with gdb `catch throw`, segfault from unchecked operator[] on a truncated row. clang-format + format-on-save configured. Textbook 22)
 
+20260923 1529 - 1649 (1.33 hours -- cpp_telemetry finished to spec except the README: grouper (map<string, vector<Reading>>), analysis (min/max/avg), ParsedLines partition, const& applied throughout, std::optional for a robot with no readings, lambda helper. All seven SPEC boxes verified against ground truth computed independently from the CSV -- 359/3 and all nine stats exact. Bugs found and fixed: inverted map-membership check, unconditional early return killing the whole analysis, numeric_limits<double>::min vs lowest, value_or(NULL) silently yielding 0.0)
+
 ### Estimated Task Times
 

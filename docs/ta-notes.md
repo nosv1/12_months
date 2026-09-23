@@ -23,44 +23,69 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-23 13:07.**
+**Updated 2026-09-23 16:50.**
 
-- Started Wed 2026-09-09. **41.83 h logged.** Two sessions today: 08:32–09:37 and 10:58–13:07.
-- **Week 3's six checklist items are covered.** Still not ticked — see below.
-- **`cpp_telemetry/` exists and runs.** CMake, `Reading` with a member initializer list,
-  `to_string()` via `ostringstream`, CSV read into `vector<vector<string>>`. Parsing loop is
-  mid-flight; he stopped tired, with the next steps clear to him.
-- **He adopted strong types unprompted** — `Timestamp`, `RobotID`, `Velocity`, `Battery`,
-  `Temperature`, each wrapping one field — after I mentioned them as out-of-scope-but-worth-knowing.
-  Real design move, kills the swapped-same-typed-arguments hazard. Also more machinery than the SPEC
-  called for; I told him to keep it only if he can defend it, and he can. Watch it for drift.
-- **It also made his design decision for him by accident:** conversion now happens in constructors,
-  so `std::stod` throws from inside `Velocity`. Exceptions are in the design whether or not he chose
-  them. Raised as a decision to make deliberately (throw/catch, `optional`, `from_chars`, or a
-  factory); he has not chosen yet. This is design question 3 and it's still his.
-- **Three bugs hit and diagnosed today**, all first encounters: the most vexing parse; an uncaught
-  `std::invalid_argument` (the CSV header row) found with gdb `catch throw`; a segfault from
-  unchecked `operator[]` on the truncated row at line 301. Textbook 22 covers all three.
-- **Tooling added (mine):** `.clang-format` (Google/ROS 2, his choice), `.vscode/settings.json` with
-  format-on-save. `clang-format` CLI not installed — needs `sudo apt install clang-format`, which I
-  can't run.
+- Started Wed 2026-09-09. **43.16 h logged.** Three sessions today: 08:32–09:37, 10:58–13:07,
+  15:29–16:49. **4.56 h today**, his longest day of the year.
+- **`cpp_telemetry/` meets every SPEC item except the README.** Verified from a clean tree: zero
+  warnings under `-Wall -Wextra`, 359 good / 3 rejected, and all nine per-robot stats exact against
+  ground truth I computed independently from the CSV. The 3 rejects are the only 3 malformed rows
+  and cover two distinct failure kinds.
+- **Remaining: the README.** I wrote a skeleton (headings + prompts only, no content); the prose is
+  his. He said he'd fill it next session. **Do not let week 3 be ticked until it exists.**
+- **He updated the SPEC design answers post-hoc**, unprompted, at 16:47 — including where he changed
+  his mind. That was the thing I asked for and the most valuable artifact of the day.
+- **Total C++ to date: ~6.6 h over two days**, from `hello.cpp` to a six-TU CMake project. I said
+  "six days ago" at one point; he corrected me. Third time-approximation miss on record — the
+  standing instruction is to run `date`/check `git log`, not estimate.
+- **My deliverable estimate was ~2x too high** (~6–9 h against 3.5 h actual). His own "the next
+  steps seem simple" was accurate. Logged in `estimates.md`; the pattern of me over-estimating his
+  C++ now has three entries.
 - **Boss Fight #1 still ◐ on the dashboard**, still neither accepted nor disputed.
 
 ## Next session
 
 1. **Log hours:** run `date` at the opener. Log any estimate given in `estimates.md`.
-2. **His code is uncommitted** at sign-off: `cpp_telemetry/{main,reading}.cpp`, `reading.h`,
-   `CMakeLists.txt`, `data/`, `.gitignore`. His to commit, not mine. Ask at the opener.
-3. **Pick up mid-parse-loop.** Remaining: skip the header, handle bad rows, `ParseResult`,
-   per-robot min/max/mean, summary output. He said the next steps "seem simple" — that's a
-   prediction worth checking against how long they take.
-4. **Design question 3 is still open** and he is now inside it. Don't answer it. The options are
-   named in textbook 22; let him pick and defend one.
-5. **Guard the scope cap.** He asked for a config file at 11-ish and accepted "write it down, don't
-   build it." That list is in `cpp_telemetry/SPEC.md` and should grow with his additions.
-6. **Do not tick week 3 until `cpp_telemetry/` runs end to end** with a README he wrote.
+2. **README first**, then week 3 closes. Skeleton is at `cpp_telemetry/README.md`; he was resistant
+   to the "what broke" section ("everything broke mate") and accepted the filter *what would break
+   someone else, or what changed how you think*. Four items named for him: most vexing parse,
+   unchecked `operator[]`, the identical-min/max/avg bug, and the latent `numeric_limits::min`.
+3. **Latent bugs still in the code** — raise only if he doesn't put them in "Known issues":
+   `numeric_limits<double>::min()` as the max seed (wrong for all-negative data; may be fixed since
+   I flagged it), and `stod` accepting trailing junk (`"1.5kg"` → 1.5).
+4. **Then tick week 3 on the dashboard and syllabus** — six checklist items plus a working
+   deliverable with a README he wrote.
+5. **Week 4 is memory and ownership.** Today set up three callbacks to use: `unique_ptr` (he reached
+   for it for the wrong reason and changed his mind), lambda capture-by-reference dangling, and
+   `-fsanitize=address` (already mentioned, not yet used).
 
 ## 2026-09-23 — what worked
+
+**Third session, 15:29–16:49. Full day: 4.56 h.**
+
+- **Verifying his "that completes the spec" caught two real bugs.** Clean build + run + ground truth
+  computed independently from the CSV showed min/max/avg identical per robot. He'd have shipped it.
+  Computing the oracle myself (20 lines of Python over the same CSV) is cheap and should be the
+  default whenever he says a numeric deliverable is done.
+- **Giving him ground truth rather than the diagnosis worked.** I printed the correct nine numbers
+  and said "all three of yours equal the true minimum, that's systematic." He found the cause
+  himself — "oh shit HOLD ON" — in under two minutes.
+- **He took a design suggestion and improved on it.** I raised `optional<TemperatureAnalysis>` vs
+  three `optional<double>` as a question; he switched, and also applied `const&` across both
+  functions without being told twice.
+- **"I despise writing a readme with what broke in it — everything broke mate."** Correct objection
+  to a literal changelog. The reframe that landed: *what would break someone else, or what changed
+  how you think* — four items, not forty. Reuse that filter.
+- **He asked for a README template rather than grinding boilerplate at the end of a 4.5 h day.**
+  Right call and the right thing to delegate; headings and prompts are scaffolding, the prose is the
+  deliverable.
+- **Third time-approximation miss.** Said "six days ago" for what was yesterday. He caught it
+  immediately. `date` and `git log` exist; use them for every temporal claim, not just clock times.
+- **Two of my earlier answers needed correcting in-session**: `file(GLOB)` (CONFIGURE_DEPENDS since
+  CMake 3.12 fixes the staleness problem I'd cited) and the `kDataPath` naming inconsistency I
+  introduced. Correcting myself promptly seems to cost nothing and he engages with the tradeoffs
+  rather than just taking the ruling.
+
 
 **Afternoon session, 10:58–13:07.**
 
