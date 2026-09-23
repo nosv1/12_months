@@ -60,14 +60,20 @@ valuable ones.
 1. **What owns the collection of readings?** How do per-robot stats accumulate, and what happens to
    a `Reading` after it has been parsed?
 
+   > A: a vector can hold pointers, not references, so make_unique_ptr for each reading?
+
 2. **Which functions take `const Reading&`, which take `Reading&`, and which take values?**
    Justify each one individually. This is 2026-09-23's material applied directly, and it's the
    checkable part.
+
+   > A: default to all of them, unless we need to edit something in the function
 
 3. **Where do malformed rows go?** With exceptions out of scope, what is the signature of the parse
    function? This one is genuinely hard in C++ and has no obviously correct answer — the first
    instinct is what's wanted, not the right answer. It's also the question C++ answers very
    differently from Python, where raising was free.
+
+   > A: idk if we can return tuples (or similar type, guessing not), instant feel then is see if line is parseable, then based on that, try and do it after you get out of that 'is this line parseable function'? feels gross tho because by checking i'd want to return if valid (like in python),
 
 ---
 
