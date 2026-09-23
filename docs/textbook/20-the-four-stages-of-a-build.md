@@ -93,7 +93,96 @@ This is also the real reason for header guards. Without them, a header included 
 translation unit pastes its contents twice, and anything *defined* in it is now defined twice in
 that unit.
 
-(`inline` functions and templates are deliberate exceptions to ODR. Not needed yet.)
+(`inline` functions and templates are deliberate exceptions to ODR — see below.)
+
+### One rule, three different enforcers
+
+The same mistake produces three unrecognisably different errors depending on *where* the duplicate
+lands. All three were produced deliberately in one session:
+
+**Duplicates in one translation unit → the compiler catches it.** A body in the header plus an
+out-of-line definition in the `.cpp` that includes it:
+
+```
+reading.cpp:12:8: error: redefinition of 'static double Reading::celsius_to_fahrenheit(double)'
+In file included from reading.cpp:3:
+reading.h:14:17: note: previously defined here
+```
+
+Line, column, caret, and a `note:` pointing at the other copy — because both are visible at once.
+
+**Duplicates across translation units → the linker catches it.** A free function defined at file
+scope in a header, included by two `.cpp` files:
+
+```
+/usr/bin/ld: b.o: in function `f(double)':
+multiple definition of `f(double)'; a.o: first defined here
+```
+
+No line number. The linker never saw the source. Note this fires **even if nothing calls the
+function** — the definition is emitted either way.
+
+**A duplicate that is legal.** A function defined *inside* a class body is **implicitly `inline`**,
+and `inline` tells the linker "expect many identical copies, pick one." So moving the body into the
+struct in the header and including it everywhere does *not* fail. This is what makes header-only
+libraries possible, and it is why the struct itself can live in a header at all.
+
+### `static` at file scope will hide this from you
+
+An attempt to reproduce the linker error silently failed because the function kept a `static`
+carried over from when it was a class member:
+
+```cpp
+static double celsius_to_fahrenheit(double c) { ... }   // at file scope in a header
+```
+
+At file scope `static` means **internal linkage** — private to each translation unit. Each `.o`
+gets its own private copy with a local symbol, so there is nothing for the linker to collide with
+and `multiple definition` can never fire.
+
+`static` is one keyword with three unrelated meanings, a C inheritance the language never cleaned up:
+
+| Where it appears | What it means |
+|---|---|
+| on a class member | belongs to the type, not an instance — no `this` |
+| on a function or variable at **file scope** | internal linkage — private to this translation unit |
+| on a local variable inside a function | persists for the program's lifetime, not the call's |
+
+Moving one unchanged line from inside a class to file scope silently switches meaning #1 to
+meaning #2. Nothing warns.
+
+### What a header guard actually does
+
+```cpp
+#ifndef READING_H   // 1st paste: not defined → true → process the body
+#define READING_H   //            set the flag
+  ...body...
+#endif              // 2nd paste: now defined → false → skip to here
+```
+
+`#include` is **purely filename-based**. It has no relationship to the guard macro; `READING_H` is
+an arbitrary flag meaning *"already pasted into this translation unit."* It could be named anything;
+the filename-uppercased convention exists only to avoid collisions between headers.
+
+Deleting the `#define` line disables the guard entirely — the flag is never set, so `#ifndef` is
+always true. This produces no error until the header is included twice in one translation unit, at
+which point the struct is redefined and the **compiler** objects.
+
+Nobody writes the same `#include` twice on purpose, which is why a broken guard can look harmless.
+The real case is indirect:
+
+```
+main.cpp → robot.h  → reading.h
+         → sensor.h → reading.h
+```
+
+Neither intermediate header knows about the other. At ROS 2 scale this is constant, which is why
+guards are unconditional practice rather than a judgment call. `#pragma once` is the one-line
+alternative — non-standard but universally supported.
+
+Guards are **per translation unit**. Every `.cpp` starts with no macros defined, so a header is
+fully pasted into each one — that is the legal duplication, and it only works because identical
+struct definitions are ODR-exempt.
 
 ---
 
