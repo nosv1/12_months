@@ -1,0 +1,16 @@
+{
+  // C++ formatting. clang-format ships inside the cpptools extension, so this
+  // works without installing anything; the style comes from /.clang-format.
+  // Header sorting happens as part of formatting (SortIncludes in that file),
+  // so format-on-save covers it — there's no separate "organize imports" for C++.
+  "[cpp]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools",
+    "editor.formatOnSave": true
+  },
+  "C_Cpp.formatting": "clangFormat",
+  "C_Cpp.clang_format_style": "file",
+
+  // cmake-tools finds every CMakeLists.txt in the repo; don't let it prompt
+  // on every window open.
+  "cmake.configureOnOpen": false
+}
