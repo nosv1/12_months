@@ -4,6 +4,7 @@
 #include <sstream>
 #include <vector>
 
+#include "analysis.h"
 #include "grouper.h"
 #include "parser.h"
 #include "reader.h"
@@ -25,5 +26,16 @@ int main() {
   std::cout << "Rejected readings: " << parsed_lines.bad_rows.size() << std::endl;
 
   std::map<std::string, std::vector<Reading>> robots = group_robots(parsed_lines.readings);
+
+  for (auto& [r_id, readings] : robots) {
+    std::cout << r_id << " -- " << readings.size() << " readings" << std::endl;
+
+    std::optional<TemperatureAnalysis> opt_temperature_analysis = analyze_temperature(readings);
+    if (opt_temperature_analysis != std::nullopt) {
+      TemperatureAnalysis temperature_analysis =
+          static_cast<TemperatureAnalysis>(*opt_temperature_analysis);
+      std::cout << temperature_analysis.to_string() << std::endl;
+    }
+  }
   return 0;
 }
