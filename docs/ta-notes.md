@@ -23,42 +23,66 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-23 09:38.**
+**Updated 2026-09-23 13:07.**
 
-- Started Wed 2026-09-09. **39.68 h logged.** Week 3, calendar day 2.
-- **Week 3's six checklist items are all covered as of this morning.** Step 5 (references / pointers
-  / values, `const` correctness) took 63 min against my 60–90 min — 0.84x, my first estimate to land
-  in range. Textbook 21 written.
-- **The boxes are not ticked, and I told him why.** Every line of C++ so far is in untracked
-  `cpp_test/`, a struct that prints `welcome` and `goodbye`. No program with a reason to exist.
-  He accepted that framing without pushing back.
-- **The week-3 deliverable is now written down:** [`cpp_telemetry/SPEC.md`](../cpp_telemetry/SPEC.md).
-  Thin C++ port of telemetry — CSV → `Reading` objects → per-robot min/max/mean → stdout, CMake,
-  clean under `-Wall -Wextra`. Explicit out-of-scope list (JSON, error taxonomy, CLI flags, tests,
-  fight findings) because week 2 ran ~2.5x by growing exactly that way. Hold that line.
-- **Three design questions are open and are his**, in the SPEC: what owns the collection; which
-  functions take `const&` / `&` / value and why; where malformed rows go with exceptions out of
-  scope. He goes first, out loud, before any code. That third one is genuinely hard and has no clean
-  answer — the point is his first instinct, not the right one.
-- **Boss Fight #1 still ◐ on the dashboard**; still neither accepted nor disputed. #3–#6 open in
-  `boss-fights/01-telemetry/NOTES.md`.
-- Morning session, 08:32–09:37, first one of the year. Denser and sharper than the evenings.
+- Started Wed 2026-09-09. **41.83 h logged.** Two sessions today: 08:32–09:37 and 10:58–13:07.
+- **Week 3's six checklist items are covered.** Still not ticked — see below.
+- **`cpp_telemetry/` exists and runs.** CMake, `Reading` with a member initializer list,
+  `to_string()` via `ostringstream`, CSV read into `vector<vector<string>>`. Parsing loop is
+  mid-flight; he stopped tired, with the next steps clear to him.
+- **He adopted strong types unprompted** — `Timestamp`, `RobotID`, `Velocity`, `Battery`,
+  `Temperature`, each wrapping one field — after I mentioned them as out-of-scope-but-worth-knowing.
+  Real design move, kills the swapped-same-typed-arguments hazard. Also more machinery than the SPEC
+  called for; I told him to keep it only if he can defend it, and he can. Watch it for drift.
+- **It also made his design decision for him by accident:** conversion now happens in constructors,
+  so `std::stod` throws from inside `Velocity`. Exceptions are in the design whether or not he chose
+  them. Raised as a decision to make deliberately (throw/catch, `optional`, `from_chars`, or a
+  factory); he has not chosen yet. This is design question 3 and it's still his.
+- **Three bugs hit and diagnosed today**, all first encounters: the most vexing parse; an uncaught
+  `std::invalid_argument` (the CSV header row) found with gdb `catch throw`; a segfault from
+  unchecked `operator[]` on the truncated row at line 301. Textbook 22 covers all three.
+- **Tooling added (mine):** `.clang-format` (Google/ROS 2, his choice), `.vscode/settings.json` with
+  format-on-save. `clang-format` CLI not installed — needs `sudo apt install clang-format`, which I
+  can't run.
+- **Boss Fight #1 still ◐ on the dashboard**, still neither accepted nor disputed.
 
 ## Next session
 
 1. **Log hours:** run `date` at the opener. Log any estimate given in `estimates.md`.
-2. **He rubber-ducks the three SPEC questions before opening an editor.** Do not answer them. If he
-   stalls on #3, the smallest useful hint is that C++ has several answers (out-params, a
-   status-plus-value struct, `std::optional`) and none is obviously right — not which to pick.
-3. **Then he writes `cpp_telemetry/` himself.** This is the first real C++ and the first generative
-   C++ work; expect the ratio to look nothing like this morning's 0.84x. Per his own hypothesis the
-   generative hours are the valuable ones, so slowness here is the point, not a problem.
-4. **Guard the scope cap.** The out-of-scope list in the SPEC is not negotiable this week. Things he
-   wants to add get written down, not built.
-5. He still wants to fix `telemetry/` with ideas from the fight. His README's "What's next" holds
-   that list. Don't let it eat C++ time, don't block it.
+2. **His code is uncommitted** at sign-off: `cpp_telemetry/{main,reading}.cpp`, `reading.h`,
+   `CMakeLists.txt`, `data/`, `.gitignore`. His to commit, not mine. Ask at the opener.
+3. **Pick up mid-parse-loop.** Remaining: skip the header, handle bad rows, `ParseResult`,
+   per-robot min/max/mean, summary output. He said the next steps "seem simple" — that's a
+   prediction worth checking against how long they take.
+4. **Design question 3 is still open** and he is now inside it. Don't answer it. The options are
+   named in textbook 22; let him pick and defend one.
+5. **Guard the scope cap.** He asked for a config file at 11-ish and accepted "write it down, don't
+   build it." That list is in `cpp_telemetry/SPEC.md` and should grow with his additions.
+6. **Do not tick week 3 until `cpp_telemetry/` runs end to end** with a README he wrote.
 
 ## 2026-09-23 — what worked
+
+**Afternoon session, 10:58–13:07.**
+
+- **He designed first, then coded, and it held.** The three SPEC questions got real answers over the
+  haircut. His answer to #1 (vector of pointers) had the cost model inverted — "what if n is large"
+  argues *for* contiguous values — and he took the correction without defending the original.
+- **Strong types were his idea, from a throwaway line of mine.** I named them as an out-of-scope
+  technique for the swapped-doubles hazard; he built them. First time this year he has taken a
+  design idea and run with it unprompted. Worth noting on the confidence ledger.
+- **`catch throw` landed the same way `breakpoint()` did.** He was hopping frames by hand and stuck
+  on empty `info locals` in a constructor — `info args` was the missing half. The pdb parallel
+  (textbook 19) is exact and worth naming to him next time.
+- **He found the header-row bug himself** once pointed at the tool, and predicted the bad rows
+  coming next. "lmao, it's the header line, forgot to skip."
+- **Scope held once.** He wanted a config file; "write it down, don't build it" was accepted without
+  argument. The SPEC's out-of-scope list is doing its job.
+- **Frustration showed twice** — "im losing my mind" (most vexing parse) and "hard to find the
+  error" (segfault). Both were genuinely hard first encounters, not him being slow. Said so, briefly,
+  and moved to the mechanism rather than reassuring. Correct call; MVP defeats experienced people.
+- **He called the stop himself** at 2h09m into the second session, with next steps clear. Good
+  judgment, not a stall.
+
 
 - **Predict-then-run, again, every time.** Every insight came from a wrong prediction written down
   first: the empty copy-constructor body, `Reading b = a` as a stored recipe, and `r = j` predicted

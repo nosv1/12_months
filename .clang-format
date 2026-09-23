@@ -1,0 +1,31 @@
+# C++ formatting for this repo. Google style, which is what ROS 2 is based on —
+# so the code here reads the same way as the ROS 2 source you'll be living in
+# from week 6 onward.
+#
+# Applies to every .cpp/.h in the repo; clang-format finds the nearest
+# .clang-format walking up from the file being formatted.
+
+BasedOnStyle: Google
+
+# Google's 80 is tight for real code; ROS 2 uses 100.
+ColumnLimit: 100
+
+IndentWidth: 2
+
+# Header sorting. Groups are separated by blank lines and sorted within a group.
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
+IncludeCategories:
+  # The matching header for this .cpp — clang-format gives this priority 0
+  # automatically, ahead of everything below.
+  - Regex: '^<[a-z_]+>$'        # C++ standard library: <string>, <vector>
+    Priority: 2
+  - Regex: '^<.*\.h>$'          # C headers: <ctime>, <stdio.h>
+    Priority: 3
+  - Regex: '^<.*>$'             # other system/third-party angle includes
+    Priority: 4
+  - Regex: '.*'                 # project headers: "reading.h"
+    Priority: 5
+
+# Keep the member initializer list readable when it wraps.
+PackConstructorInitializers: NextLine

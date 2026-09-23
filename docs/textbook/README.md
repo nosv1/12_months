@@ -39,6 +39,7 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 19 | [Debugging with `pdb`: stop the world and look](19-debugging-with-pdb.md) | 2 | A checklist item with no record of use, and `breakpoint()` + `n` as the whole toolkit |
 | 20 | [The four stages of a build, and reading an error by stage](20-the-four-stages-of-a-build.md) | 3 | 5 lines of source becoming 36,588, then 67, and an `undefined reference` that names no line |
 | 21 | [Values, references, pointers, and `const`](21-values-references-pointers-and-const.md) | 3 | A copy constructor with an empty body printing a blank `robot_id`, and `r = j` not doing what it looks like |
+| 22 | [Parsing input that fights back](22-parsing-input-that-fights-back.md) | 3 | `conflicting declaration ‘RobotID* row’` naming a variable nobody wrote, and a segfault on line 301 |
 
 ---
 
