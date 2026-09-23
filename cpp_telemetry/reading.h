@@ -2,6 +2,7 @@
 
 #define READING_H
 
+#include <ctime>
 #include <string>
 
 struct Reading {
