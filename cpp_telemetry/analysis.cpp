@@ -32,19 +32,16 @@ std::optional<TemperatureAnalysis> analyze_temperature(const std::vector<Reading
 }
 
 std::string TemperatureAnalysis::to_string() const {
-  struct Local {
-    static std::string show(const std::optional<double>& v) {
-      if (!v) return "null";
-      std::ostringstream oss;
-      oss << *v;
-      return oss.str();
-    }
+  auto show = [](const std::optional<double>& v) -> std::string {
+    if (!v) return "null";
+    std::ostringstream oss;
+    oss << *v;
+    return oss.str();
   };
-  Local local;
 
   std::ostringstream oss;
-  oss << "min: " << local.show(this->min) << std::endl;
-  oss << "max: " << local.show(this->max) << std::endl;
-  oss << "avg: " << local.show(this->avg) << std::endl;
+  oss << "min: " << show(this->min) << std::endl;
+  oss << "max: " << show(this->max) << std::endl;
+  oss << "avg: " << show(this->avg) << std::endl;
   return oss.str();
 }
