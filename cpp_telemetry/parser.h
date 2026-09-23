@@ -7,6 +7,11 @@
 
 #include "reading.h"
 
-std::vector<Reading> parse_data_to_readings(std::vector<std::vector<std::string>>& data);
+struct ParsedLines {
+  std::vector<Reading> readings;
+  std::vector<std::vector<std::string>> bad_rows;
+};
+
+ParsedLines parse_data_to_readings(std::vector<std::vector<std::string>>& data);
 
 #endif
