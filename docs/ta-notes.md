@@ -38,9 +38,11 @@ He reads these notes too. Write them so that's fine.
 - **Total C++ to date: ~6.6 h over two days**, from `hello.cpp` to a six-TU CMake project. I said
   "six days ago" at one point; he corrected me. Third time-approximation miss on record — the
   standing instruction is to run `date`/check `git log`, not estimate.
-- **My deliverable estimate was ~2x too high** (~6–9 h against 3.5 h actual). His own "the next
-  steps seem simple" was accurate. Logged in `estimates.md`; the pattern of me over-estimating his
-  C++ now has three entries.
+- **My deliverable estimate was ~2x too high** (~6–9 h against 3.5 h actual), but **his correction
+  is the one to keep**: the speed came from the *problem* already being solved in his head, not from
+  him being fast at design. That was the SPEC's deliberate choice — known domain, so the difficulty
+  lands on the language. The entry measures C++ mechanics only. Boss fight #2 (week 7) is still the
+  honest test of blank-page work.
 - **Boss Fight #1 still ◐ on the dashboard**, still neither accepted nor disputed.
 
 ## Next session
