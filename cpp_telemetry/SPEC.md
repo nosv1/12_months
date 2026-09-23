@@ -64,20 +64,23 @@ valuable ones.
 1. **What owns the collection of readings?** How do per-robot stats accumulate, and what happens to
    a `Reading` after it has been parsed?
 
-   > A: a vector can hold pointers, not references, so make_unique_ptr for each reading?
+   > A (pre): a vector can hold pointers, not references, so make_unique_ptr for each reading?
+   > A (post): ParsedLines.readings holds the readings until they're grouped into a robots map of [str, vector[readings]]
 
 2. **Which functions take `const Reading&`, which take `Reading&`, and which take values?**
    Justify each one individually. This is 2026-09-23's material applied directly, and it's the
    checkable part.
 
-   > A: default to all of them, unless we need to edit something in the function
+   > A (pre): default to all of them, unless we need to edit something in the function
+   > A (post): agreed, we always send the const version, once we parse/validate/create a reading, it never needs to be edited so we never send it an editable version
 
 3. **Where do malformed rows go?** With exceptions out of scope, what is the signature of the parse
    function? This one is genuinely hard in C++ and has no obviously correct answer — the first
    instinct is what's wanted, not the right answer. It's also the question C++ answers very
    differently from Python, where raising was free.
 
-   > A: idk if we can return tuples (or similar type, guessing not), instant feel then is see if line is parseable, then based on that, try and do it after you get out of that 'is this line parseable function'? feels gross tho because by checking i'd want to return if valid (like in python),
+   > A (pre): idk if we can return tuples (or similar type, guessing not), instant feel then is see if line is parseable, then based on that, try and do it after you get out of that 'is this line parseable function'? feels gross tho because by checking i'd want to return if valid (like in python),
+   > A (post): ParsedLines does this perfectly for us, while we're looping rows, we're trying to create readings, if there's an error we store the row (as a ',' split string) in bad_rows, valid readings go to ParsedLines.readings
 
 ---
 
