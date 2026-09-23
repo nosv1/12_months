@@ -1,10 +1,9 @@
 #include "reading.h"
 
-#include <ctime>
 #include <sstream>
 #include <string>
 
-Reading::Reading(time_t timestamp, std::string robot_id, double velocity, double battery,
+Reading::Reading(std::string timestamp, std::string robot_id, double velocity, double battery,
                  double temperature)
     : timestamp(timestamp),
       robot_id(robot_id),
