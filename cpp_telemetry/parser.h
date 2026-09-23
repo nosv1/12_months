@@ -12,6 +12,6 @@ struct ParsedLines {
   std::vector<std::vector<std::string>> bad_rows;
 };
 
-ParsedLines parse_data_to_readings(std::vector<std::vector<std::string>>& data);
+ParsedLines parse_data(std::vector<std::vector<std::string>>& data);
 
 #endif

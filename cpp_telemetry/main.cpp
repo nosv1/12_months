@@ -21,7 +21,7 @@ int main() {
   std::vector<std::vector<std::string>> data = read_file(file);
   file.close();
 
-  ParsedLines parsed_lines = parse_data_to_readings(data);
+  ParsedLines parsed_lines = parse_data(data);
   std::cout << "Readings: " << parsed_lines.readings.size() << std::endl;
   std::cout << "Rejected readings: " << parsed_lines.bad_rows.size() << std::endl;
 

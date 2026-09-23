@@ -8,7 +8,7 @@
 
 #include "reading.h"
 
-ParsedLines parse_data_to_readings(std::vector<std::vector<std::string>>& data) {
+ParsedLines parse_data(std::vector<std::vector<std::string>>& data) {
   ParsedLines parsed_lines;
 
   for (uint i = 1; i < data.size(); i++) {
