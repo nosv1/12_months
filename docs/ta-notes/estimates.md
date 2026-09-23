@@ -33,6 +33,8 @@ into measurements.
 | 09-20 | Review my CI scaffold for `telemetry/` | review | — | 30 min | 19 min (18:20–18:39, 09-21, to first green run) | 0.6x | Five review questions: 4 answered, #4 (editable vs installed) answered well on the second prompt. Includes a failed run caused by my unverified `setup-uv@v10` tag. |
 | 09-21 | Fight artifact shipped: installed tool's output parses as JSON from `~`, snapshot demo done | ops | — | 15 min | done before the estimate, untimed | — | Estimate was void: he'd already reinstalled after textbook 17 (09-20), checked the output in `less`, then uninstalled (shell history). I checked `uv tool list` and not history, so I gave him a task he'd already done. Snapshot demo (step 3) not done. |
 | 09-21 | Review CI customer step; green run on push | review | — | 10 min | 6 min (18:46–18:52) | 0.6x | Two questions, both right in substance; corrected "more global PATH" and "separate machine". |
+| 09-22 | Week 3 complete: all six syllabus checklist items | read | — | 11–13h | open | — | Given at the start of week 3, before any C++ was written. Sequenced as five steps of ~2h each. |
+| 09-22 | Week 3 steps 1–4 (build stages, headers/TU/ODR, CMake, ctors/dtors) | read | — | ~7.5h (2 + 2 + 1.5 + 2) | 2.05h | 0.27x | **My estimate was 3.7x too high.** Caveat: the session was heavily guided — I diagnosed the ODR bug from his files, supplied out-of-line member syntax, and found the file-scope `static`. Not a clean measurement of him working alone. Step 5 (references/pointers/values, const) untouched, and no C++ written outside a toy. |
 
 ## Ratios by kind
 
