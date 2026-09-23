@@ -12,5 +12,7 @@
 
 20260922 1737 - 1940 (2.05 hours -- C++ week 3 night 1: preprocessor/compile/assemble/link walked stage by stage on hello.cpp (36,588 -> 67 lines); three-file Reading build by hand with -c and manual link; ODR bug diagnosed (reading.cpp redefined the struct instead of including the header); all three ODR failure modes produced deliberately incl. the file-scope `static` that hid one; CMakeLists + out-of-source build; destructors, LIFO destruction order, and a visible leak from `new` with no delete; unique_ptr explained; textbook 20)
 
+20260923 0832 - 0937 (1.08 hours -- week 3 step 5: copy constructors made visible; value/reference/const-reference passing; aliasing; dangling reference returned from a function, caught by -Wreturn-local-addr and segfaulting because GCC emitted a null reference; references cannot be rebound; const member functions and the hidden `this`. Week 3 checklist complete. cpp_telemetry/SPEC.md written; textbook 21)
+
 ### Estimated Task Times
 

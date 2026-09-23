@@ -23,65 +23,62 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-21 18:52.**
+**Updated 2026-09-23 09:38.**
 
-- Started Wed 2026-09-09. **36.55 h logged.** Calendar week 3 began today; the evening went on
-  closing week 2's deliverable, as planned. **Week 3 (C++) starts next session.**
-- **Week-2 deliverable closed 09-21.** `telemetry/` README rewritten by him against the code over two
-  review rounds (62 min). CI (`.github/workflows/telemetry.yml`, mine) green on GitHub Actions:
-  `uv sync --locked`, ruff (no `--fix`), mypy, pytest, one sample run via `uv run`, then **§8 as the
-  customer**: `uv tool install .`, run by name from `$RUNNER_TEMP`, strict JSON parse (`4bbcef2`, green). He answered four of five
-  review questions; #4 (editable vs installed) he got on the second prompt, cleanly.
-- **Syllabus ticks — at his call, Monday rather than Sunday:** pytest, pdb, I/O separation, README,
-  CI. **Left open: "project setup from empty, unaided"**, because the fight has no `py.typed`. His
-  debugger use is his account (`breakpoint()` + `n` + inspecting); textbook 19 covers `s`/`w`/`u`,
-  `pytest --pdb`, and conditional breakpoints. First real use of `--pdb` will be worth noting.
-- **Estimates log started** at his request: [ta-notes/estimates.md](ta-notes/estimates.md). Tonight:
-  README 1.2x mine / 2.1x his; CI review 0.6x mine. Too few entries to conclude anything.
-- **Boss Fight #1 still ◐ on the dashboard**; he hasn't accepted or disputed it. Fight finding #2
-  (stale artifact): he reinstalled, checked the output and uninstalled on 09-20 (his account, shell
-  history agrees). #3–#6 open in `boss-fights/01-telemetry/NOTES.md`.
-- **`json.tool` and `json.loads` accept `-Infinity`** — found writing the CI customer step; textbook 17
-  corrected. Worth remembering for the `-Infinity` test still open below.
-- **Two misses of mine tonight, same shape:** gave him a ship task he'd already done (checked
-  `uv tool list`, not history), and pinned `setup-uv@v10`, a tag that doesn't exist, which failed
-  CI's first run. Both came from checking something *near* the fact instead of the fact itself.
+- Started Wed 2026-09-09. **39.68 h logged.** Week 3, calendar day 2.
+- **Week 3's six checklist items are all covered as of this morning.** Step 5 (references / pointers
+  / values, `const` correctness) took 63 min against my 60–90 min — 0.84x, my first estimate to land
+  in range. Textbook 21 written.
+- **The boxes are not ticked, and I told him why.** Every line of C++ so far is in untracked
+  `cpp_test/`, a struct that prints `welcome` and `goodbye`. No program with a reason to exist.
+  He accepted that framing without pushing back.
+- **The week-3 deliverable is now written down:** [`cpp_telemetry/SPEC.md`](../cpp_telemetry/SPEC.md).
+  Thin C++ port of telemetry — CSV → `Reading` objects → per-robot min/max/mean → stdout, CMake,
+  clean under `-Wall -Wextra`. Explicit out-of-scope list (JSON, error taxonomy, CLI flags, tests,
+  fight findings) because week 2 ran ~2.5x by growing exactly that way. Hold that line.
+- **Three design questions are open and are his**, in the SPEC: what owns the collection; which
+  functions take `const&` / `&` / value and why; where malformed rows go with exceptions out of
+  scope. He goes first, out loud, before any code. That third one is genuinely hard and has no clean
+  answer — the point is his first instinct, not the right one.
+- **Boss Fight #1 still ◐ on the dashboard**; still neither accepted nor disputed. #3–#6 open in
+  `boss-fights/01-telemetry/NOTES.md`.
+- Morning session, 08:32–09:37, first one of the year. Denser and sharper than the evenings.
 
 ## Next session
 
 1. **Log hours:** run `date` at the opener. Log any estimate given in `estimates.md`.
-2. **Week 3 step 5 is next: references vs pointers vs values, and `const` correctness.** The only
-   untouched checklist item, and the hardest — it is where copies, dangling references and `const`
-   actually bite. Everything else in week 3 was covered 09-22. Make copies *visible* (a printing
-   copy constructor) the same way destructors made lifetime visible; that framing worked.
-3. **No real C++ has been written yet.** Everything so far is a toy `Reading` in untracked
-   `cpp_test/`. The week-3 vehicle — a thin telemetry port, one file, one struct, one summary —
-   is still unwritten, and that is where any of this consolidates. Scope cap matters: week 2 was
-   eaten by exactly that kind of growth.
-4. **Do not let him conclude week 3 is done.** He noticed the pace himself ("kinda changes the
-   timeline"). Steps 1–4 took 2.05h against my ~7.5h, but the session was guided throughout — the
-   ODR diagnosis, the out-of-line syntax and the `static` catch were all mine. Recognition is not
-   recall; boss fight #2 (week 7) is the honest test.
-5. He wants to fix `telemetry/` with ideas from the fight. His README's "What's next" section holds
-   that list now. Don't let it eat C++ time, but don't block it either.
+2. **He rubber-ducks the three SPEC questions before opening an editor.** Do not answer them. If he
+   stalls on #3, the smallest useful hint is that C++ has several answers (out-params, a
+   status-plus-value struct, `std::optional`) and none is obviously right — not which to pick.
+3. **Then he writes `cpp_telemetry/` himself.** This is the first real C++ and the first generative
+   C++ work; expect the ratio to look nothing like this morning's 0.84x. Per his own hypothesis the
+   generative hours are the valuable ones, so slowness here is the point, not a problem.
+4. **Guard the scope cap.** The out-of-scope list in the SPEC is not negotiable this week. Things he
+   wants to add get written down, not built.
+5. He still wants to fix `telemetry/` with ideas from the fight. His README's "What's next" holds
+   that list. Don't let it eat C++ time, don't block it.
 
-## 2026-09-22 — what worked
+## 2026-09-23 — what worked
 
-- **He named the failure mode himself:** *"this was a teacher showing commands and their outputs and
-  a student being like mmm yes, interesting, it's hard to make sense of it without a reason to make
-  sense of it."* Correct, and it was the turning point of the session. Demos → a build he had to
-  make work. Everything good after that came from tasks with a predict-before-you-run step.
-- **"mmmm interesting" is his tell for passive watching.** He used the phrase twice; the second time
-  naming it back to him converted the moment into a 30-second action. Watch for it.
-- **Predict-then-run is the format that works.** Every real insight tonight came from a wrong
-  prediction: the constructor undefined reference, `static` hiding the linker error, `goodbye c`
-  never printing, LIFO destruction order. He is not precious about being wrong when he wrote the
-  guess down first.
-- **Environment papercuts: just fix them.** The Windows Caps Lock OSD was Logi Options+, found in
-  30 seconds via `powershell.exe Get-Process` from WSL. He responded "omg tysm". That is the
-  correct division of labor and he feels it.
-- **I over-estimated the clock three times** (19:05, 19:15 when it was 19:09). Run `date`. Every
-  time. Standing instruction, broken three times in one session.
+- **Predict-then-run, again, every time.** Every insight came from a wrong prediction written down
+  first: the empty copy-constructor body, `Reading b = a` as a stored recipe, and `r = j` predicted
+  as `1, 2, 2`. He is not precious about being wrong when the guess is on record. This is the format.
+- **He called out my verbal tic** — "can't wait for you to say 'you're half right, but the bit
+  you're wrong on will bite later'". He was right; I'd used that shape three times. Dropped it. Worth
+  noticing that the framing had become a formula he could predict, which makes it stop landing.
+- **Verifying his "fixed fixed" caught a miss.** He'd deleted the broken copy constructor rather than
+  fixing it, which made the symptom go away and threw out the instrument. Reading the file took
+  10 seconds. Keep doing this — two of Monday's misses were exactly this shape.
+- **Checking GCC's actual output twice changed what I wrote.** The dangling reference segfaulted
+  rather than printing stale bytes; the address turned out to be `0`, GCC having replaced the code
+  outright. I had been about to tell him the stale-bytes story. Also verified the `discards
+  qualifiers` wording rather than quoting from memory.
+- **His Rust background is a live asset.** He reached for `mut` unprompted when explaining `const`,
+  and the C++/Rust default inversion landed immediately. Use Rust as the bridge for ownership and
+  lifetime in week 4; it will be cheaper than teaching from Python.
+- **"goodnes so references are kinda dangerous"** needed correcting, not agreeing with. The hazard is
+  lifetime, not references — a pointer dangles identically and can also be null. Left him with the
+  parameter-safe / returned-or-stored-is-the-risk rule.
 
 ## Open, his — the week-2 `telemetry/` project (not the fight rebuild)
 

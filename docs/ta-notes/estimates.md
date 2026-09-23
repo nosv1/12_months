@@ -35,6 +35,7 @@ into measurements.
 | 09-21 | Review CI customer step; green run on push | review | — | 10 min | 6 min (18:46–18:52) | 0.6x | Two questions, both right in substance; corrected "more global PATH" and "separate machine". |
 | 09-22 | Week 3 complete: all six syllabus checklist items | read | — | 11–13h | open | — | Given at the start of week 3, before any C++ was written. Sequenced as five steps of ~2h each. |
 | 09-22 | Week 3 steps 1–4 (build stages, headers/TU/ODR, CMake, ctors/dtors) | read | — | ~7.5h (2 + 2 + 1.5 + 2) | 2.05h | 0.27x | **My estimate was 3.7x too high.** Caveat: the session was heavily guided — I diagnosed the ODR bug from his files, supplied out-of-line member syntax, and found the file-scope `static`. Not a clean measurement of him working alone. Step 5 (references/pointers/values, const) untouched, and no C++ written outside a toy. |
+| 09-23 | Week 3 step 5: references/pointers/values + `const` correctness understood | read | — | 60–90 min | 63 min (08:32–09:35) | 0.84x | Predict-then-run throughout; wrong predictions on copy-ctor signature (recovered), `Reading b = a` semantics, and `r = j` rebinding. Guided, but he wrote every line and made every prediction unaided. |
 
 ## Working hypothesis — his, 2026-09-22
 
