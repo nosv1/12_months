@@ -29,6 +29,12 @@ repo-convention change.
   was reverted — `*` is illegal on NTFS and would break checkout on the Windows side of the
   planned dual-boot.
 
+- **Estimates are instrumentation, not an objective.** His call, 2026-09-23: *"the time estimates
+  are not a priority, we don't need to change how we're working to get better data in that realm."*
+  Raised after I suggested choosing work that would populate the generative column. Keep logging
+  estimates when they're given; never let the log influence what gets built. The goal is employable
+  robotics capability — hirable at 6 months, engineer at 12 — and the log serves that or it goes.
+
 ## Authorship and docs
 
 - **Commits Claude makes are authored as Claude**, not as Chris:

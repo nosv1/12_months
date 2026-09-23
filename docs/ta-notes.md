@@ -23,10 +23,10 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-23 16:50.**
+**Updated 2026-09-23 16:59.**
 
-- Started Wed 2026-09-09. **43.16 h logged.** Three sessions today: 08:32–09:37, 10:58–13:07,
-  15:29–16:49. **4.56 h today**, his longest day of the year.
+- Started Wed 2026-09-09. **43.33 h logged.** Three sessions today: 08:32–09:37, 10:58–13:07,
+  15:29–16:59. **4.73 h today**, his longest day of the year.
 - **`cpp_telemetry/` meets every SPEC item except the README.** Verified from a clean tree: zero
   warnings under `-Wall -Wextra`, 359 good / 3 rejected, and all nine per-robot stats exact against
   ground truth I computed independently from the CSV. The 3 rejects are the only 3 malformed rows
