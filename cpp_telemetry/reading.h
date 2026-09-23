@@ -1,3 +1,7 @@
+#ifndef READING_H
+
+#define READING_H
+
 #include <string>
 
 struct Reading {
@@ -10,3 +14,5 @@ struct Reading {
           double temperature);
   std::string to_string() const;
 };
+
+#endif
