@@ -1,8 +1,10 @@
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <sstream>
 #include <vector>
 
+#include "grouper.h"
 #include "parser.h"
 #include "reader.h"
 #include "reading.h"
@@ -21,5 +23,7 @@ int main() {
   ParsedLines parsed_lines = parse_data_to_readings(data);
   std::cout << "Readings: " << parsed_lines.readings.size() << std::endl;
   std::cout << "Rejected readings: " << parsed_lines.bad_rows.size() << std::endl;
+
+  std::map<std::string, std::vector<Reading>> robots = group_robots(parsed_lines.readings);
   return 0;
 }
