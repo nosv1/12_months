@@ -1,10 +1,11 @@
 #include "reading.h"
 
+#include <iostream>
 #include <sstream>
 #include <string>
 
-Reading::Reading(std::string timestamp, std::string robot_id, double velocity, double battery,
-                 double temperature)
+Reading::Reading(Timestamp timestamp, RobotID robot_id, Velocity velocity, Battery battery,
+                 Temperature temperature)
     : timestamp(timestamp),
       robot_id(robot_id),
       velocity(velocity),
@@ -13,10 +14,10 @@ Reading::Reading(std::string timestamp, std::string robot_id, double velocity, d
 
 std::string Reading::to_string() const {
   std::ostringstream oss;
-  oss << "timestamp: " << this->timestamp;
-  oss << ", robot_id: " << this->robot_id;
-  oss << ", velocity: " << this->velocity;
-  oss << ", battery: " << this->battery;
-  oss << ", temperature: " << this->temperature;
+  oss << "timestamp: " << this->timestamp.v;
+  oss << ", robot_id: " << this->robot_id.v;
+  oss << ", velocity: " << this->velocity.v;
+  oss << ", battery: " << this->battery.v;
+  oss << ", temperature: " << this->temperature.v;
   return oss.str();
 }
