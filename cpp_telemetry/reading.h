@@ -5,26 +5,26 @@
 
 struct Timestamp {
   std::string v;
-  Timestamp(std::string v) { this->v = v; }
+  explicit Timestamp(std::string v) { this->v = v; }
 };
 
 struct RobotID {
   std::string v;
-  RobotID(std::string v) { this->v = v; }
+  explicit RobotID(std::string v) { this->v = v; }
 };
 
 struct Velocity {
   double v;
-  Velocity(std::string v) { this->v = std::stod(v); }
+  explicit Velocity(std::string v) { this->v = std::stod(v); }
 };
 
 struct Battery {
   double v;
-  Battery(std::string v) { this->v = std::stod(v); }
+  explicit Battery(std::string v) { this->v = std::stod(v); }
 };
 struct Temperature {
   double v;
-  Temperature(std::string v) { this->v = std::stod(v); }
+  explicit Temperature(std::string v) { this->v = std::stod(v); }
 };
 
 struct Reading {
