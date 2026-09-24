@@ -4,4 +4,4 @@
 
 #include "reading.h"
 
-std::map<std::string, std::vector<Reading>> group_robots(std::vector<Reading>& readings);
+std::map<std::string, std::vector<Reading>> group_robots(const std::vector<Reading>& readings);
