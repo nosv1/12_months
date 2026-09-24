@@ -150,12 +150,12 @@ Do not rush it. If you need a sixth week, take it from Part 3.
 
 ### Week 3 — C++ that compiles
 
-- [ ] Compilation model: preprocessor → compile → link (and what each error looks like)
-- [ ] Headers, translation units, ODR
-- [ ] CMake — enough to build a multi-file project
-- [ ] Classes, constructors, destructors
-- [ ] References vs pointers vs values
-- [ ] `const` correctness
+- [x] Compilation model: preprocessor → compile → link (and what each error looks like)
+- [x] Headers, translation units, ODR
+- [x] CMake — enough to build a multi-file project
+- [x] Classes, constructors, destructors
+- [x] References vs pointers vs values
+- [x] `const` correctness
 
 ### Week 4 — Memory and ownership
 

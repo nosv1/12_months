@@ -23,14 +23,15 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-24 17:10.** Mid-session: he is at dinner, back for ~1 h of week 4.
+**Updated 2026-09-24 17:20.** Mid-session: he is at dinner, back for ~1 h of week 4.
 
-- **44.25 h logged through 09-23.** Today's first block started **16:11**; he left for dinner
-  ~17:00 (exact time not known — **ask when he's back**, don't guess). Log both blocks at sign-off.
-- **Week 3 deliverable is done.** README finalized (`7e9affb`), strong-type constructors now
-  `explicit` (`c26b10b`). Clean build, zero warnings, 359/3 unchanged — verified 17:0x.
-- **Week 3 is NOT ticked.** I told him I'd tick it; `decisions.md` says ticks happen Sunday after
-  review. Tick Sun 09-27 unless he objects. Say so when he's back.
+- **45.20 h logged.** Today's first block 16:11–17:08 (end = his `finalize readme` commit). Log
+  the post-dinner block at sign-off: ask for the start time, don't guess.
+- **Week 3 closed and ticked** (dashboard + syllabus), at his call — see decisions.md for the
+  changed tick rule. Evidence per item checked first: textbooks 20–23, hours lines 09-22/23.
+  README finalized (`7e9affb`), strong types `explicit` (`c26b10b`), 359/3 unchanged.
+- **Dashboard weeks 01 and 02 are still `[ ]`.** Week 1's syllabus items are all `[x]`; week 2
+  has "project setup from an empty directory, unaided" open and Boss Fight #1 at ◐. Raise once.
 - **Textbook 23 written** (converting constructors / `explicit`), every claim compile-tested.
   **Textbook 22 corrected**: it quoted `_GLIBCXX_DEBUG`'s message as `_GLIBCXX_ASSERTIONS`'s, and said
   the bad row was one field / `row[1]` (it's four fields / `row[4]`). Written from memory on 09-23;

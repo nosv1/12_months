@@ -20,5 +20,7 @@
 
 20260923 1900 - 1955 (0.92 hours -- cpp_telemetry README first draft, his prose. Review found: Q1/Q2 answers didn't match the code (non-const & params, grouping copies every Reading); Q3 omits the stod try/catch; segfault credited to -W flags rather than -D_GLIBCXX_ASSERTIONS; missing-file error is a linker error, not a compiler error. Fixed the const& params himself (9787481). Rest carried to next session)
 
+20260924 1611 - 1708 (0.95 hours -- README closed out: Q2 per-function answers, Q3 try/catch rationale, known issues (out_of_range, nan), linker-not-compiler, _GLIBCXX_ASSERTIONS reproduced and its message decoded. Found by prediction that non-explicit strong-type constructors let five swapped strings compile; fixed with explicit on the wrapper types (c26b10b). Week 3 closed and ticked. Textbook 23)
+
 ### Estimated Task Times
 

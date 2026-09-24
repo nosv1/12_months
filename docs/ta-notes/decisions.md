@@ -14,7 +14,10 @@ repo-convention change.
   Estimates name a checkable end state, not a topic. Compare on Sundays.
 - **Session goals are outcomes he can check**, phrased as the problem, not the tool (2026-09-12).
   "Every bad row has a failing-if-broken test", not "understand parametrize."
-- **Ticks happen on Sunday, after review** — not when he feels done.
+- **Ticks happen when the week's evidence is verified**, not on a fixed day and not when he feels
+  done. Originally "Sunday, after review"; he overrode it 2026-09-24 ("if week 3 is done, lets log
+  it, tick it, and move on"). The safeguard that matters survives: I check each checklist item
+  against a record (textbook entry, hours line, commit) before ticking. Sunday review still happens.
 - **Working off days (Wed–Sat) is his call.** Accepted 2026-09-12. Revisit only if hours drop or he
   reports burnout, around week 4.
 - **Toolchain prereq not added to the syllabus.** Installed and verified before week 3, so moot.
