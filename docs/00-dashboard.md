@@ -10,7 +10,7 @@ Single source of truth. Update every Sunday.
 
 | Part | Weeks | Focus | Status |
 | --- | --- | --- | --- |
-| 1 | 1–2 | Reactivation | ☐ |
+| 1 | 1–2 | Reactivation | ✓ |
 | 2 | 3–7 | C++ + Linux systems | ☐ |
 | 3 | 8–10 | Robotics fundamentals | ☐ |
 | 4 | 11–15 | ROS 2 | ☐ |
