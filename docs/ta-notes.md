@@ -23,42 +23,29 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-24 17:20.** Mid-session: he is at dinner, back for ~1 h of week 4.
+**Updated 2026-09-24 18:10.** He may come back later tonight.
 
-- **45.20 h logged.** Today's first block 16:11–17:08 (end = his `finalize readme` commit). Log
-  the post-dinner block at sign-off: ask for the start time, don't guess.
-- **Week 3 closed and ticked** (dashboard + syllabus), at his call — see decisions.md for the
-  changed tick rule. Evidence per item checked first: textbooks 20–23, hours lines 09-22/23.
-  README finalized (`7e9affb`), strong types `explicit` (`c26b10b`), 359/3 unchanged.
-- **Boss Fight #1 → ✓ (passed with gaps on record)**, weeks 01/02 ticked, week-2 setup item
-  ticked — agreed 2026-09-24. He'd moved on; I argued "pass" over permanent ◐ since the fight
-  measures blank-page build and that held. Gaps stay in the dashboard note and the fight review.
-- **Textbook 23 written** (converting constructors / `explicit`), every claim compile-tested.
-  **Textbook 22 corrected**: it quoted `_GLIBCXX_DEBUG`'s message as `_GLIBCXX_ASSERTIONS`'s, and said
-  the bad row was one field / `row[1]` (it's four fields / `row[4]`). Written from memory on 09-23;
-  his real output today disproved it.
+- **46.00 h logged.** Today: 16:11–17:08 (week 3 close-out), 17:20–18:08 (week 4; start time his
+  estimate). Session log: [sessions/week-04.md](ta-notes/sessions/week-04.md).
+- **Weeks 1–3 ticked, Part 1 ticked, Boss Fight #1 ✓ with gaps on record** — all his call today.
+  Tick rule changed to evidence-based (decisions.md).
+- **Week 4 started: `cpp_memory/`** (his commit `fd4ec0b`, "test leak -> ASan -> RAII"). Done:
+  stack vs heap, RAII, `unique_ptr` (not yet moved), leak + double free under ASan. Textbook 24.
+  Syllabus week-4 items **not ticked yet** — tick when the week's evidence is complete.
+- `cpp_memory/` has **no README** yet. Convention says every project gets one; his to write,
+  short is fine. Raise when the week-4 work is done, not before.
+- Textbooks 22 (corrected) and 23 written earlier today.
 
-## Next session (tonight, after dinner): week 4, hour 1
+## Next session: move semantics (~30–40 min, my estimate, logged)
 
-Syllabus: stack vs heap, RAII, `unique_ptr`/`shared_ptr`, move semantics, dangling/UAF, sanitizers.
-Callbacks already set up: `unique_ptr` for the wrong reason (09-23), dangling refs (textbook 21),
-`-fsanitize=address` (mentioned, never run). He has already seen LIFO destruction order (09-22) —
-RAII is that fact, used on purpose.
+1. `std::move` one `unique_ptr` into another; predict what's left in the first, then use it.
+   (Moved-from = null → segfault or ASan. Also the on-ramp to use-after-free.)
+2. A class with printing copy ctor and move ctor; predict which runs for: `T b = a`,
+   `T b = std::move(a)`, returning a local by value, `push_back(a)` vs `push_back(std::move(a))`.
+3. The point: `std::move` does nothing at runtime — it's a cast that *permits* a move.
+Then: `shared_ptr` (when ownership is genuinely shared), use-after-free, one valgrind run.
 
-**He writes an estimate first** (decisions.md). Suggested checkable end state for the hour: *a leak
-he wrote, found by a tool, then made impossible by a type.* Predict-then-run at every step:
-
-1. **Stack vs heap by lifetime.** A class that prints in ctor/dtor; one on the stack, one via
-   `new` with no `delete`. Predict which destructor messages print. (One won't.)
-2. **Make the leak visible.** Rebuild with `-fsanitize=address -g`. Predict the output first;
-   LeakSanitizer names the allocation site.
-3. **RAII.** Own a real resource in a ctor/dtor pair, then leave the scope early (`return`, a
-   `throw`). Predict whether cleanup runs. Then: where in `cpp_telemetry` is this already happening
-   without him writing it? (`std::ifstream` in `reader.cpp`.)
-4. If time: replace the `new` with `std::make_unique`; try to copy it and read the error — that
-   error is the ownership rule stated by the compiler, and the on-ramp to move semantics.
-
-He writes all of it. I explain, predict-check, and read errors with him.
+**Keep replies short.** He's tired of reading after ~2 h. One question, then "run it."
 
 ## 2026-09-23 — what worked
 
