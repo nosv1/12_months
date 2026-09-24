@@ -30,13 +30,13 @@ He reads these notes too. Write them so that's fine.
 - **Week 3 closed and ticked** (dashboard + syllabus), at his call — see decisions.md for the
   changed tick rule. Evidence per item checked first: textbooks 20–23, hours lines 09-22/23.
   README finalized (`7e9affb`), strong types `explicit` (`c26b10b`), 359/3 unchanged.
-- **Dashboard weeks 01 and 02 are still `[ ]`.** Week 1's syllabus items are all `[x]`; week 2
-  has "project setup from an empty directory, unaided" open and Boss Fight #1 at ◐. Raise once.
+- **Boss Fight #1 → ✓ (passed with gaps on record)**, weeks 01/02 ticked, week-2 setup item
+  ticked — agreed 2026-09-24. He'd moved on; I argued "pass" over permanent ◐ since the fight
+  measures blank-page build and that held. Gaps stay in the dashboard note and the fight review.
 - **Textbook 23 written** (converting constructors / `explicit`), every claim compile-tested.
   **Textbook 22 corrected**: it quoted `_GLIBCXX_DEBUG`'s message as `_GLIBCXX_ASSERTIONS`'s, and said
   the bad row was one field / `row[1]` (it's four fields / `row[4]`). Written from memory on 09-23;
   his real output today disproved it.
-- **Boss Fight #1 still ◐.**
 
 ## Next session (tonight, after dinner): week 4, hour 1
 
