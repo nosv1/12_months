@@ -18,5 +18,7 @@
 
 20260923 1529 - 1659 (1.50 hours -- cpp_telemetry finished to spec except the README: grouper (map<string, vector<Reading>>), analysis (min/max/avg), ParsedLines partition, const& applied throughout, std::optional for a robot with no readings, lambda helper. All seven SPEC boxes verified against ground truth computed independently from the CSV -- 359/3 and all nine stats exact. Bugs found and fixed: inverted map-membership check, unconditional early return killing the whole analysis, numeric_limits<double>::min vs lowest, value_or(NULL) silently yielding 0.0)
 
+20260923 1900 - 1955 (0.92 hours -- cpp_telemetry README first draft, his prose. Review found: Q1/Q2 answers didn't match the code (non-const & params, grouping copies every Reading); Q3 omits the stod try/catch; segfault credited to -W flags rather than -D_GLIBCXX_ASSERTIONS; missing-file error is a linker error, not a compiler error. Fixed the const& params himself (9787481). Rest carried to next session)
+
 ### Estimated Task Times
 

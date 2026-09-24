@@ -23,10 +23,12 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-23 16:59.**
+**Updated 2026-09-23 19:55.**
 
-- Started Wed 2026-09-09. **43.33 h logged.** Three sessions today: 08:32–09:37, 10:58–13:07,
-  15:29–16:59. **4.73 h today**, his longest day of the year.
+- Started Wed 2026-09-09. **44.25 h logged.** Four sessions today: 08:32–09:37, 10:58–13:07,
+  15:29–16:59, 19:00–19:55. **5.65 h today**, his longest day of the year.
+- **README first draft exists (his, ~20 min, uncommitted at sign-off).** I dedented its code
+  fences (formatting only). He asked to be reminded of the review list next session — see below.
 - **`cpp_telemetry/` meets every SPEC item except the README.** Verified from a clean tree: zero
   warnings under `-Wall -Wextra`, 359 good / 3 rejected, and all nine per-robot stats exact against
   ground truth I computed independently from the CSV. The 3 rejects are the only 3 malformed rows
@@ -48,10 +50,23 @@ He reads these notes too. Write them so that's fine.
 ## Next session
 
 1. **Log hours:** run `date` at the opener. Log any estimate given in `estimates.md`.
-2. **README first**, then week 3 closes. Skeleton is at `cpp_telemetry/README.md`; he was resistant
-   to the "what broke" section ("everything broke mate") and accepted the filter *what would break
-   someone else, or what changed how you think*. Four items named for him: most vexing parse,
-   unchecked `operator[]`, the identical-min/max/avg bug, and the latent `numeric_limits::min`.
+2. **Remind him: README fixes from the 09-23 evening review.** He asked for this reminder.
+   - ~~Q2: `parse_data`/`group_robots` took non-const `&`~~ — fixed in code (9787481). Q2 answer is
+     still a blanket statement; the question asks for per-function justification.
+   - Q1: says readings are held "until grouped" — actually `push_back(reading)` **copies** every
+     Reading; `parsed_lines.readings` lives on in `main`. Two copies. Also `row = data[i]` copies.
+     His call whether to change code or wording; the README must describe what happens.
+   - Q3: doesn't mention the `stod` → `std::invalid_argument` try/catch, despite exceptions being
+     out of scope. That's a design decision; write it down.
+   - Known issues to add: uncaught `std::out_of_range` (`1e999` crashes); `stod("nan")` accepted
+     (sample line 39, velocity); `-273.2` in his own output example and the DoD "matches Python"
+     clause (Python rejects that row).
+   - What broke: segfault credited to "-W flags" — it was `-D_GLIBCXX_ASSERTIONS`; `-Wall -Wextra`
+     are compile-time only. He should look it up, not be told. The CMake story is a **linker**
+     error (undefined reference), not a compiler error; heading is still my second-person template.
+   - Small: `TelemetryAnalysis` → `TemperatureAnalysis`; "null" → `std::nullopt`; missing `>` in
+     the map type; two leftover `<!-- -->` template comments.
+   Then week 3 closes.
 3. **Latent bugs still in the code** — raise only if he doesn't put them in "Known issues":
    `numeric_limits<double>::min()` as the max seed (wrong for all-negative data; may be fixed since
    I flagged it), and `stod` accepting trailing junk (`"1.5kg"` → 1.5).
