@@ -56,6 +56,11 @@ there. Check before summarising his work back to him.
   Calibrate Part 5 (navigation, wk 16–19) and Part 3 like the DS material: jog, don't re-teach
   the algorithms; teach the ROS 2 / Nav2 plumbing around them. MAVLink is a live example for
   week 7 (serialization, UDP). This is the part of the year he's looking forward to; use it.
+- **What he enjoys is optimization** (2026-09-24): "it was just fun to write code that solved a
+  problem the best it could" — path planning, and a genetic algorithm for class scheduling. Points
+  at planning/optimization as a lane (motion planning, trajectory opt, multi-robot task
+  allocation). Bring up at the capstone scope decision; watch whether Parts 5 and 10 light him up.
+  Also his own framing of the career worry: likes writing code himself more than directing AI.
 
 ## Things to watch
 
