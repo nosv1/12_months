@@ -51,6 +51,12 @@ there. Check before summarising his work back to him.
   fix"). Point at verified evidence (e.g. "refactor kept all 8 defects caught").
 - Limited evening hours. Lead with the answer.
 
+- **Prior robotics beyond Gazebo** (told me 2026-09-24): a graduate **path planning** course,
+  "one of the most fun classes i've ever done", and hands-on **ArduPilot** drone waypoint work.
+  Calibrate Part 5 (navigation, wk 16–19) and Part 3 like the DS material: jog, don't re-teach
+  the algorithms; teach the ROS 2 / Nav2 plumbing around them. MAVLink is a live example for
+  week 7 (serialization, UDP). This is the part of the year he's looking forward to; use it.
+
 ## Things to watch
 
 - Commits: one idea each since week 2 started (`862cc49`/`284ad5a` duplicate message aside). Keep
