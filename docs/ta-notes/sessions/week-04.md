@@ -24,3 +24,9 @@ session. Newest last.
   hours of reading my text is the fatigue, not C++ — shorter replies, fewer bullets, more "run it."
 - **Pace:** ~half the week-4 checklist in 38 minutes of work. Remaining: move semantics,
   `shared_ptr`, use-after-free, valgrind.
+
+**After sign-off (not logged as hours):** he talked through where this goes — companies writing
+"a lot of AI code", preferring to write code himself, own venture vs getting hired. Told him it's
+not a week-4 decision and that the syllabus projects serve both. What he enjoys: optimization —
+path planning, a genetic algorithm for class scheduling. Named planning/optimization as a lane;
+suggested ArduPilot for the week-40 open-source PR. Ended with "keep looking out for my future."

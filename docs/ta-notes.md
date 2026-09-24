@@ -23,7 +23,8 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-24 18:10.** He may come back later tonight.
+**Updated 2026-09-24, session ended by him after 18:08.** Last work block 17:20–18:08 is logged; the
+chat after it (career, below) was not work time.
 
 - **46.00 h logged.** Today: 16:11–17:08 (week 3 close-out), 17:20–18:08 (week 4; start time his
   estimate). Session log: [sessions/week-04.md](ta-notes/sessions/week-04.md).
@@ -35,6 +36,12 @@ He reads these notes too. Write them so that's fine.
 - `cpp_memory/` has **no README** yet. Convention says every project gets one; his to write,
   short is fine. Raise when the week-4 work is done, not before.
 - Textbooks 22 (corrected) and 23 written earlier today.
+- **Career conversation after sign-off** — he likes writing code himself over directing AI, and
+  what he enjoys is optimization (path planning, a GA scheduler). Pointed at planning/optimization
+  as a lane and ArduPilot as the open-source PR target. Details in observations.md. He asked me to
+  "keep looking out for my future": that means accurate, not encouraging.
+- **Several of my commits today are unpushed** (he pushes). Mention it at the opener if
+  `git status` shows `dev` ahead of origin.
 
 ## Next session: move semantics (~30–40 min, my estimate, logged)
 
