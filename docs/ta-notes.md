@@ -23,58 +23,41 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-23 19:55.**
+**Updated 2026-09-24 17:10.** Mid-session: he is at dinner, back for ~1 h of week 4.
 
-- Started Wed 2026-09-09. **44.25 h logged.** Four sessions today: 08:32–09:37, 10:58–13:07,
-  15:29–16:59, 19:00–19:55. **5.65 h today**, his longest day of the year.
-- **README first draft exists (his, ~20 min, uncommitted at sign-off).** I dedented its code
-  fences (formatting only). He asked to be reminded of the review list next session — see below.
-- **`cpp_telemetry/` meets every SPEC item except the README.** Verified from a clean tree: zero
-  warnings under `-Wall -Wextra`, 359 good / 3 rejected, and all nine per-robot stats exact against
-  ground truth I computed independently from the CSV. The 3 rejects are the only 3 malformed rows
-  and cover two distinct failure kinds.
-- **Remaining: the README.** I wrote a skeleton (headings + prompts only, no content); the prose is
-  his. He said he'd fill it next session. **Do not let week 3 be ticked until it exists.**
-- **He updated the SPEC design answers post-hoc**, unprompted, at 16:47 — including where he changed
-  his mind. That was the thing I asked for and the most valuable artifact of the day.
-- **Total C++ to date: ~6.6 h over two days**, from `hello.cpp` to a six-TU CMake project. I said
-  "six days ago" at one point; he corrected me. Third time-approximation miss on record — the
-  standing instruction is to run `date`/check `git log`, not estimate.
-- **My deliverable estimate was ~2x too high** (~6–9 h against 3.5 h actual), but **his correction
-  is the one to keep**: the speed came from the *problem* already being solved in his head, not from
-  him being fast at design. That was the SPEC's deliberate choice — known domain, so the difficulty
-  lands on the language. The entry measures C++ mechanics only. Boss fight #2 (week 7) is still the
-  honest test of blank-page work.
-- **Boss Fight #1 still ◐ on the dashboard**, still neither accepted nor disputed.
+- **44.25 h logged through 09-23.** Today's first block started **16:11**; he left for dinner
+  ~17:00 (exact time not known — **ask when he's back**, don't guess). Log both blocks at sign-off.
+- **Week 3 deliverable is done.** README finalized (`7e9affb`), strong-type constructors now
+  `explicit` (`c26b10b`). Clean build, zero warnings, 359/3 unchanged — verified 17:0x.
+- **Week 3 is NOT ticked.** I told him I'd tick it; `decisions.md` says ticks happen Sunday after
+  review. Tick Sun 09-27 unless he objects. Say so when he's back.
+- **Textbook 23 written** (converting constructors / `explicit`), every claim compile-tested.
+  **Textbook 22 corrected**: it quoted `_GLIBCXX_DEBUG`'s message as `_GLIBCXX_ASSERTIONS`'s, and said
+  the bad row was one field / `row[1]` (it's four fields / `row[4]`). Written from memory on 09-23;
+  his real output today disproved it.
+- **Boss Fight #1 still ◐.**
 
-## Next session
+## Next session (tonight, after dinner): week 4, hour 1
 
-1. **Log hours:** run `date` at the opener. Log any estimate given in `estimates.md`.
-2. **Remind him: README fixes from the 09-23 evening review.** He asked for this reminder.
-   - ~~Q2: `parse_data`/`group_robots` took non-const `&`~~ — fixed in code (9787481). Q2 answer is
-     still a blanket statement; the question asks for per-function justification.
-   - Q1: says readings are held "until grouped" — actually `push_back(reading)` **copies** every
-     Reading; `parsed_lines.readings` lives on in `main`. Two copies. Also `row = data[i]` copies.
-     His call whether to change code or wording; the README must describe what happens.
-   - Q3: doesn't mention the `stod` → `std::invalid_argument` try/catch, despite exceptions being
-     out of scope. That's a design decision; write it down.
-   - Known issues to add: uncaught `std::out_of_range` (`1e999` crashes); `stod("nan")` accepted
-     (sample line 39, velocity); `-273.2` in his own output example and the DoD "matches Python"
-     clause (Python rejects that row).
-   - What broke: segfault credited to "-W flags" — it was `-D_GLIBCXX_ASSERTIONS`; `-Wall -Wextra`
-     are compile-time only. He should look it up, not be told. The CMake story is a **linker**
-     error (undefined reference), not a compiler error; heading is still my second-person template.
-   - Small: `TelemetryAnalysis` → `TemperatureAnalysis`; "null" → `std::nullopt`; missing `>` in
-     the map type; two leftover `<!-- -->` template comments.
-   Then week 3 closes.
-3. **Latent bugs still in the code** — raise only if he doesn't put them in "Known issues":
-   `numeric_limits<double>::min()` as the max seed (wrong for all-negative data; may be fixed since
-   I flagged it), and `stod` accepting trailing junk (`"1.5kg"` → 1.5).
-4. **Then tick week 3 on the dashboard and syllabus** — six checklist items plus a working
-   deliverable with a README he wrote.
-5. **Week 4 is memory and ownership.** Today set up three callbacks to use: `unique_ptr` (he reached
-   for it for the wrong reason and changed his mind), lambda capture-by-reference dangling, and
-   `-fsanitize=address` (already mentioned, not yet used).
+Syllabus: stack vs heap, RAII, `unique_ptr`/`shared_ptr`, move semantics, dangling/UAF, sanitizers.
+Callbacks already set up: `unique_ptr` for the wrong reason (09-23), dangling refs (textbook 21),
+`-fsanitize=address` (mentioned, never run). He has already seen LIFO destruction order (09-22) —
+RAII is that fact, used on purpose.
+
+**He writes an estimate first** (decisions.md). Suggested checkable end state for the hour: *a leak
+he wrote, found by a tool, then made impossible by a type.* Predict-then-run at every step:
+
+1. **Stack vs heap by lifetime.** A class that prints in ctor/dtor; one on the stack, one via
+   `new` with no `delete`. Predict which destructor messages print. (One won't.)
+2. **Make the leak visible.** Rebuild with `-fsanitize=address -g`. Predict the output first;
+   LeakSanitizer names the allocation site.
+3. **RAII.** Own a real resource in a ctor/dtor pair, then leave the scope early (`return`, a
+   `throw`). Predict whether cleanup runs. Then: where in `cpp_telemetry` is this already happening
+   without him writing it? (`std::ifstream` in `reader.cpp`.)
+4. If time: replace the `new` with `std::make_unique`; try to copy it and read the error — that
+   error is the ownership rule stated by the compiler, and the on-ramp to move semantics.
+
+He writes all of it. I explain, predict-check, and read errors with him.
 
 ## 2026-09-23 — what worked
 

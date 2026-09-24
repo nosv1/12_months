@@ -157,8 +157,8 @@ the factory gives the failure somewhere to live that isn't the exception system.
 
 ## `operator[]` does not bounds-check
 
-Line 301 of the sample CSV is a truncated row — a timestamp and nothing else. Reading `row[1]`
-segfaulted.
+Line 302 of the sample CSV (data row 301) is a truncated row — four fields instead of five,
+temperature missing. Reading `row[4]` segfaulted.
 
 ```cpp
 row[0]     // operator[]  — NO bounds check. Out of range is undefined behavior.
@@ -179,14 +179,26 @@ target_compile_options(telem PRIVATE -Wall -Wextra -D_GLIBCXX_ASSERTIONS)
 ```
 
 `_GLIBCXX_ASSERTIONS` enables libstdc++'s cheap precondition checks — `operator[]` on a `vector`,
-`front()` on an empty container, invalid iterators. A segfault becomes:
+`front()` on an empty container. It adds the bounds check `operator[]` normally skips, so the
+program aborts *before* the bad read instead of maybe-segfaulting after it. The actual output, from
+the four-field row (reproduced 2026-09-24):
 
 ```text
-Error: attempt to subscript container with out-of-bounds index 1, but container only holds
-1 elements.
+/usr/include/c++/13/bits/stl_vector.h:1128: std::vector<_Tp, _Alloc>::reference std::vector<_Tp, _Alloc>::operator[](size_type) [with _Tp = std::__cxx11::basic_string<char>; _Alloc = std::allocator<std::__cxx11::basic_string<char> >; reference = std::__cxx11::basic_string<char>&; size_type = long unsigned int]: Assertion '__n < this->size()' failed.
+Aborted (core dumped)
 ```
 
-with a line number. Small runtime cost; belongs in every debug build.
+Read it in three parts: **which operation** (`operator[]`), **on what** (`_Tp` is
+`basic_string<char>`, i.e. `std::string`, so a `vector<string>` — `row`, not `data`), and **which
+precondition** (index `__n` must be less than `size()`; here 4 is not less than 4). The file and
+line are libstdc++'s, not yours — `gdb` plus `bt` gets you from there to the call site.
+
+Small runtime cost; belongs in every debug build.
+
+*Correction (2026-09-24):* an earlier version of this entry quoted `Error: attempt to subscript
+container with out-of-bounds index...`. That is the message format of `_GLIBCXX_DEBUG`, the heavier
+debug mode, not `_GLIBCXX_ASSERTIONS`. It was written from memory; the real output above replaced
+it. Also corrected: the row is four fields, not one, and the failing index was 4, not 1.
 
 The heavier tool is `-fsanitize=address` (AddressSanitizer), which also catches use-after-free and
 buffer overruns — week 4 material, same idea.
@@ -274,7 +286,8 @@ Note the distinction, which costs time if missed:
   one bad field discards the row. Around each field means deciding what a `Reading` with one
   missing value means.
 - **Strong types** (`struct Velocity { double v; };`) prevent swapping same-typed arguments at a
-  call site, which the compiler otherwise accepts silently. They also push conversion into
+  call site, which the compiler otherwise accepts silently — *but only if their constructors are
+  `explicit`*. See [23](23-converting-constructors-and-explicit.md). They also push conversion into
   constructors, which is how the failure-reporting decision gets made by accident.
 - **`std::expected`** is C++23's answer to "a value or an error, with the error carrying detail."
   Not available in C++17, which is what ROS 2 Jazzy targets.

@@ -22,3 +22,24 @@ session. Newest last.
   correct division of labor and he feels it.
 - **I over-estimated the clock three times** (19:05, 19:15 when it was 19:09). Run `date`. Every
   time. Standing instruction, broken three times in one session.
+
+## 2026-09-24 — README close-out, `explicit`
+
+**16:11–~17:00, then dinner.**
+
+- **I overwrote his live edits.** He was saving README changes 16:16–16:26; I did a full-file Write
+  from a 16:13 read. Recovered from VS Code local history
+  (`~/.vscode-server/data/User/History/`), nothing lost. Rule: **re-read immediately before any
+  full-file write to a file he has open**, and prefer `Edit` for his files.
+- **My opening review list was partly stale** — three items copied from last night's notes that he
+  had already fixed. He asked "have you re-read readme since?" Same failure shape as the date
+  misses: trusting my notes over the artifact.
+- **Wrong prediction, best moment of the day.** "i hope that doesn't compile" → "well shit, it
+  compiles and runs no problem." Then put `explicit` on `Reading` first — wrong place, found with a
+  one-question hint. → textbook 23.
+- **I pushed an explain-back three rounds; he ended it: "mate, we're moving on."** Then apologised
+  for being blunt — he shouldn't have to. His one-liner was imprecise but his fix was correct and
+  in the right place; the second round was already enough. Cap explain-backs at one retry.
+- **The `_GLIBCXX_ASSERTIONS` reproduction worked**: comment out the size check, predict, run. He
+  decoded the message with prompts (got `row` and the `<` rule; said `data[i]` for the operator
+  until `_Tp` contradicted it). It also exposed that textbook 22 had quoted the wrong message.
