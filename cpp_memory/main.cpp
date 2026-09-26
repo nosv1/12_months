@@ -25,22 +25,17 @@ struct Tracer {
 };
 
 int main() {
-  auto p = std::make_shared<Tracer>();
-  // 1
-  std::cout << p.use_count() << ", " << p.get() << std::endl;
+  // borrowed int pointer
+  int* borrowed;
   {
-    auto q = p;
-    // 2
-    std::cout << p.use_count() << std::endl;
+    // unique pointer, p to int
+    std::unique_ptr<int> p(new int(7));
+    // p.get() is the address
+    borrowed = p.get();
+    // borrowed is now the address of p's int
+    // p's address gets deconstructed, so the address is freed,
   }
-  // 2
-  std::cout << p.use_count() << std::endl;
-  auto r = std::move(p);
-  // 2,
-  std::cout << r.use_count() << ", " << p.get() << std::endl;
-  std::cout << "resetting" << std::endl;
-  r.reset();
-  std::cout << "after reset" << std::endl;
-
+  // get the value at borrowed's address
+  std::cout << "*borrowed = " << *borrowed;
   return 0;
 }
