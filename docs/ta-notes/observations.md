@@ -81,3 +81,7 @@ there. Check before summarising his work back to him.
 - **09-12 late:** raised "sessions feel unproductive without coding" and "checklist as fast as
   possible" himself. Asked for a 0–10 skills rating — offered per-skill with evidence instead; not
   taken up, don't push. Drove a full parser redesign mostly on his own instincts.
+- **09-26:** his own read on stamina: *reading/explaining ~1 h a stint, 2 h max; pure coding
+  3–4 h.* Said after three prediction-heavy days (09-24/25/26) felt like "a lot of reading." Plan
+  sessions around it: front-load the concept, then hand over a build. Links to 09-12's "sessions
+  feel unproductive without coding" — the same signal, now with numbers.
