@@ -15,7 +15,7 @@
 | **Availability** | Evenings after work + Saturday |
 | **Primary languages** | Python + C++ |
 | **Core platform** | ROS 2 |
-| **Simulation** | Gazebo (primary), Isaac Lab (robot learning only) |
+| **Simulation** | Gazebo (primary), Isaac Lab (optional, robot learning only) |
 | **ML** | PyTorch, LeRobot |
 | **OS** | Linux (WSL2 → native dual-boot by Part 3) |
 | **Version control** | Git/GitHub |
@@ -70,22 +70,22 @@ can you delete it and rewrite it from memory tomorrow? See
 | --- | --- | --- | --- |
 | 1 | 1–2 | Reactivation | Telemetry toolkit |
 | 2 | 3–7 | **C++ + Linux systems** | Sensor simulator + network service |
-| 3 | 8–10 | Robotics fundamentals | Simulated mobile robot |
-| 4 | 11–15 | **ROS 2** | ROS robot system |
-| 5 | 16–19 | Navigation | Autonomous navigation in sim |
-| 6 | 20–22 | **Physical robot** | Working hardware robot |
-| 7 | 23–26 | Perception | Perception pipeline |
-| 8 | 27–29 | Deep learning | Vision model |
-| 9 | 30–33 | AI + robotics | Vision-guided robot |
-| 10 | 34–38 | **Manipulation + behavior** | Pick-and-place task system |
-| 11 | 39–42 | **Modern robot learning** | Learned policy (diffusion / BC) |
+| 3 | 8–12 | **Components + robotics fundamentals** | Bench rig + simulated mobile robot |
+| 4 | 13–17 | **ROS 2** | ROS robot system |
+| 5 | 18–21 | Navigation | Autonomous navigation in sim |
+| 6 | 22–24 | **Physical robot** | Working hardware robot |
+| 7 | 25–28 | Perception | Perception pipeline |
+| 8 | 29–31 | Deep learning | Vision model |
+| 9 | 32–35 | AI + robotics | Vision-guided robot |
+| 10 | 36–40 | **Manipulation + behavior** | Pick-and-place task system |
+| 11 | 41–42 | **Modern robot learning** | Learned policy (diffusion / BC) |
 | 12 | 43–45 | Systems engineering | Production-grade stack |
 | 13 | 46–52 | Capstone + career | Capstone + job campaign |
 
 Bold parts are where this revision differs most from the original draft.
 
 **Continuous background threads** run alongside everything from the week noted — build log
-(week 1), interview problems (week 20), applications (week 22). Details in
+(week 1), interview problems (week 20), applications (week 24). Details in
 [docs/background-threads.md](docs/background-threads.md).
 
 ---
@@ -215,13 +215,73 @@ bus, your abstraction was wrong — that's the lesson, not a failure.
 
 ---
 
-## Part 3 — Robotics Fundamentals · Weeks 8–10
+## Part 3 — Robotics Fundamentals · Weeks 8–12
 
-**Compressed from 4 weeks to 3** — you've used Gazebo before, so the simulation ramp is faster.
-The math is not optional, though. Coordinate frames are the single most common source of
-robotics bugs, and "I'll figure out transforms later" is a decision you pay for in Part 9.
+**Two weeks of physical components first, then math, kinematics, and simulation.** A robot is
+what it's made of, how it moves, and how it senses. Writing software for one without knowing
+those parts leaves gaps that show up in debugging and in interviews. The components weeks were
+added on a critique from Seth (MS Mechanical Engineering, robotics emphasis). Reasoning in
+[docs/syllabus-revisions.md](docs/syllabus-revisions.md) §13.
 
-### Week 8 — Robotics mathematics
+The simulation part is still compressed, because you've used Gazebo before. The math is not
+optional, though. Coordinate frames are the single most common source of robotics bugs, and
+"I'll figure out transforms later" is a decision you pay for in Part 9.
+
+**The four questions.** For every component in weeks 8–9, answer these in your own words: *what
+physical principle does it use, what does it output, how does it connect, and how does it fail?*
+The goal is not to memorize a parts catalogue. It's being able to pick up a component you've
+never seen, read its datasheet, and answer the four questions.
+
+**Bench kit, ~$100–150. Order by week 6.** Raspberry Pi 5 (it becomes the robot's computer in
+Part 6), an Arduino-class microcontroller, breadboard and jumpers, a multimeter, an IMU breakout,
+a DC gear motor with a quadrature encoder and a motor driver, a hobby servo, a small stepper and
+its driver, an ultrasonic rangefinder, and a thermocouple with an amplifier board. Plus a battery
+pack or bench supply that can run the motors.
+
+### Week 8 — Components I: compute, interfaces, sensing
+
+- [ ] Microcontroller vs single-board computer, and why real robots use both (the real-time
+      loop on one, Linux and planning on the other)
+- [ ] GPIO, pull-ups, debouncing, interrupts; PWM; analog signals and the ADC
+- [ ] Buses: UART, I2C, SPI. How each is wired, addressed, and clocked, and when each is used.
+      CAN: what it is and why vehicles and robot arms use it
+- [ ] Read one sensor from its datasheet register map, with no library
+- [ ] Proprioceptive sensors, which measure the robot itself: encoders (incremental, absolute,
+      quadrature), IMU (accelerometer, gyro, magnetometer), current sensing, force/torque,
+      limit switches
+- [ ] Exteroceptive sensors, which measure the world: camera, LiDAR, radar, ultrasonic,
+      time-of-flight, bump
+- [ ] Environmental sensors: thermocouple (and cold-junction compensation), thermistor, and the
+      analog chain from physical quantity to bits
+- [ ] How sensors lie: noise, drift, bias, quantization, sampling rate, latency. This is why
+      sensor fusion exists
+- [ ] Power: batteries (LiPo safety), regulators, common ground, and why motors brown out a Pi
+
+### Week 9 — Components II: actuators and control
+
+- [ ] Actuators: brushed DC, brushless with ESC, stepper, hobby servo vs smart servo, and linear
+      actuators (lead/ball screw, belt, pneumatic; hydraulic conceptually)
+- [ ] Transmissions: gear ratios and the torque–speed trade, backlash, belts, harmonic drives.
+      Torque–speed curves and stall current
+- [ ] Driving actuators: H-bridge and motor drivers, step/direction, servo PWM
+- [ ] Open loop vs closed loop, and what a stepper does when it misses steps
+- [ ] PID: what P, I and D each do, integral windup, derivative noise. Tune a real motor with
+      an encoder and plot the step response
+- [ ] Mounting: IMU placement and vibration, why a mount that isn't rigid invalidates your
+      extrinsics, field of view and occlusion, cable strain relief
+
+### Components deliverable — Bench Rig
+
+- A real IMU, read over I2C in C++, added to the week-7 sensor bus **without modifying the core**.
+  This is Boss Fight #2 again, this time with hardware.
+- A DC motor under PID velocity or position control, with a plotted step response and a
+  paragraph on how you tuned it.
+- A README with a four-questions table for every part on the bench.
+
+> **WSL note:** the Pi is its own Linux machine, so reach it over SSH. The Arduino connects
+> over USB, which WSL only sees through `usbipd-win`. Flashing from Windows is fine.
+
+### Week 10 — Robotics mathematics
 
 - [ ] Coordinate systems and frame conventions
 - [ ] Vectors, matrices, matrix multiplication as transformation
@@ -232,21 +292,20 @@ robotics bugs, and "I'll figure out transforms later" is a decision you pay for 
 
 You don't need mathematical perfection. You need intuition and correct signs.
 
-### Week 9 — Kinematics + sensors
+### Week 11 — Kinematics
 
-- [ ] Frames, links, joints
+- [ ] Frames, links, joints, and how the joints map to the actuators from week 9
 - [ ] Forward kinematics
 - [ ] Inverse kinematics (concept + one worked 2-link example by hand)
 - [ ] Joint space vs Cartesian space
-- [ ] IMU, encoders, LiDAR, depth camera — what each measures and how each lies
-- [ ] Noise, drift, bias, sampling rate, and sensor fusion motivation
+- [ ] Differential-drive kinematics: from wheel encoder ticks to robot velocity
 
-### Week 10 — Simulation
+### Week 12 — Simulation
 
 - [ ] Gazebo refresher (you've seen this — go faster)
 - [ ] URDF: robot description from scratch
 - [ ] Physics, collision meshes vs visual meshes
-- [ ] Simulated sensor plugins
+- [ ] Simulated sensor plugins, and which of the week-8 failure modes they don't model
 - [ ] The simulation loop, real-time factor, determinism
 
 ### Deliverable — Your First Robot
@@ -263,22 +322,22 @@ hard months.
 
 ---
 
-## Part 4 — ROS 2 · Weeks 11–15
+## Part 4 — ROS 2 · Weeks 13–17
 
 **Expanded from 4 weeks to 5.** ROS 2 is the backbone of everything after this and the single
 most valuable line on a robotics résumé. Depth here pays compound interest.
 
-> **Distro decision required before Week 11.** See [docs/environment.md](docs/environment.md) —
+> **Distro decision required before Week 13.** See [docs/environment.md](docs/environment.md) —
 > your machine currently has only Ubuntu 26.04, which constrains the choice.
 
-### Week 11 — Foundations
+### Week 13 — Foundations
 
 - [ ] Installation, sourcing, workspace layout
 - [ ] Packages, `colcon`, build/install/devel
 - [ ] Nodes and the node lifecycle
 - [ ] `ros2` CLI — become fast with it, it's your debugger
 
-### Week 12 — Topics
+### Week 14 — Topics
 
 - [ ] Publishers, subscribers, message types
 - [ ] Custom messages
@@ -286,7 +345,7 @@ most valuable line on a robotics résumé. Depth here pays compound interest.
 - [ ] Executors, callback groups, spinning
 - [ ] `ros2 topic echo/hz/bw`, `rqt_graph`
 
-### Week 13 — Services, actions, parameters
+### Week 15 — Services, actions, parameters
 
 - [ ] Services (request/response)
 - [ ] Actions (long-running, cancellable, with feedback)
@@ -294,7 +353,7 @@ most valuable line on a robotics résumé. Depth here pays compound interest.
 - [ ] Parameters and reconfiguration
 - [ ] Launch files (Python launch), composing systems
 
-### Week 14 — Transforms and description
+### Week 16 — Transforms and description
 
 - [ ] TF2 — the tree, broadcasting, listening
 - [ ] Static vs dynamic transforms
@@ -302,7 +361,7 @@ most valuable line on a robotics résumé. Depth here pays compound interest.
 - [ ] URDF + Xacro
 - [ ] RViz2 — configure it well, you'll live here
 
-### Week 15 — Tooling and rigor
+### Week 17 — Tooling and rigor
 
 - [ ] `rosbag2`: record, replay, and why it changes how you debug
 - [ ] Testing ROS nodes (`launch_testing`)
@@ -335,9 +394,9 @@ interface for each link — and be able to defend why each is a topic, service, 
 
 ---
 
-## Part 5 — Navigation · Weeks 16–19
+## Part 5 — Navigation · Weeks 18–21
 
-### Week 16 — State estimation
+### Week 18 — State estimation
 
 - [ ] Odometry and wheel encoders
 - [ ] Dead reckoning and why drift is inevitable
@@ -345,14 +404,14 @@ interface for each link — and be able to defend why each is a topic, service, 
 - [ ] Kalman filter — intuition, then the equations
 - [ ] `robot_localization` / EKF fusion
 
-### Week 17 — Mapping
+### Week 19 — Mapping
 
 - [ ] Occupancy grids
 - [ ] SLAM concepts: front end, back end, loop closure
 - [ ] `slam_toolbox`
 - [ ] Map serving and AMCL localization
 
-### Week 18 — Planning
+### Week 20 — Planning
 
 - [ ] Configuration space
 - [ ] Dijkstra, A*, and the heuristic that makes A* work
@@ -361,7 +420,7 @@ interface for each link — and be able to defend why each is a topic, service, 
 - [ ] Collision checking
 - [ ] DWB / MPPI local control
 
-### Week 19 — Nav2
+### Week 21 — Nav2
 
 - [ ] Nav2 architecture and behavior trees
 - [ ] Goal poses and the action interface
@@ -382,33 +441,37 @@ You've now built your first genuinely autonomous system.
 
 ---
 
-## Part 6 — Physical Robot · Weeks 20–22
+## Part 6 — Physical Robot · Weeks 22–24
 
 **New.** The original syllabus was 52 weeks of pure simulation. Every applicant has Gazebo
 videos; almost none have dealt with a robot that physically falls over. This is the single
 highest-leverage addition to your portfolio, and it's the part interviewers will ask about.
 
 **Budget: ~$250–400.** Raspberry Pi 5, differential-drive base with encoders, RPLIDAR A1, a
-camera, a battery, and a motor driver. Order it during Part 5 — shipping will otherwise become
-the bottleneck.
+camera, a battery, and a motor driver. The Pi and the IMU carry over from the Part 3 bench kit.
+Order the rest during Part 5 — shipping will otherwise become the bottleneck.
 
-### Week 20 — Bring-up
+Prefer separate parts over a pre-integrated kit where it's cheap to do so. Mount the LiDAR and
+IMU yourself rather than using a pre-drilled plate. The mounting decisions are part of the lesson.
+
+### Week 22 — Bring-up
 
 - [ ] Ubuntu + ROS 2 on the Pi
 - [ ] Cross-machine ROS 2 (DDS discovery over the network — expect pain, budget for it)
-- [ ] Motor driver and `cmd_vel`
+- [ ] Motor driver and `cmd_vel`, with the wheel-velocity PID loop from week 9
 - [ ] Encoder reading and odometry publishing
 - [ ] Teleop a real robot
 
-### Week 21 — Real sensors
+### Week 23 — Real sensors
 
 - [ ] LiDAR driver, real scan data
 - [ ] Camera driver, real images
-- [ ] Calibration: camera intrinsics, LiDAR mounting transform
+- [ ] Your I2C IMU from week 8, now as a ROS 2 node, fused into odometry
+- [ ] Calibration: camera intrinsics, LiDAR and IMU mounting transforms
 - [ ] Time synchronization and message filters
 - [ ] Compare real sensor noise against your sim assumptions — write down every difference
 
-### Week 22 — Port the stack
+### Week 24 — Port the stack
 
 - [ ] Run SLAM on real data
 - [ ] Nav2 on hardware
@@ -428,23 +491,23 @@ demo.
 
 ---
 
-## Part 7 — Perception · Weeks 23–26
+## Part 7 — Perception · Weeks 25–28
 
-### Week 23 — Camera geometry
+### Week 25 — Camera geometry
 
 - [ ] Pinhole model, intrinsics, distortion
 - [ ] Extrinsics and camera↔robot transforms
 - [ ] RGB, depth, stereo, point clouds
 - [ ] Projection and back-projection — by hand, at least once
 
-### Week 24 — Classical CV
+### Week 26 — Classical CV
 
 - [ ] OpenCV fundamentals
 - [ ] Color spaces, thresholding, morphology
 - [ ] Edges, contours, features
 - [ ] When classical CV beats a neural network (more often than you'd think)
 
-### Week 25 — Detection
+### Week 27 — Detection
 
 - [ ] Detection vs classification vs segmentation
 - [ ] Bounding boxes, IoU, NMS
@@ -452,7 +515,7 @@ demo.
 - [ ] Running a pretrained detector (YOLO or similar)
 - [ ] Dataset concepts, labeling, class imbalance
 
-### Week 26 — Perception in ROS
+### Week 28 — Perception in ROS
 
 - [ ] `image_transport`, camera topics, compression
 - [ ] `vision_msgs`
@@ -473,16 +536,16 @@ the transform chain correct. Not necessarily perfectly. It needs to work.
 
 ---
 
-## Part 8 — Deep Learning · Weeks 27–29
+## Part 8 — Deep Learning · Weeks 29–31
 
 **Compressed from 4 weeks to 3.** Your DS background covers tensors, training loops, loss
 functions, overfitting, and metrics. Skim those hard and spend the time on what's actually new:
 convolutional architectures, vision-specific training, and deployment.
 
-If any of Week 27's list is genuinely unfamiliar, stop compressing and take the fourth week.
+If any of Week 29's list is genuinely unfamiliar, stop compressing and take the fourth week.
 Be honest with yourself here — this is the one place where the DS asterisk could cut either way.
 
-### Week 27 — PyTorch fluency (fast)
+### Week 29 — PyTorch fluency (fast)
 
 - [ ] Tensors, devices, dtypes
 - [ ] `Dataset` / `DataLoader`, collate, augmentation
@@ -490,7 +553,7 @@ Be honest with yourself here — this is the one place where the DS asterisk cou
 - [ ] Training loop, validation split, checkpointing
 - [ ] Reproducibility: seeds, determinism
 
-### Week 28 — Vision
+### Week 30 — Vision
 
 - [ ] CNNs: convolution, stride, padding, receptive field
 - [ ] Modern backbones (ResNet, and why residuals)
@@ -499,7 +562,7 @@ Be honest with yourself here — this is the one place where the DS asterisk cou
 - [ ] Detection fine-tuning on a custom dataset
 - [ ] Error analysis — look at the failures, individually
 
-### Week 29 — Deployment
+### Week 31 — Deployment
 
 - [ ] Export: TorchScript, ONNX
 - [ ] TensorRT and why robotics cares
@@ -524,32 +587,32 @@ walkthrough.
 
 ---
 
-## Part 9 — AI + Robotics · Weeks 30–33
+## Part 9 — AI + Robotics · Weeks 32–35
 
 Where the previous eight parts connect.
 
-### Week 30 — Inference in the loop
+### Week 32 — Inference in the loop
 
 - [ ] Model inference inside a ROS 2 node
 - [ ] Threading: don't block the executor
 - [ ] Real-time constraints and dropping frames gracefully
 - [ ] Detection message design
 
-### Week 31 — 3D localization
+### Week 33 — 3D localization
 
 - [ ] From bounding box to 3D position (depth, stereo, or geometry)
 - [ ] Camera → robot → map frame chains
 - [ ] Uncertainty propagation
 - [ ] Publishing detections into TF
 
-### Week 32 — Tracking
+### Week 34 — Tracking
 
 - [ ] Multi-object detection
 - [ ] Data association
 - [ ] Track lifecycle: birth, update, death
 - [ ] Temporal consistency and filtering
 
-### Week 33 — Perception-driven behavior
+### Week 35 — Perception-driven behavior
 
 - [ ] Closing the loop: perception → decision → motion
 - [ ] Handling detection failure without crashing
@@ -568,7 +631,7 @@ navigates to it.
 
 ---
 
-## Part 10 — Manipulation + Behavior · Weeks 34–38
+## Part 10 — Manipulation + Behavior · Weeks 36–40
 
 **Expanded to 5 weeks and given an arm.** The original syllabus taught inverse kinematics in
 week 10, then asked you to "pick object / place object" in month 9 with a robot that had no
@@ -577,7 +640,7 @@ hiring actually is.
 
 The arm is simulated (Franka Panda or UR5 in Gazebo). Do not buy one.
 
-### Week 34 — Arm kinematics
+### Week 36 — Arm kinematics
 
 - [ ] Serial manipulators, DH parameters
 - [ ] Forward kinematics for a 6/7-DOF arm
@@ -585,7 +648,7 @@ The arm is simulated (Franka Panda or UR5 in Gazebo). Do not buy one.
 - [ ] Jacobians, singularities, redundancy
 - [ ] Workspace limits
 
-### Week 35 — MoveIt 2
+### Week 37 — MoveIt 2
 
 - [ ] MoveIt 2 architecture and setup assistant
 - [ ] Planning scene and collision objects
@@ -593,21 +656,21 @@ The arm is simulated (Franka Panda or UR5 in Gazebo). Do not buy one.
 - [ ] Cartesian paths
 - [ ] Grasp pose generation and execution
 
-### Week 36 — State machines and behavior trees
+### Week 38 — State machines and behavior trees
 
 - [ ] Finite state machines: states, events, guards, recovery
 - [ ] Behavior trees: why robotics prefers them
 - [ ] BehaviorTree.CPP and Nav2's BT integration
 - [ ] Reactive vs deliberative behavior
 
-### Week 37 — Task composition
+### Week 39 — Task composition
 
 - [ ] Task planning and preconditions
 - [ ] Trajectory constraints
 - [ ] Collision checking during execution
 - [ ] Blackboards and shared state
 
-### Week 38 — Robustness
+### Week 40 — Robustness
 
 - [ ] System architecture for failure
 - [ ] Failure detection and classification
@@ -628,46 +691,36 @@ demos.
 
 ---
 
-## Part 11 — Modern Robot Learning · Weeks 39–42
+## Part 11 — Modern Robot Learning · Weeks 41–42
 
-**Substantially rewritten.** The original gave you MDPs, Q-learning, and PPO — a solid but
-roughly 2019 curriculum. That's not what's moving robotics right now, and "left behind by recent
-developments" is the reason you started this. The current centre of gravity is **learning from
-demonstration at scale**: behavior cloning, diffusion policies, and vision-language-action
-models.
+**Substantially rewritten, then compressed from 4 weeks to 2** to pay for the Part 3
+components weeks (see [syllabus-revisions.md](docs/syllabus-revisions.md) §13). The original gave
+you MDPs, Q-learning, and PPO — a solid but roughly 2019 curriculum. That's not what's moving
+robotics right now, and "left behind by recent developments" is the reason you started this. The
+current centre of gravity is **learning from demonstration at scale**: behavior cloning,
+diffusion policies, and vision-language-action models.
 
-Keep the RL foundations — they're the vocabulary. But land the plane on what shipped recently.
+RL is now vocabulary only, with no dedicated week. What got cut is depth, not coverage. If
+interviews from week 24 onward show that RL depth is what the market wants from you, take a
+week back from here.
 
-### Week 39 — RL foundations (fast)
+### Week 41 — RL vocabulary + imitation learning
 
-- [ ] MDPs: state, action, reward, transition, discount
-- [ ] Policy, value function, Q-function
-- [ ] Exploration vs exploitation
-- [ ] Policy gradients → PPO, conceptually
-- [ ] Why pure RL is hard on real robots (sample complexity, reward design, safety)
-
-### Week 40 — Imitation learning
-
+- [ ] RL vocabulary: MDP, policy, value, reward, PPO in one paragraph, and why pure RL is hard
+      on real robots (sample complexity, reward design, safety)
 - [ ] Behavioral cloning and the compounding-error problem
 - [ ] DAgger and interactive correction
 - [ ] Demonstration collection — teleoperate your own robot to gather data
 - [ ] LeRobot: datasets, training, evaluation
 - [ ] Action chunking (ACT)
 
-### Week 41 — Diffusion policies
+### Week 42 — Diffusion policies + VLAs
 
-- [ ] Diffusion models — enough theory to understand the policy
-- [ ] Why diffusion suits multimodal action distributions
-- [ ] Training a diffusion policy in LeRobot
-- [ ] Evaluation: success rate, and why it's noisy
-
-### Week 42 — VLAs and simulation scale
-
-- [ ] Vision-language-action models: the RT-2 → OpenVLA → π0 lineage
-- [ ] Read one VLA paper properly, end to end
-- [ ] Run inference with an open VLA checkpoint
-- [ ] Isaac Lab: vectorized envs, domain randomization
-- [ ] Sim-to-real transfer — connect this to what you measured in Boss Fight #6
+- [ ] Diffusion policies: enough theory to understand why they suit multimodal actions
+- [ ] Train a diffusion policy in LeRobot; evaluate success rate, and why it's noisy
+- [ ] Vision-language-action models: the RT-2 → OpenVLA → π0 lineage; run one open checkpoint
+- [ ] Domain randomization and sim-to-real — connect this to what you measured in Boss Fight #6
+- [ ] *Optional, if time allows:* Isaac Lab vectorized environments. Otherwise randomize in Gazebo
 
 ### Deliverable — Learned Robot Behavior
 
@@ -731,7 +784,7 @@ behavior, and recover or shut down safely.
 
 You're no longer primarily learning. You're packaging the capability you've built.
 
-> If you followed the background threads, you've been applying since week 22 and have real
+> If you followed the background threads, you've been applying since week 24 and have real
 > interview feedback by now. Use it to aim this part.
 
 ### Week 46 — Choose and scope
@@ -816,6 +869,10 @@ Everything else supports those three. The physical robot is the differentiator �
 Not *"I know all of robotics."* That's impossible. Instead:
 
 **Software** — Python + C++ + Linux + Git + Docker, comfortably.
+
+**Hardware** — what robots are made of: actuators, sensors, microcontrollers vs SBCs, buses,
+power, and PID on a real motor. Enough to read a datasheet and debug across the software/hardware
+line.
 
 **Robotics** — ROS 2, sensors, frames, kinematics, localization, navigation, motion planning.
 

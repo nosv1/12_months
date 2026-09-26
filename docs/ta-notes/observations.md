@@ -53,7 +53,7 @@ there. Check before summarising his work back to him.
 
 - **Prior robotics beyond Gazebo** (told me 2026-09-24): a graduate **path planning** course,
   "one of the most fun classes i've ever done", and hands-on **ArduPilot** drone waypoint work.
-  Calibrate Part 5 (navigation, wk 16–19) and Part 3 like the DS material: jog, don't re-teach
+  Calibrate Part 5 (navigation, wk 18–21) and Part 3 like the DS material: jog, don't re-teach
   the algorithms; teach the ROS 2 / Nav2 plumbing around them. MAVLink is a live example for
   week 7 (serialization, UDP). This is the part of the year he's looking forward to; use it.
 - **What he enjoys is optimization** (2026-09-24): "it was just fun to write code that solved a

@@ -40,6 +40,9 @@ chat after it (career, below) was not work time.
   what he enjoys is optimization (path planning, a GA scheduler). Pointed at planning/optimization
   as a lane and ArduPilot as the open-source PR target. Details in observations.md. He asked me to
   "keep looking out for my future": that means accurate, not encouraging.
+- **2026-09-26: syllabus revision §13** (components weeks 8–9, Part 11 → 2 weeks) on Seth's
+  critique, Chris's go-ahead. Bench kit must be **ordered by week 6** — raise it in week 5.
+  Pushed to `claude/chat-session-5ev4q7`, not `dev`. He merges.
 - **Several of my commits today are unpushed** (he pushes). Mention it at the opener if
   `git status` shows `dev` ahead of origin.
 

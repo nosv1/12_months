@@ -12,15 +12,15 @@ Single source of truth. Update every Sunday.
 | --- | --- | --- | --- |
 | 1 | 1–2 | Reactivation | ✓ |
 | 2 | 3–7 | C++ + Linux systems | ☐ |
-| 3 | 8–10 | Robotics fundamentals | ☐ |
-| 4 | 11–15 | ROS 2 | ☐ |
-| 5 | 16–19 | Navigation | ☐ |
-| 6 | 20–22 | Physical robot | ☐ |
-| 7 | 23–26 | Perception | ☐ |
-| 8 | 27–29 | Deep learning | ☐ |
-| 9 | 30–33 | AI + robotics | ☐ |
-| 10 | 34–38 | Manipulation + behavior | ☐ |
-| 11 | 39–42 | Modern robot learning | ☐ |
+| 3 | 8–12 | Components + robotics fundamentals | ☐ |
+| 4 | 13–17 | ROS 2 | ☐ |
+| 5 | 18–21 | Navigation | ☐ |
+| 6 | 22–24 | Physical robot | ☐ |
+| 7 | 25–28 | Perception | ☐ |
+| 8 | 29–31 | Deep learning | ☐ |
+| 9 | 32–35 | AI + robotics | ☐ |
+| 10 | 36–40 | Manipulation + behavior | ☐ |
+| 11 | 41–42 | Modern robot learning | ☐ |
 | 12 | 43–45 | Systems engineering | ☐ |
 | 13 | 46–52 | Capstone + career | ☐ |
 
@@ -43,14 +43,14 @@ The real progress metric. Each is a blank-page rebuild — no tutorial, no copyi
 | --- | --- | --- | --- |
 | 1 | 2 | Rebuild telemetry analyzer from empty dir | ✓ |
 | 2 | 7 | Add a sensor type without touching the core | ☐ |
-| 3 | 10 | Drive forward → detect obstacle → stop | ☐ |
-| 4 | 15 | Three-node ROS system, correct interfaces | ☐ |
-| 5 | 19 | Navigate past random obstacles | ☐ |
-| 6 | 22 | Diagnose and write up the sim-to-real gap | ☐ |
-| 7 | 26 | Locate an object in the robot's frame | ☐ |
-| 8 | 29 | Unfamiliar dataset → trained model | ☐ |
-| 9 | 33 | Find the named target among distractors | ☐ |
-| 10 | 38 | Recover from deliberate failures | ☐ |
+| 3 | 12 | Drive forward → detect obstacle → stop | ☐ |
+| 4 | 17 | Three-node ROS system, correct interfaces | ☐ |
+| 5 | 21 | Navigate past random obstacles | ☐ |
+| 6 | 24 | Diagnose and write up the sim-to-real gap | ☐ |
+| 7 | 28 | Locate an object in the robot's frame | ☐ |
+| 8 | 31 | Unfamiliar dataset → trained model | ☐ |
+| 9 | 35 | Find the named target among distractors | ☐ |
+| 10 | 40 | Recover from deliberate failures | ☐ |
 | 11 | 42 | Policy survives environment change | ☐ |
 | 12 | 45 | System survives a killed component | ☐ |
 | 👑 | 52 | Ambiguous brief, empty repo, one week | ☐ |
@@ -69,14 +69,15 @@ missing capability. Not being rebuilt. Review in
 
 - [ ] Telemetry toolkit (wk 2)
 - [ ] Sensor simulator (wk 7)
-- [ ] Simulated robot (wk 10)
-- [ ] ROS robot system (wk 15)
-- [ ] Autonomous navigation (wk 19)
-- [ ] **Physical robot** (wk 22)
-- [ ] Perception pipeline (wk 26)
-- [ ] Vision model, own dataset (wk 29)
-- [ ] Vision-guided robot (wk 33)
-- [ ] Pick-and-place task system (wk 38)
+- [ ] Bench rig: real IMU on the sensor bus, PID motor (wk 9)
+- [ ] Simulated robot (wk 12)
+- [ ] ROS robot system (wk 17)
+- [ ] Autonomous navigation (wk 21)
+- [ ] **Physical robot** (wk 24)
+- [ ] Perception pipeline (wk 28)
+- [ ] Vision model, own dataset (wk 31)
+- [ ] Vision-guided robot (wk 35)
+- [ ] Pick-and-place task system (wk 40)
 - [ ] Learned policy (wk 42)
 - [ ] Production stack (wk 45)
 - [ ] Capstone (wk 50)
@@ -94,7 +95,7 @@ See [background-threads.md](background-threads.md).
 
 - [ ] Build log started (wk 1) — current streak: ___ weeks
 - [ ] Interview problems (from wk 20) — total: ___
-- [ ] Applications (from wk 22) — sent: _**· screens:**_ · onsites: ___
+- [ ] Applications (from wk 24) — sent: _**· screens:**_ · onsites: ___
 - [ ] Open-source PR merged (by wk 40)
 
 ## Career
@@ -103,8 +104,9 @@ See [background-threads.md](background-threads.md).
 - [ ] GitHub profile + 3 pinned projects
 - [ ] LinkedIn
 - [ ] Mock interviews (3+)
-- [ ] Robot BOM ordered — **do this in Part 5, wk 16–19, or shipping blocks wk 20**
-- [ ] Native Ubuntu dual-boot — target wk 8, required by wk 20
+- [ ] Bench kit ordered — **by wk 6**, for Part 3 components weeks 8–9
+- [ ] Robot BOM ordered — **do this in Part 5, wk 18–21, or shipping blocks wk 22**
+- [ ] Native Ubuntu dual-boot — target wk 8, required by wk 22
 
 ## Open decisions
 
