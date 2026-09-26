@@ -23,9 +23,9 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-26 06:58, session ended by him.** Last block 09-25 17:03–18:24 is logged (1.35 h,
-break that became the end: he didn't come back that night). **47.35 h logged.** Session log:
-[sessions/week-04.md](ta-notes/sessions/week-04.md).
+**Updated 2026-09-26 18:35, signed off by him** ("maybe back later"). 16:27–18:35 logged, split
+across week 4 (0.82 h) and week 5 (1.32 h). **49.49 h logged.** Session logs:
+[week-04.md](ta-notes/sessions/week-04.md), [week-05.md](ta-notes/sessions/week-05.md).
 
 - **Week 4 ticked 09-26** (`f576084`), finished day 3 of 7. Textbooks 24–26; copy elision added to 25.
 - **Root reorganized 09-26** (`cb37641`, other session): `projects/`, `labs/wNN-topic/`,
