@@ -259,14 +259,42 @@ is safe to take."* Two corrections:
 
 ## Open questions
 
-- **Returning a local by value** (`Tracer make() { Tracer t; return t; }`): copy, move, or
-  neither? This was on the plan and got skipped. The answer involves *copy elision*, which is
-  when the compiler builds the object directly in the caller's slot and runs no constructor at all.
+- ~~**Returning a local by value**: copy, move, or neither?~~ **Answered 2026-09-26: neither.**
+  See *Copy elision* below.
 - **Move assignment** (`b = std::move(a)` where `b` already exists) is the fifth special member.
   What does it have to do with what `b` already owned?
 - **Rule of Five**: 24's Rule of Three plus the two move operations. When is writing all five
   correct, rather than zero?
 - **`shared_ptr`**: copying one doesn't copy the pointee. What does it copy?
+
+## Copy elision: the move that never happens
+
+```cpp
+Tracer make_tracer() { Tracer t; return t; }
+Tracer x = make_tracer();
+```
+
+Prediction on record: `ctor`, then a move for `return t`, *"done and done."* Actual output:
+`ctor`, `dtor`. The `dtor` is `x`'s, at the end of `main`, not a loss of the object.
+
+One `ctor` and one `dtor` means **one object**, with two names. `main` reserves space for `x` and
+passes its address to `make_tracer()` as a hidden argument. `t` is constructed directly in that
+space. Printing `&t` and `&x` confirmed it: the same address. Nothing is left to copy or move.
+This is **NRVO** (named return value optimization), one form of copy elision.
+
+With `-fno-elide-constructors` the output becomes `ctor`, `move`, `dtor`, `dtor`. `t` is moved
+into `x`, and the moved-from `t` is **still destroyed** at the end of `make_tracer()`. A move
+never saves a destructor call; it only makes that destructor cheap.
+
+- **NRVO (`return t;` of a named local) is allowed, not required.** GCC and Clang do it whenever
+  they can. When they can't (for example, two different locals returned on different paths),
+  `return t` falls back to a **move**, never a copy.
+- **Returning a temporary (`return Tracer{};`) is guaranteed elision since C++17.** No copy or
+  move constructor even needs to exist, and `-fno-elide-constructors` doesn't change it.
+- **So don't write `return std::move(t);`.** It turns `t` into an expression that isn't a plain
+  name, which *disables* NRVO and forces a move. GCC warns about it (`-Wpessimizing-move`).
+- **Return by value is the idiom.** Out-parameters "to avoid the copy" solve a problem the compiler
+  already solved.
 
 ## Where this returns
 
