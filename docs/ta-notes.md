@@ -23,109 +23,35 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-24, session ended by him after 18:08.** Last work block 17:20–18:08 is logged; the
-chat after it (career, below) was not work time.
+**Updated 2026-09-26 06:58, session ended by him.** Last block 09-25 17:03–18:24 is logged (1.35 h,
+break that became the end: he didn't come back that night). **47.35 h logged.** Session log:
+[sessions/week-04.md](ta-notes/sessions/week-04.md).
 
-- **46.00 h logged.** Today: 16:11–17:08 (week 3 close-out), 17:20–18:08 (week 4; start time his
-  estimate). Session log: [sessions/week-04.md](ta-notes/sessions/week-04.md).
-- **Weeks 1–3 ticked, Part 1 ticked, Boss Fight #1 ✓ with gaps on record** — all his call today.
-  Tick rule changed to evidence-based (decisions.md).
-- **Week 4 started: `cpp_memory/`** (his commit `fd4ec0b`, "test leak -> ASan -> RAII"). Done:
-  stack vs heap, RAII, `unique_ptr` (not yet moved), leak + double free under ASan. Textbook 24.
-  Syllabus week-4 items **not ticked yet** — tick when the week's evidence is complete.
-- `cpp_memory/` has **no README** yet. Convention says every project gets one; his to write,
-  short is fine. Raise when the week-4 work is done, not before.
-- Textbooks 22 (corrected) and 23 written earlier today.
-- **Career conversation after sign-off** — he likes writing code himself over directing AI, and
-  what he enjoys is optimization (path planning, a GA scheduler). Pointed at planning/optimization
-  as a lane and ArduPilot as the open-source PR target. Details in observations.md. He asked me to
-  "keep looking out for my future": that means accurate, not encouraging.
-- **2026-09-26: syllabus revision §13** (components weeks 8–9, Part 11 → 2 weeks) on Seth's
-  critique, Chris's go-ahead. Bench kit must be **ordered by week 6** — raise it in week 5.
-  Pushed to `claude/chat-session-5ev4q7`, not `dev`. He merges.
-- **Several of my commits today are unpushed** (he pushes). Mention it at the opener if
-  `git status` shows `dev` ahead of origin.
+- **Week 4 in `cpp_memory/`.** Done: stack vs heap, RAII, `unique_ptr`, leak + double free (09-24);
+  move semantics, `noexcept` and vector reallocation, `shared_ptr` and when each pointer is correct
+  (09-25). Textbooks 24, 25. **Remaining: use-after-free, valgrind.** Week-4 items not ticked yet.
+- **He's not committing `cpp_memory/`** ("a test bed"), possibly gitignoring it. Pushed back once
+  (it's tracked since `fd4ec0b`; history is evidence); said I won't raise it again. Don't.
+  `cpp_memory/` README: drop it if he ignores the directory.
+- **Syllabus revision §13 merged into `dev`** (`d99bc75`, conflict in estimates.md only, both sides
+  kept). Components weeks 8–9, Parts 4–10 shifted +2, Part 11 → 2 weeks, ESP32 + micro-ROS. **Bench
+  kit must be ordered by week 6 — raise it in week 5.** Merge is local; **he pushes**. Remote branch
+  `claude/chat-session-5ev4q7` can be deleted once pushed; his call.
+- Career thread (09-24): optimization/planning lane, ArduPilot as PR target. observations.md.
 
-## Next session: move semantics (~30–40 min, my estimate, logged)
+## Next session: use-after-free + valgrind (~25–30 min, my estimate, logged)
 
-1. `std::move` one `unique_ptr` into another; predict what's left in the first, then use it.
-   (Moved-from = null → segfault or ASan. Also the on-ramp to use-after-free.)
-2. A class with printing copy ctor and move ctor; predict which runs for: `T b = a`,
-   `T b = std::move(a)`, returning a local by value, `push_back(a)` vs `push_back(std::move(a))`.
-3. The point: `std::move` does nothing at runtime — it's a cast that *permits* a move.
-Then: `shared_ptr` (when ownership is genuinely shared), use-after-free, one valgrind run.
+Exercise 4, already given 09-25, not started: raw `int* borrowed` outside a scope; inside, a
+`unique_ptr<int>(7)` and `borrowed = p.get()`; after the scope, `*borrowed`. Predict: ASan says
+**heap-use-after-free** with a real heap address (contrast exercise 1's `0x0`), plus *freed by* and
+*allocated by* stacks. Then rebuild without ASan and run under `valgrind`: "Invalid read", no
+recompile, far slower. Then week 4 is evidence-complete → tick with him.
 
-**Keep replies short.** He's tired of reading after ~2 h. One question, then "run it."
+Skipped from the plan and left open in textbook 25: returning a local by value (copy elision). Worth
+five minutes if he's fresh.
 
-## 2026-09-23 — what worked
-
-**Third session, 15:29–16:49. Full day: 4.56 h.**
-
-- **Verifying his "that completes the spec" caught two real bugs.** Clean build + run + ground truth
-  computed independently from the CSV showed min/max/avg identical per robot. He'd have shipped it.
-  Computing the oracle myself (20 lines of Python over the same CSV) is cheap and should be the
-  default whenever he says a numeric deliverable is done.
-- **Giving him ground truth rather than the diagnosis worked.** I printed the correct nine numbers
-  and said "all three of yours equal the true minimum, that's systematic." He found the cause
-  himself — "oh shit HOLD ON" — in under two minutes.
-- **He took a design suggestion and improved on it.** I raised `optional<TemperatureAnalysis>` vs
-  three `optional<double>` as a question; he switched, and also applied `const&` across both
-  functions without being told twice.
-- **"I despise writing a readme with what broke in it — everything broke mate."** Correct objection
-  to a literal changelog. The reframe that landed: *what would break someone else, or what changed
-  how you think* — four items, not forty. Reuse that filter.
-- **He asked for a README template rather than grinding boilerplate at the end of a 4.5 h day.**
-  Right call and the right thing to delegate; headings and prompts are scaffolding, the prose is the
-  deliverable.
-- **Third time-approximation miss.** Said "six days ago" for what was yesterday. He caught it
-  immediately. `date` and `git log` exist; use them for every temporal claim, not just clock times.
-- **Two of my earlier answers needed correcting in-session**: `file(GLOB)` (CONFIGURE_DEPENDS since
-  CMake 3.12 fixes the staleness problem I'd cited) and the `kDataPath` naming inconsistency I
-  introduced. Correcting myself promptly seems to cost nothing and he engages with the tradeoffs
-  rather than just taking the ruling.
-
-
-**Afternoon session, 10:58–13:07.**
-
-- **He designed first, then coded, and it held.** The three SPEC questions got real answers over the
-  haircut. His answer to #1 (vector of pointers) had the cost model inverted — "what if n is large"
-  argues *for* contiguous values — and he took the correction without defending the original.
-- **Strong types were his idea, from a throwaway line of mine.** I named them as an out-of-scope
-  technique for the swapped-doubles hazard; he built them. First time this year he has taken a
-  design idea and run with it unprompted. Worth noting on the confidence ledger.
-- **`catch throw` landed the same way `breakpoint()` did.** He was hopping frames by hand and stuck
-  on empty `info locals` in a constructor — `info args` was the missing half. The pdb parallel
-  (textbook 19) is exact and worth naming to him next time.
-- **He found the header-row bug himself** once pointed at the tool, and predicted the bad rows
-  coming next. "lmao, it's the header line, forgot to skip."
-- **Scope held once.** He wanted a config file; "write it down, don't build it" was accepted without
-  argument. The SPEC's out-of-scope list is doing its job.
-- **Frustration showed twice** — "im losing my mind" (most vexing parse) and "hard to find the
-  error" (segfault). Both were genuinely hard first encounters, not him being slow. Said so, briefly,
-  and moved to the mechanism rather than reassuring. Correct call; MVP defeats experienced people.
-- **He called the stop himself** at 2h09m into the second session, with next steps clear. Good
-  judgment, not a stall.
-
-
-- **Predict-then-run, again, every time.** Every insight came from a wrong prediction written down
-  first: the empty copy-constructor body, `Reading b = a` as a stored recipe, and `r = j` predicted
-  as `1, 2, 2`. He is not precious about being wrong when the guess is on record. This is the format.
-- **He called out my verbal tic** — "can't wait for you to say 'you're half right, but the bit
-  you're wrong on will bite later'". He was right; I'd used that shape three times. Dropped it. Worth
-  noticing that the framing had become a formula he could predict, which makes it stop landing.
-- **Verifying his "fixed fixed" caught a miss.** He'd deleted the broken copy constructor rather than
-  fixing it, which made the symptom go away and threw out the instrument. Reading the file took
-  10 seconds. Keep doing this — two of Monday's misses were exactly this shape.
-- **Checking GCC's actual output twice changed what I wrote.** The dangling reference segfaulted
-  rather than printing stale bytes; the address turned out to be `0`, GCC having replaced the code
-  outright. I had been about to tell him the stale-bytes story. Also verified the `discards
-  qualifiers` wording rather than quoting from memory.
-- **His Rust background is a live asset.** He reached for `mut` unprompted when explaining `const`,
-  and the C++/Rust default inversion landed immediately. Use Rust as the bridge for ownership and
-  lifetime in week 4; it will be cheaper than teaching from Python.
-- **"goodnes so references are kinda dangerous"** needed correcting, not agreeing with. The hazard is
-  lifetime, not references — a pointer dangles identically and can also be null. Left him with the
-  parameter-safe / returned-or-stored-is-the-risk rule.
+**Keep replies short.** Instructions I give between tool calls get buried — he missed exercise 3.
+Put the task in the **final** message, never mid-turn.
 
 ## Open, his — the week-2 `telemetry/` project (not the fight rebuild)
 

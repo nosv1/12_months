@@ -51,3 +51,31 @@ could critique the syllabus.
 - Noted from observations.md: he already has hands-on ArduPilot waypoint work. Worth asking in
   week 8 how much wiring he did there. It may make parts of Components I a refresher.
 - **Next session is unchanged:** move semantics.
+
+## 2026-09-25 — move semantics and `shared_ptr`, 17:03–18:24
+
+Noisy location ("a lot of commotion... hard to focus"). Paused 18:24 for a break and didn't return;
+ended 09-26 morning.
+
+- **Predict-then-run still carried it.** Productive misses: "move probably moves the location of the
+  int" (addresses disproved it); "heads up a is useless" (abort); `push_back(std::move(b))` → copy
+  (moved, plus a reallocation move he then explained himself: "it needs to reallocate space").
+- **He flagged cargo-culted `noexcept`** unprompted: "saw it in a move constructor tutorial." Good
+  instinct to say so; it became the best lesson of the session.
+- **"What does `std::move` do" took four guesses** — copy-then-delete, changes the address, turns it
+  into a pointer. All runtime stories. The "zero instructions" hint didn't land in a noisy room; I
+  gave the answer after the fourth and his explain-back was then correct. Worth checking he still
+  has it cold next session: one-line question, no hint.
+- **Mid-turn instructions got lost.** I wrote exercise 3 between tool calls while writing textbook
+  25; he saw "a snippet of a thought." Task goes in the final message.
+- **Delegation bug** (`Tracer(const Tracer&) : Tracer(other)`) — rubber-ducked with two questions;
+  he fixed it, then asked how constructors "return." They don't; answered directly.
+- **`shared_ptr` design question answered well:** "hard to know who has the object last." Rule
+  given: `unique_ptr` by default.
+- **"learning new things is slow, but it's just how it goes"** — said it himself, while choosing to
+  continue. Nothing to add.
+
+## 2026-09-26 06:56 — end-of-session admin (not work time)
+
+Merged `origin/claude/chat-session-5ev4q7` (syllabus §13, Seth's critique) into `dev` at his
+request. Local only; he pushes.
