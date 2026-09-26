@@ -159,12 +159,12 @@ Do not rush it. If you need a sixth week, take it from Part 3.
 
 ### Week 4 — Memory and ownership
 
-- [ ] Stack vs heap
-- [ ] RAII — the central idea in modern C++
-- [ ] `unique_ptr`, `shared_ptr`, when each is correct
-- [ ] Move semantics and why copies are expensive
-- [ ] Dangling references, use-after-free, and how they present
-- [ ] Debug with `gdb`, `valgrind`, and sanitizers (`-fsanitize=address`)
+- [x] Stack vs heap
+- [x] RAII — the central idea in modern C++
+- [x] `unique_ptr`, `shared_ptr`, when each is correct
+- [x] Move semantics and why copies are expensive
+- [x] Dangling references, use-after-free, and how they present
+- [x] Debug with `gdb`, `valgrind`, and sanitizers (`-fsanitize=address`)
 
 ### Week 5 — STL and idiom
 
