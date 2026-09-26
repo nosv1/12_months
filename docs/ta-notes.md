@@ -28,7 +28,7 @@ across week 4 (0.82 h) and week 5 (1.32 h). **49.49 h logged.** Session logs:
 [week-04.md](ta-notes/sessions/week-04.md), [week-05.md](ta-notes/sessions/week-05.md).
 
 - **Week 4 ticked 09-26** (`f576084`), finished day 3 of 7. Textbooks 24–26; copy elision added to 25.
-- **Root reorganized 09-26** (`cb37641`, other session): `projects/`, `labs/wNN-topic/`,
+- **Root reorganized 09-26** (`14a8d6f`, other session; re-authored as Claude 09-26, was `cb37641` on the remote): `projects/`, `labs/wNN-topic/`,
   `boss-fights/`. `cpp_memory/` → `labs/w04-cpp-memory/`, now tracked with a README. Old paths in
   logs and textbook left as written.
 - **Week 5 started 09-26 17:16**: STL library, `Sensor → SensorBuffer → Processor → Statistics`.
