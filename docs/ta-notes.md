@@ -27,12 +27,15 @@ He reads these notes too. Write them so that's fine.
 break that became the end: he didn't come back that night). **47.35 h logged.** Session log:
 [sessions/week-04.md](ta-notes/sessions/week-04.md).
 
-- **Week 4 in `cpp_memory/`.** Done: stack vs heap, RAII, `unique_ptr`, leak + double free (09-24);
-  move semantics, `noexcept` and vector reallocation, `shared_ptr` and when each pointer is correct
-  (09-25). Textbooks 24, 25. **Remaining: use-after-free, valgrind.** Week-4 items not ticked yet.
-- **He's not committing `cpp_memory/`** ("a test bed"), possibly gitignoring it. Pushed back once
-  (it's tracked since `fd4ec0b`; history is evidence); said I won't raise it again. Don't.
-  `cpp_memory/` README: drop it if he ignores the directory.
+- **Week 4 ticked 09-26** (`f576084`), finished day 3 of 7. Textbooks 24–26; copy elision added to 25.
+- **Root reorganized 09-26** (`cb37641`, other session): `projects/`, `labs/wNN-topic/`,
+  `boss-fights/`. `cpp_memory/` → `labs/w04-cpp-memory/`, now tracked with a README. Old paths in
+  logs and textbook left as written.
+- **Week 5 started 09-26 17:16**: STL library, `Sensor → SensorBuffer → Processor → Statistics`.
+  His design so far: `Reading` base with `IMUReading`/`TempReading`; ring buffer, keep newest N;
+  Processor integrates 1-axis accel → velocity; Statistics compares against simulated truth to
+  show drift. Open, his: what the base `Reading` interface is; checkable end state (asked twice).
+  Expect object slicing when he stores subclasses by value — let him hit it, predict first.
 - **Syllabus revision §13 merged into `dev`** (`d99bc75`, conflict in estimates.md only, both sides
   kept). Components weeks 8–9, Parts 4–10 shifted +2, Part 11 → 2 weeks, ESP32 + micro-ROS. **Bench
   kit must be ordered by week 6 — raise it in week 5.** Merge is local; **he pushes**. Remote branch
