@@ -79,3 +79,19 @@ ended 09-26 morning.
 
 Merged `origin/claude/chat-session-5ev4q7` (syllabus §13, Seth's critique) into `dev` at his
 request. Local only; he pushes.
+
+## 2026-09-26 16:27–17:16 — use-after-free, valgrind, copy elision; week 4 ticked
+
+Opened with the new progress bar (his ask: see how much of the week is left at the start).
+
+- **Bare `*borrowed;` did nothing** — GCC drops the unused load, ASan silent. He fixed it after the
+  warning was pointed at.
+- **Prediction misses, both good:** "borrowed doesn't have a value yet"; "p's address gets
+  deconstructed, the int is still there." Half right on stack vs heap; missed that destroying `p`
+  runs its destructor. Worth checking cold: *what does a destructor do to other copies of a pointer?*
+- **"Invalid read of size 4"** predicted exactly after the valgrind explanation. "7 prints unless
+  something changed those bytes" — and something did (glibc tcache). Best result of the session.
+- **Read my question as a hint** and backed off a correct answer (valgrind sees the `delete`). Told
+  him not to.
+- **Copy elision:** "ctor, dtor??? lmao" → counted objects → "t shoulda been built inside
+  make_tracer()". Confirmed `&t == &x` himself.

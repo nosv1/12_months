@@ -35,7 +35,6 @@ break that became the end: he didn't come back that night). **47.35 h logged.** 
   His design so far: `Reading` base with `IMUReading`/`TempReading`; ring buffer, keep newest N;
   Processor integrates 1-axis accel → velocity; Statistics compares against simulated truth to
   show drift. Open, his: what the base `Reading` interface is; checkable end state (asked twice).
-  Expect object slicing when he stores subclasses by value — let him hit it, predict first.
 - **Syllabus revision §13 merged into `dev`** (`d99bc75`, conflict in estimates.md only, both sides
   kept). Components weeks 8–9, Parts 4–10 shifted +2, Part 11 → 2 weeks, ESP32 + micro-ROS. **Bench
   kit must be ordered by week 6 — raise it in week 5.** Merge is local; **he pushes**. Remote branch
@@ -45,29 +44,33 @@ break that became the end: he didn't come back that night). **47.35 h logged.** 
 ## Week progress — render this as the session opener
 
 ```text
-Week 4 · Memory and ownership   ███████████████░░░  4.5/6   day 3 of 7   ~25–30 min left
-  ✓ stack vs heap   ✓ RAII   ✓ unique_ptr/shared_ptr   ✓ move semantics
-  ◐ dangling refs, use-after-free      — use-after-free left (exercise 4)
-  ◐ gdb ✓ (wk 3) · sanitizers ✓ · valgrind   — valgrind left (exercise 4)
+Week 5 · STL and idiom   ██░░░░░░░░░░░░░░░░  0.5/5   day 1 of 7 (started 09-26)   my est 8–12 h left
+  ◐ vector, unordered_map, string_view, optional   — vector in use; others not touched
+  ☐ iterators + <algorithm>
+  ☐ templates (reading)                            — lands with SensorBuffer<T> + TempReading
+  ☐ exceptions vs error codes
+  ☐ build a library, link it from another project  — single executable so far
 ```
 
 Items are the syllabus checklist for the week; ◐ counts as half. Syllabus ticks still wait for
 verification, so this block is the mid-week state. Update it at sign-off with the session log.
 When the remaining work fits in one session, **say so up front**.
 
-## Next session: use-after-free + valgrind (~25–30 min, my estimate, logged)
+## Next session: `IMUBuffer`, the ring-buffer policy
 
-Exercise 4, already given 09-25, not started: raw `int* borrowed` outside a scope; inside, a
-`unique_ptr<int>(7)` and `borrowed = p.get()`; after the scope, `*borrowed`. Predict: ASan says
-**heap-use-after-free** with a real heap address (contrast exercise 1's `0x0`), plus *freed by* and
-*allocated by* stacks. Then rebuild without ASan and run under `valgrind`: "Invalid read", no
-recompile, far slower. Then week 4 is evidence-complete → tick with him.
+Where it stands: `labs/w05-sensor-processing/` builds and runs (`IMUReading` with `Timestamp` on
+`steady_clock`, `Acceleration`/`Gyro` in mps2/rad_s). **Untracked — his to commit.** No buffer yet.
 
-Skipped from the plan and left open in textbook 25: returning a local by value (copy elision). Worth
-five minutes if he's fresh.
+Open, his: where "capacity N, drop oldest" lives and what erasing element 0 of a `vector` costs
+(ring index vs `std::deque`); run the 30-second slicing experiment; a checkable end state for the
+week (asked three times — get it before building); README.
 
-**Keep replies short.** Instructions I give between tool calls get buried — he missed exercise 3.
-Put the task in the **final** message, never mid-turn.
+He's **decision-fatigued** at the end of 09-26. Next session: give him a concrete, buildable step
+first, not another open design question. Sunday 09-27 he's busy — review may be short or slip.
+**Bench kit order (by wk 6) still to raise.**
+
+**Keep replies short.** Instructions I give between tool calls get buried. Put the task in the
+**final** message, never mid-turn.
 
 ## Open, his — the week-2 `telemetry/` project (not the fight rebuild)
 
