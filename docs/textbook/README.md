@@ -48,6 +48,7 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 23 | [Converting constructors and `explicit`](23-converting-constructors-and-explicit.md) | 3 | Strong types that let five swapped strings compile, and `explicit` put on the wrong constructor first |
 | 24 | [RAII: who frees the memory, on every exit path](24-raii-and-ownership.md) | 4 | A leak that looked fine, a `throw` that skipped the `delete`, and "b is just renaming a" ending in a double free |
 | 25 | [Move semantics: `std::move` moves nothing](25-move-semantics.md) | 4 | "move probably moves the location of the int?", a `vector` that moved twice for one `push_back`, and a `std::move` that ran a copy |
+| 26 | [Use-after-free: the pointer still looks fine](26-use-after-free-asan-and-valgrind.md) | 4 | A borrowed `.get()` outliving its `unique_ptr`; ASan and valgrind agree on three stacks, and the value was 7 only under valgrind |
 
 ---
 
