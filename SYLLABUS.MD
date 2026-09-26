@@ -233,7 +233,7 @@ The goal is not to memorize a parts catalogue. It's being able to pick up a comp
 never seen, read its datasheet, and answer the four questions.
 
 **Bench kit, ~$100–150. Order by week 6.** Raspberry Pi 5 (it becomes the robot's computer in
-Part 6), an Arduino-class microcontroller, breadboard and jumpers, a multimeter, an IMU breakout,
+Part 6), an ESP32 dev board (3.3 V logic — mind your 5 V breakouts), breadboard and jumpers, a multimeter, an IMU breakout,
 a DC gear motor with a quadrature encoder and a motor driver, a hobby servo, a small stepper and
 its driver, an ultrasonic rangefinder, and a thermocouple with an amplifier board. Plus a battery
 pack or bench supply that can run the motors.
@@ -241,7 +241,8 @@ pack or bench supply that can run the motors.
 ### Week 8 — Components I: compute, interfaces, sensing
 
 - [ ] Microcontroller vs single-board computer, and why real robots use both (the real-time
-      loop on one, Linux and planning on the other)
+      loop on one, Linux and planning on the other). ESP32 specifics: 3.3 V logic and level
+      shifting, FreeRTOS tasks, a noisy nonlinear ADC
 - [ ] GPIO, pull-ups, debouncing, interrupts; PWM; analog signals and the ADC
 - [ ] Buses: UART, I2C, SPI. How each is wired, addressed, and clocked, and when each is used.
       CAN: what it is and why vehicles and robot arms use it
@@ -458,7 +459,8 @@ IMU yourself rather than using a pre-drilled plate. The mounting decisions are p
 
 - [ ] Ubuntu + ROS 2 on the Pi
 - [ ] Cross-machine ROS 2 (DDS discovery over the network — expect pain, budget for it)
-- [ ] Motor driver and `cmd_vel`, with the wheel-velocity PID loop from week 9
+- [ ] Motor driver and `cmd_vel`, with the wheel-velocity PID loop from week 9 running on the
+      ESP32, bridged to ROS 2 with micro-ROS (serial first; WiFi carries telemetry, never the loop)
 - [ ] Encoder reading and odometry publishing
 - [ ] Teleop a real robot
 

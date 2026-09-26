@@ -191,6 +191,10 @@ point. It carries over to parts he has never seen, and a catalogue wouldn't.
   by what it leaves out. Week 9's old sensor-noise items moved into week 8.
 - **The components deliverable reuses Part 2's sensor bus.** A real I2C IMU gets added to it
   without touching the core. That's Boss Fight #2's lesson, tested against hardware.
+- **ESP32 over Arduino Uno** (Seth's suggestion, same day). It runs micro-ROS, which gives the
+  standard "microcontroller runs the loop, Pi runs ROS" split in Part 6. It also has a CAN
+  controller (TWAI) for week 8 and FreeRTOS to connect to week 6's threading. Its costs are
+  lessons too: 3.3 V logic, a poor ADC, WiFi jitter.
 - **Bench kit, ~$100–150, ordered by week 6.** The Pi and the IMU carry over to Part 6, so the
   Part 6 budget effectively absorbs part of it.
 - **Part 6 builds on it.** The PID loop drives the wheels, the IMU is fused into odometry, and
