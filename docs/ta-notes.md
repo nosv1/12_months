@@ -39,6 +39,19 @@ break that became the end: he didn't come back that night). **47.35 h logged.** 
   `claude/chat-session-5ev4q7` can be deleted once pushed; his call.
 - Career thread (09-24): optimization/planning lane, ArduPilot as PR target. observations.md.
 
+## Week progress — render this as the session opener
+
+```text
+Week 4 · Memory and ownership   ███████████████░░░  4.5/6   day 3 of 7   ~25–30 min left
+  ✓ stack vs heap   ✓ RAII   ✓ unique_ptr/shared_ptr   ✓ move semantics
+  ◐ dangling refs, use-after-free      — use-after-free left (exercise 4)
+  ◐ gdb ✓ (wk 3) · sanitizers ✓ · valgrind   — valgrind left (exercise 4)
+```
+
+Items are the syllabus checklist for the week; ◐ counts as half. Syllabus ticks still wait for
+verification, so this block is the mid-week state. Update it at sign-off with the session log.
+When the remaining work fits in one session, **say so up front**.
+
 ## Next session: use-after-free + valgrind (~25–30 min, my estimate, logged)
 
 Exercise 4, already given 09-25, not started: raw `int* borrowed` outside a scope; inside, a
@@ -84,6 +97,9 @@ Put the task in the **final** message, never mid-turn.
 
 ## Standing instructions
 
+- **Open every session with the week progress bar** (block above): items done/total, day of the
+  week, my estimate of what's left. Asked for 2026-09-26 — the remaining-work picture should come
+  at the start, not as a surprise "that's the week" at the end.
 - **I log his hours.** Opener → `date`. Sign-off → `date`, append
   `YYYYMMDD HHMM - HHMM (N hours -- note)` under **Hours** in
   `docs/background-threads/week-NN.md`, bump **Hours logged** in `00-dashboard.md`, commit as
