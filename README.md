@@ -17,19 +17,39 @@ git clone https://github.com/nosv1/12_months.git
 Clone inside WSL (`~/`), not `/mnt/c/` or OneDrive. Toolchain and gotchas:
 [docs/environment.md](docs/environment.md). C++ toolchain: [scripts/install-cpp-toolchain.sh](scripts/install-cpp-toolchain.sh).
 
-## Projects
+## Layout
 
-One directory per project, each with its own README
-([template](docs/templates/project-README.md)).
+Work is filed by *kind*; the week lives in the tables below, not the root.
+
+```text
+projects/      part deliverables — the portfolio pieces (one per syllabus part)
+labs/          weekly exercises and test beds, named wNN-topic/
+boss-fights/   blank-page rebuilds, named NN-topic/
+ros_ws/        colcon workspace, from week 13 (ROS 2) — packages go in ros_ws/src/
+docs/          dashboard, build log, textbook, TA notes
+scripts/       machine setup
+```
+
+`labs/scratch/` is gitignored — throwaway experiments. Every other directory gets a README.
+
+## Projects
 
 | Project | Lang | Week | What it is |
 | --- | --- | --- | --- |
-| [telemetry/](telemetry/) | Python | 1–2 | Load a telemetry CSV; parse, validate, analyze, report. |
-| [boss-fights/](boss-fights/) | Py / C++ | — | Blank-page rebuilds of the previous weeks' work. 01: telemetry toolkit. |
-| [cpp_telemetry/](cpp_telemetry/) | C++ | 3 | Scoped C++ port of `telemetry/` — per-robot temperature stats. A language review, not a feature extension. |
-| [cpp_memory/](cpp_memory/) | C++ | 4 | Test bed for memory lessons: leaks, ASan, RAII, move semantics. History is in the commits. |
+| [projects/telemetry/](projects/telemetry/) | Python | 1–2 | Load a telemetry CSV; parse, validate, analyze, report. |
 
-`cpp_test/` is a gitignored local scratch area.
+## Labs
+
+| Lab | Lang | Week | What it is |
+| --- | --- | --- | --- |
+| [w03-cpp-telemetry/](labs/w03-cpp-telemetry/) | C++ | 3 | Scoped C++ port of `projects/telemetry` — per-robot temperature stats. A language review, not a feature extension. |
+| [w04-cpp-memory/](labs/w04-cpp-memory/) | C++ | 4 | Test bed for memory lessons: leaks, ASan, RAII, move semantics. History is in the commits. |
+
+## Boss fights
+
+| Fight | Lang | After week | What it is |
+| --- | --- | --- | --- |
+| [01-telemetry/](boss-fights/01-telemetry/) | Python | 2 | Blank rebuild of the telemetry toolkit. |
 
 ## Docs
 

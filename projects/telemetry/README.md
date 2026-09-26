@@ -198,7 +198,7 @@ class attribute level.
 
 ## Known issues / What's next?
 
-- Based on the [telemetry requirements](../docs/telemetry-requirements.md), headers can be in any
+- Based on the [telemetry requirements](../../docs/telemetry-requirements.md), headers can be in any
   order, and there is currently not a "header handler" in the parser. The parser can know what
   headers to expect and attribute them appropriately.
 

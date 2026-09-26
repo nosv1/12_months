@@ -1,7 +1,7 @@
 # Telemetry (C++)
 
 A toy program that reads robot telemetry from a CSV file and prints per-robot temperature
-statistics. It is a scoped C++ port of the Python version in [`/telemetry`](../telemetry). The
+statistics. It is a scoped C++ port of the Python version in [`projects/telemetry`](../../projects/telemetry). The
 purpose of the port was to review the language, not to extend the functionality.
 
 ## Setup and running

@@ -1,15 +1,15 @@
-# CI for telemetry/: the same checks as debug.sh, minus the prompts and minus --fix.
+# CI for projects/telemetry/: the same checks as debug.sh, minus the prompts and minus --fix.
 # CI reports problems; it never edits code.
 name: telemetry
 
 on:
   push:
     paths:
-      - "telemetry/**"
+      - "projects/telemetry/**"
       - ".github/workflows/telemetry.yml"
   pull_request:
     paths:
-      - "telemetry/**"
+      - "projects/telemetry/**"
       - ".github/workflows/telemetry.yml"
 
 jobs:
@@ -17,12 +17,12 @@ jobs:
     runs-on: ubuntu-24.04
     defaults:
       run:
-        working-directory: telemetry
+        working-directory: projects/telemetry
     steps:
       - uses: actions/checkout@v7
 
       - uses: astral-sh/setup-uv@v10.2.0   # setup-uv publishes exact tags only; no floating v10
-        # Python comes from telemetry/.python-version; uv installs it.
+        # Python comes from projects/telemetry/.python-version; uv installs it.
 
       - name: Install (locked)
         run: uv sync --locked    # fail if uv.lock is out of date with pyproject.toml
@@ -50,6 +50,6 @@ jobs:
         working-directory: ${{ runner.temp }}   # outside the repo, no venv
         run: |
           which telemetry
-          telemetry "$GITHUB_WORKSPACE/telemetry/data/sample_telemetry.csv" customer-report
+          telemetry "$GITHUB_WORKSPACE/projects/telemetry/data/sample_telemetry.csv" customer-report
           # Strict parse: json.tool and json.loads both accept -Infinity/NaN, which §7's dashboard doesn't.
           python3 -c "import json, sys; json.load(open(sys.argv[1]), parse_constant=lambda c: sys.exit(f'not valid JSON: {c}'))" customer-report/output.json

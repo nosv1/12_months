@@ -5,5 +5,5 @@
 !.vscode/extensions.json
 __pycache__/
 build/
-cpp_test/
+labs/scratch/
 output/

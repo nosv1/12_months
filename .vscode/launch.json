@@ -11,8 +11,8 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "${workspaceFolder}/telemetry/data/sample_telemetry.csv",
-                "${workspaceFolder}/telemetry/output",
+                "${workspaceFolder}/projects/telemetry/data/sample_telemetry.csv",
+                "${workspaceFolder}/projects/telemetry/output",
             ]
         }
     ]

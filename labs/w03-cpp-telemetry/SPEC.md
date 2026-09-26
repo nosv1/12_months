@@ -25,7 +25,7 @@ a failure signal.
 
 ## In scope
 
-- Read a CSV of the shape in [`../telemetry/data/sample_telemetry.csv`](../telemetry/data/sample_telemetry.csv):
+- Read a CSV of the shape in [`projects/telemetry/data/sample_telemetry.csv`](../../projects/telemetry/data/sample_telemetry.csv):
   `timestamp,robot_id,velocity,battery,temperature`
 - Parse rows into `Reading` objects
 - Skip malformed rows and count them
