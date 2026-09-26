@@ -106,7 +106,7 @@ Verified 2026-09-09. Full detail in [docs/environment.md](docs/environment.md).
 - **`Ubuntu-24.04` is the working distro** → ROS 2 **Jazzy** (supported to May 2029)
 - Two stale 26.04 distros (`Ubuntu`, `Ubuntu-26.04`) pending removal
 - GPU passthrough into WSL2 confirmed working
-- Native dual-boot planned ~week 8, required by week 20 (physical robot)
+- Native dual-boot planned ~week 8, required by week 22 (physical robot)
 
 **Repo lives at `~/12_months` inside WSL, branch `dev`.** Not in `/mnt/c/`, not in OneDrive —
 9P is slow, breaks file watching, mangles permissions, and OneDrive's sync daemon corrupts `.git`.
@@ -115,7 +115,7 @@ Verified 2026-09-09. Full detail in [docs/environment.md](docs/environment.md).
 
 ## Stack
 
-Python, C++, ROS 2 Jazzy, Gazebo (primary sim), MoveIt 2, PyTorch, LeRobot, Isaac Lab (Part 11
+Python, C++, ROS 2 Jazzy, Gazebo (primary sim), MoveIt 2, PyTorch, LeRobot, Isaac Lab (optional, Part 11
 only), Docker, Linux.
 
 ---

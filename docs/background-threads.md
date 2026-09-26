@@ -56,9 +56,9 @@ That last one you'll be able to answer from Boss Fight #6, which most candidates
 
 ---
 
-## 3. Applications — from week 22
+## 3. Applications — from week 24
 
-**Start applying at week 22, not week 46.**
+**Start applying at week 24, not week 46.**
 
 This feels premature. It isn't. You will fail these interviews, and that's the point — failure
 transcripts are the highest-quality feedback in the entire curriculum. They tell you what the
@@ -129,5 +129,5 @@ Sunday, ~10 minutes:
 - [ ] Week's checkboxes updated in [00-dashboard.md](00-dashboard.md)
 - [ ] Code committed and pushed
 - [ ] Two interview problems done (from week 20)
-- [ ] Applications sent (from week 22)
+- [ ] Applications sent (from week 24)
 - [ ] Next week's Monday material identified — so Monday starts, rather than begins with deciding

@@ -140,7 +140,8 @@ cd ~/12_months && git init -b dev
 ### 4. ROS 2 DDS across the WSL boundary
 
 Fine entirely inside one distro. Painful the moment you talk to another machine — which happens
-in **Part 6, week 20**, when the Raspberry Pi arrives.
+in **Part 6, week 22**, when the robot comes together. The Pi itself arrives earlier, with the Part 3
+bench kit (weeks 8–9), but that work is SSH and GPIO, not DDS.
 
 WSL2 sits behind a NAT by default and DDS discovery relies on multicast, which doesn't traverse
 it. Windows 11 supports mirrored networking mode, which mostly fixes this — in `%USERPROFILE%\.wslconfig`:
@@ -203,7 +204,7 @@ flaky exactly where you're heading:
 - Cross-machine DDS, as above
 - Real-time scheduling for control loops
 
-**Plan the dual-boot for around week 8, needed by week 20.** Don't do it now — "perfect the
+**Plan the dual-boot for around week 8, needed by week 22.** Don't do it now — "perfect the
 environment first" is the most reliable way for week 1 to never happen.
 
 ## Toolchain checklist
@@ -217,7 +218,7 @@ Set up in `Ubuntu-24.04` during week 1:
 - [x] Git configured: name, email, SSH key on GitHub
 - [ ] Shell you actually like — you'll be in it for 550 hours
 - [x] VS Code + Remote-WSL extension
-- [ ] ROS 2 Jazzy — **not needed until week 11**, don't install early
+- [ ] ROS 2 Jazzy — **not needed until week 13**, don't install early
 
 ## Verify
 

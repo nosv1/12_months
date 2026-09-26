@@ -151,6 +151,75 @@ Rule 5 and the [background threads](background-threads.md) make the boundary exp
 Weeks no longer divide into 4-week months, so month framing would misrepresent the schedule.
 Parts have explicit week ranges. Thirteen parts, twelve boss fights, one final.
 
+### 13. Physical components added; robot learning compressed (2026-09-26)
+
+**Critique from Seth**, Chris's brother (MS Mechanical Engineering, robotics emphasis), given in
+session in week 4. His argument: *you cannot fully understand robotics without knowing what
+robots are made of, how they move, and how they sense the environment, even if you only write
+the software.* Cameras and LiDAR don't cover the physical components of most robots. He named
+motors (stepper, servo), linear actuators, sensors beyond vision (radar, thermocouples, IMUs,
+acoustic), processors (Arduino, Raspberry Pi), wiring, communication protocols, and building a
+test robot.
+
+**What checking the syllabus showed.** He was right, and the gap was bigger than he said:
+
+- **No feedback control anywhere.** No PID, no motor control loop. Actuators appeared once,
+  as "motor driver and `cmd_vel`" in the physical-robot week.
+- **No communication protocols.** I2C, SPI, UART, CAN, PWM and the ADC were never taught. The
+  Part 6 kit hides all of them behind USB drivers. He could have finished the year without ever
+  reading a datasheet register map.
+- **Sensors covered only for use, not for selection.** Week 9 asked how the four standard mobile
+  sensors lie, but never how to choose a sensor for a job.
+- **Mounting reduced to one calibration number.** Nothing on vibration, rigidity, field of view,
+  or cable strain.
+- **Power absent entirely.**
+
+**Where the critique was scoped rather than adopted whole.** "Fully understand all physical
+components" is most of a mechatronics degree. It doesn't fit in ~550 hours alongside everything
+else. The target is a robotics *software* engineer who knows the hardware well enough to choose
+it, wire it, read it, and debug it. CAD and structural design stay out of scope. Coverage is
+**broad and organized by principle**: every component gets the same four questions (physical
+principle, output, interface, how it fails). There is **hands-on depth on a few parts**: one
+sensor read from its datasheet, one PID loop on a real motor. The principle-based framing is the
+point. It carries over to parts he has never seen, and a catalogue wouldn't.
+
+**What changed.**
+
+- **Part 3 expands 3 → 5 weeks (8–12).** Weeks 8–9 are new: *Components I* (compute, buses,
+  sensing, power) and *Components II* (actuators, transmissions, PID, mounting). They come
+  first so kinematics can refer to real joints and actuators, and so simulation can be judged
+  by what it leaves out. Week 9's old sensor-noise items moved into week 8.
+- **The components deliverable reuses Part 2's sensor bus.** A real I2C IMU gets added to it
+  without touching the core. That's Boss Fight #2's lesson, tested against hardware.
+- **ESP32 over Arduino Uno** (Seth's suggestion, same day). It runs micro-ROS, which gives the
+  standard "microcontroller runs the loop, Pi runs ROS" split in Part 6. It also has a CAN
+  controller (TWAI) for week 8 and FreeRTOS to connect to week 6's threading. Its costs are
+  lessons too: 3.3 V logic, a poor ADC, WiFi jitter.
+- **Bench kit, ~$100–150, ordered by week 6.** The Pi and the IMU carry over to Part 6, so the
+  Part 6 budget effectively absorbs part of it.
+- **Part 6 builds on it.** The PID loop drives the wheels, the IMU is fused into odometry, and
+  he mounts the LiDAR and IMU himself instead of using a pre-drilled plate.
+- **Parts 4–10 shift two weeks later.** Boss fights #3–#10 move with them.
+- **Applications move from week 22 to 24.** They were timed to land when the physical robot
+  was finished, and it now finishes at week 24. Interview problems stay at week 20.
+
+**What paid for it: Part 11, 4 → 2 weeks.** RL foundations drop to vocabulary. Imitation
+learning and diffusion/VLA get one week each, and Isaac Lab becomes optional. Chosen because:
+
+- it's the most speculative part of the plan;
+- he has since said he leans toward planning/optimization, not learning-based control;
+- week 50's VLA reimplementation still carries the "not left behind" checkpoint;
+- hands-on hardware knowledge is more likely to come up in a robotics interview than a second
+  learning framework.
+
+**Reverse it** if interviews from week 24 onward show that RL/learning depth is what the market
+asks of him. Take the week back from Part 11 then.
+
+**Estimate, mine:** the components weeks at ~20–25 h. Logged in `ta-notes/estimates.md`.
+
+Seth offered domain review. When weeks 8–9 arrive, have him check the component list for
+anything missing or misweighted.
+
 ## What was deliberately kept
 
 The original draft was better than most. Unchanged:
@@ -171,4 +240,5 @@ The original draft was better than most. Unchanged:
 - **ROS 2 distro** — both WSL distros are Ubuntu 26.04; the mature LTS targets 24.04. Must be
   settled before week 11. See [environment.md](environment.md).
 - **Native dual-boot** — planned before Part 3, needed by Part 6.
-- **Robot BOM** — order during Part 5 (weeks 16–19) so shipping isn't the bottleneck at week 20.
+- **Bench kit** — order by week 6 for the Part 3 components weeks (see §13).
+- **Robot BOM** — order during Part 5 (weeks 18–21) so shipping isn't the bottleneck at week 22.

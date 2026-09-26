@@ -9,7 +9,7 @@ requirements question as the customer, or when Boss Fight #1 starts.
 
 - **`main`/`cli` orchestrates** (parse → analyze → report). His original blocker was picturing
   stages as separate programs passing files; in-process stages pass return values. Revisit at
-  week 11 (ROS nodes *are* separate processes).
+  week 13 (ROS nodes *are* separate processes).
 - **Bad rows dropped and recorded** on the `Robot` as `(line, message)`, fed into the report.
 - **Warnings: Strategy pattern** in `telemetry_warning.py` (renamed from `Warning`, which shadowed
   the builtin), detected in `analysis.py`, carrying the reading's timestamp. Kept in analysis with

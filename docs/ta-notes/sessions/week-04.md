@@ -30,3 +30,24 @@ session. Newest last.
 not a week-4 decision and that the syllabus projects serve both. What he enjoys: optimization —
 path planning, a genetic algorithm for class scheduling. Named planning/optimization as a lane;
 suggested ArduPilot for the week-40 open-source PR. Ended with "keep looking out for my future."
+
+## 2026-09-26 — syllabus critique from Seth (not work time)
+
+Opened 00:26 UTC by the container clock. Chris's local start time wasn't given; no hours logged.
+Chris paused before any C++ so his brother **Seth** (MS Mechanical Engineering, robotics emphasis)
+could critique the syllabus.
+
+- **Seth's point:** the syllabus has little on physical components — motors (stepper, servo,
+  linear actuators), sensors beyond vision (radar, thermocouples, IMU, acoustic), processors
+  (Arduino, Pi), wiring, protocols, a test robot. *"You cannot fully understand robotics without
+  knowing what they're made of, how they move, and how they sense."*
+- **Checking the syllabus against his point turned up a bigger gap:** no feedback control anywhere,
+  no PID, and no protocols. His critique was right. I pushed back only on "fully/all": the target
+  is a software engineer, so the fix is broad coverage by principle plus depth on a few parts, not
+  a mechatronics degree.
+- **Chris: "write the proposal, I think I'm committed for the whole syllabus, so whatever y'all
+  think is good."** Applied as revision §13: Part 3 → 5 weeks with two components weeks first,
+  Parts 4–10 shift +2, Part 11 → 2 weeks, applications → wk 24. Bench kit to order by wk 6.
+- Noted from observations.md: he already has hands-on ArduPilot waypoint work. Worth asking in
+  week 8 how much wiring he did there. It may make parts of Components I a refresher.
+- **Next session is unchanged:** move semantics.
