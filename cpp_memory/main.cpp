@@ -24,18 +24,17 @@ struct Tracer {
   ~Tracer() { std::cout << "dtor" << std::endl; }
 };
 
+Tracer make_tracer() {
+  // ctor
+  Tracer t;
+  std::cout << "&t = " << &t << std::endl;
+  return t;
+}
+// dtor
+
 int main() {
-  // borrowed int pointer
-  int* borrowed;
-  {
-    // unique pointer, p to int
-    std::unique_ptr<int> p(new int(7));
-    // p.get() is the address
-    borrowed = p.get();
-    // borrowed is now the address of p's int
-    // p's address gets deconstructed, so the address is freed,
-  }
-  // get the value at borrowed's address
-  std::cout << "*borrowed = " << *borrowed;
+  Tracer u = make_tracer();
+  std::cout << "&u = " << &u << std::endl;
+  // move
   return 0;
 }
