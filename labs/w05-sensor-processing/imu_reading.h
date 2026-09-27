@@ -8,7 +8,7 @@ struct Acceleration {
   double x_mps2;
   double y_mps2;
   double z_mps2;  // at rest z = +9.81
-  Acceleration(double x_mps2, double y_mps2, double z_mps2)
+  explicit Acceleration(double x_mps2, double y_mps2, double z_mps2)
       : x_mps2(x_mps2), y_mps2(y_mps2), z_mps2(z_mps2) {}
 };
 
@@ -16,7 +16,7 @@ struct Gyro {
   double x_rad_s;
   double y_rad_s;
   double z_rad_s;
-  Gyro(double x_rad_s, double y_rad_s, double z_rad_s)
+  explicit Gyro(double x_rad_s, double y_rad_s, double z_rad_s)
       : x_rad_s(x_rad_s), y_rad_s(y_rad_s), z_rad_s(z_rad_s) {}
 };
 
@@ -24,7 +24,7 @@ struct IMUReading {
   Timestamp timestamp;  // high res clock duration (needs testing to know what this outputs)
   Acceleration accel;   // m/s^2
   Gyro gyro;            // rad/s
-  IMUReading(Timestamp timestamp, Acceleration accel, Gyro gyro)
+  explicit IMUReading(Timestamp timestamp, Acceleration accel, Gyro gyro)
       : timestamp(timestamp), accel(accel), gyro(gyro) {}
 };
 
