@@ -86,8 +86,9 @@ there. Check before summarising his work back to him.
   sessions around it: front-load the concept, then hand over a build. Links to 09-12's "sessions
   feel unproductive without coding" — the same signal, now with numbers.
 - **09-27 (car ride, not work time):** background I didn't have. **BS CS 2020 → rejected by
-  SpaceX → about a year away from CS → MS** in a research lab doing **drone modeling and
-  simulation** (his brother worked there too). That work needed a **Secret clearance**, now
+  SpaceX → about a year away from CS → MS** while working in a **drone research lab** (he
+  dictated this by voice and later corrected it; "modeling and simulation" and his brother's
+  involvement weren't clear, so ask). That work needed a **Secret clearance**, now
   inactive after 2+ years unused. That changes the calibration: his aerial-sim background is more
   than "ArduPilot waypoints." Ask what he built in the lab, which simulator and language, and what
   he owned, before Part 3 and at capstone scope.
