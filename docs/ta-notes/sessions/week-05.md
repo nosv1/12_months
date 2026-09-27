@@ -18,3 +18,38 @@ of making them."* Stamina numbers from him, logged in observations.
 - Headers reviewed twice; I reviewed a stale copy once and told him to fix what he'd already fixed.
   **Re-read files before every review.**
 - I wrote "18:2x" once. Broke the never-approximate rule; it was 18:26.
+
+## 2026-09-27 — oral explain-backs, car ride (ended 13:24 UTC by container clock; start not recorded)
+
+Voice-to-text from the car, on the way to a bowling tournament. His idea: "utilize the textbook a bit
+more", since he rarely opens it. **Correction owed and given:** I had told him entries end with
+explain-back questions. They don't. They end with Open questions / Where this returns. Offered to
+add an explain-back section to each entry; not agreed yet, so not done.
+
+**Format that worked:** one question at a time, one retry with a hint, then the answer. He asked
+partway through for **concept questions, no code**, because code is hard to dictate. Keep that for
+any future phone session.
+
+Ten questions, results:
+
+| # | Entry | Result |
+| --- | --- | --- |
+| 1 | 25 `std::move` | Zero instructions: **held from last week.** Still thinks it returns "what x holds"; it's x as `T&&`. Called a moved-from object "null/garbage"; it's valid-but-unspecified. Said "copy and delete" for a move. **Re-check.** |
+| 2 | 20 linker | Linker: right. "Where the call is looking is missing": right. Attributed pasting the includes together to the linker (that's the preprocessor). |
+| 3 | 24 RAII | Leak: right. Called it a "dangling reference" (wrong term). Unwinding: got it on the retry. Reasoned on his own that a raw pointer can't free because it doesn't know if it owns the memory. Good. |
+| 4 | 16 sentinel | Solid. Reminded him there's still no test for `-Infinity`. |
+| 5 | 23 `explicit` | **Real gap.** Didn't know one-argument constructors are implicit conversions. Answer given; his restatement afterwards was correct and enthusiastic ("that was hot"). **Re-check cold.** |
+| 6 | 21 reference assignment | Had "r is i with a new name" and didn't trust it. Got `r = j` → `i = j` after. Says "points to" for references. |
+| 7 | 26 use-after-free | Tools and the glibc overwrite: right. Missed "the pointer is unchanged and the memory is still mapped, so no crash". |
+| 8 | 11/14 counting tests | Solid: conservation vs classification. |
+| 9 | 07 circular imports | Cycle and direction: right. Didn't know the leaf-module fix; asked, it landed ("obviously..."), then blamed himself for being lazy. Corrected that: it's the normal first layout. |
+| 10 | 02 falsy return | Solid. |
+
+**Pattern:** the ideas are there; **the vocabulary slips** (dangling vs leak, "points to" vs
+"refers to", what `move` returns). That vocabulary is what interviews test. Next session, cold, no
+hints: `explicit`, what `std::move` returns, leak vs dangling.
+
+Not asked yet: all four stages of a build end to end, `raise X from Y`, why I/O belongs at the edges.
+
+**Hours:** not logged. The start time wasn't captured and the end time is only the container's
+UTC clock. Ask him whether this counts toward his hours, and for the times.
