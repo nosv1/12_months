@@ -53,3 +53,11 @@ Not asked yet: all four stages of a build end to end, `raise X from Y`, why I/O 
 
 **Hours:** 0.98, logged. He said to log it how I wanted. Start is the session's creation time (12:25 UTC)
 and end is the `date` output when he called the break (13:24 UTC), both converted to CDT (-0500).
+
+## 2026-09-27 evening — aerospace conversation (car ride, not work time)
+
+No hours. He asked about adding aerospace. My answer: fold it into existing weeks, don't add a
+Part or fly a physical drone in Part 6. Mapped the hooks: wk 7 MAVLink, wk 8–9 attitude + cascaded
+PID, wk 12 ArduPilot/PX4 SITL in Gazebo, wk 18 EKF, wk 20 3D planning / min-snap, wk 40 ArduPilot
+PR, wk 46 capstone. If aerial becomes his lane, Part 10 is the trade, decided on Part 5 evidence.
+Then the Space Force / SpaceX question; details in observations.md 09-27. **No syllabus change.**

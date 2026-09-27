@@ -39,7 +39,7 @@ across week 4 (0.82 h) and week 5 (1.32 h). **49.49 h logged.** Session logs:
   kept). Components weeks 8–9, Parts 4–10 shifted +2, Part 11 → 2 weeks, ESP32 + micro-ROS. **Bench
   kit must be ordered by week 6 — raise it in week 5.** Merge is local; **he pushes**. Remote branch
   `claude/chat-session-5ev4q7` can be deleted once pushed; his call.
-- Career thread (09-24): optimization/planning lane, ArduPilot as PR target. observations.md.
+- Career thread (09-24, 09-27): optimization/planning lane, ArduPilot as PR target, aerial folded into existing weeks (no syllabus change). **Goals are capabilities, never a company**: his rule. MS: drone research lab, M&S for base defense (classified; public version only). observations.md.
 
 ## Week progress — render this as the session opener
 
