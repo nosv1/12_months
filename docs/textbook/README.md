@@ -49,6 +49,7 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 24 | [RAII: who frees the memory, on every exit path](24-raii-and-ownership.md) | 4 | A leak that looked fine, a `throw` that skipped the `delete`, and "b is just renaming a" ending in a double free |
 | 25 | [Move semantics: `std::move` moves nothing](25-move-semantics.md) | 4 | "move probably moves the location of the int?", a `vector` that moved twice for one `push_back`, and a `std::move` that ran a copy |
 | 26 | [Use-after-free: the pointer still looks fine](26-use-after-free-asan-and-valgrind.md) | 4 | A borrowed `.get()` outliving its `unique_ptr`; ASan and valgrind agree on three stacks, and the value was 7 only under valgrind |
+| 27 | [Thrust vector control: balancing a pencil on a jet](27-thrust-vector-control.md) | 5 | "What is this thrust vector stuff?" after BPS Space came up; preview of IMU + PID, bench TVC stand |
 
 ---
 
