@@ -23,22 +23,16 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-26 18:35, signed off by him** ("maybe back later"). 16:27–18:35 logged, split
-across week 4 (0.82 h) and week 5 (1.32 h). **49.49 h logged.** Session logs:
-[week-04.md](ta-notes/sessions/week-04.md), [week-05.md](ta-notes/sessions/week-05.md).
+**Updated 2026-09-27 18:35, break** ("i'll be back"). 17:21–18:35 logged (1.23 h). **51.70 h
+logged.** Session log: [week-05.md](ta-notes/sessions/week-05.md).
 
-- **Week 4 ticked 09-26** (`f576084`), finished day 3 of 7. Textbooks 24–26; copy elision added to 25.
-- **Root reorganized 09-26** (`14a8d6f`, other session; re-authored as Claude 09-26, was `cb37641` on the remote): `projects/`, `labs/wNN-topic/`,
-  `boss-fights/`. `cpp_memory/` → `labs/w04-cpp-memory/`, now tracked with a README. Old paths in
-  logs and textbook left as written.
-- **Week 5 started 09-26 17:16**: STL library, `Sensor → SensorBuffer → Processor → Statistics`.
-  His design so far: `Reading` base with `IMUReading`/`TempReading`; ring buffer, keep newest N;
-  Processor integrates 1-axis accel → velocity; Statistics compares against simulated truth to
-  show drift. Open, his: what the base `Reading` interface is; checkable end state (asked twice).
-- **Syllabus revision §13 merged into `dev`** (`d99bc75`, conflict in estimates.md only, both sides
-  kept). Components weeks 8–9, Parts 4–10 shifted +2, Part 11 → 2 weeks, ESP32 + micro-ROS. **Bench
-  kit must be ordered by week 6 — raise it in week 5.** Merge is local; **he pushes**. Remote branch
-  `claude/chat-session-5ev4q7` can be deleted once pushed; his call.
+- **Textbook 27 (TVC) stranded** on `origin/claude/aerospace-exploration-b3o9z5` (`91d8bc6`),
+  pushed after PR #2 merged. His to PR/cherry-pick. Owed entry is 28.
+- **Build log empty weeks 2–5** (Built/Broke/Learned/Stuck). Raised 09-27.
+- **Bench kit order due by 10-03** (week 6). Raised 09-27, not acted on.
+- Week 5 design: ring buffer, capacity via constructor, `std::vector` sized once. Open, his:
+  head == tail ambiguity; default-ctor trap; capacity 0; public interface; checkable end state
+  (asked four times now).
 - Career thread (09-24, 09-27): optimization/planning lane, ArduPilot as PR target, aerial folded into existing weeks (no syllabus change). **Goals are capabilities, never a company**: his rule. MS: drone research lab, M&S for base defense (classified; public version only). observations.md.
 
 ## Week progress — render this as the session opener
@@ -56,18 +50,15 @@ Items are the syllabus checklist for the week; ◐ counts as half. Syllabus tick
 verification, so this block is the mid-week state. Update it at sign-off with the session log.
 When the remaining work fits in one session, **say so up front**.
 
-## Next session: `IMUBuffer`, the ring-buffer policy
+## Next session: finish the ring, then test it
 
-Where it stands: `labs/w05-sensor-processing/` builds and runs (`IMUReading` with `Timestamp` on
-`steady_clock`, `Acceleration`/`Gyro` in mps2/rad_s). **Untracked — his to commit.** No buffer yet.
+`labs/w05-sensor-processing/` has `IMUBuffer` v1 (vector + `erase(begin())`), `.cpp` splits for
+reading/timestamp, and an untracked `sensor_processing_test.cpp` I haven't seen. **All of it
+uncommitted — his.**
 
-Open, his: where "capacity N, drop oldest" lives and what erasing element 0 of a `vector` costs
-(ring index vs `std::deque`); run the 30-second slicing experiment; a checkable end state for the
-week (asked three times — get it before building); README.
-
-He's **decision-fatigued** at the end of 09-26. Next session: give him a concrete, buildable step
-first, not another open design question. Sunday 09-27 he's busy — review may be short or slip.
-**Bench kit order (by wk 6) still to raise.**
+Pick up at: head == tail (empty vs full) — the question he left open. Then `IMUBuffer` → `class`,
+ring with head/tail(+count), then gtest via FetchContent with the library split. First test: 150
+adds, predicted size written down before running.
 
 **Keep replies short.** Instructions I give between tool calls get buried. Put the task in the
 **final** message, never mid-turn.

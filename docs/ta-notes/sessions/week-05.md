@@ -61,3 +61,31 @@ Part or fly a physical drone in Part 6. Mapped the hooks: wk 7 MAVLink, wk 8–9
 PID, wk 12 ArduPilot/PX4 SITL in Gazebo, wk 18 EKF, wk 20 3D planning / min-snap, wk 40 ArduPilot
 PR, wk 46 capstone. If aerial becomes his lane, Part 10 is the trade, decided on Part 5 evidence.
 Then the Space Force / SpaceX question; details in observations.md 09-27. **No syllabus change.**
+
+## 2026-09-27 17:21–18:35 — Sunday review, IMUBuffer ring-buffer design (break)
+
+**Sunday review:** both remote PRs merged cleanly into `dev`. **Textbook 27 (TVC) is stranded**
+on `origin/claude/aerospace-exploration-b3o9z5` (`91d8bc6`), pushed after PR #2 merged. His to
+PR or cherry-pick. **Build log Built/Broke/Learned/Stuck empty weeks 2–5**; only my Hours lines
+exist. Bench kit (by wk 6, i.e. by 10-03) raised for the first time. He went straight to code.
+
+- Mechanics answered directly: C++17 has no `operator<<` for `duration`; `.count()` +
+  `duration_cast`; `steady_clock` epoch is unspecified (time since boot), deltas are what it's for.
+- **IMUBuffer v1 review** (built with `-Wshadow`, runs): public vector bypasses the policy;
+  `size > MAX` then push holds 101 (told him it's off by one, asked him to predict 150 adds before
+  running); `erase(begin())`; non-static `const u_long` member (non-standard type, per-instance,
+  kills copy assignment); `int` return always 0; `auto const` copies in the loop; parameter shadows
+  member.
+- Taught: gtest shape, why tests force the library/exe/test split (= the week's library item; CMake
+  is his); gtest **not installed**, recommended FetchContent. `struct` vs `class` is default access
+  only. Public vs private: private by default, public is a promise, test through the interface.
+- **Ring buffer, his reasoning:** saw that array + shift is still O(N) → offered linked list (valid;
+  rejected on per-reading allocation, cache, node overhead) → reading 5 goes in slot 1, but modelled
+  slots as pointing to each other → `% N` → "just the oldest" (insufficient) → head + next-write.
+  **Open: head == tail when empty and when full.** Asked twice, not answered yet.
+- **Decision, his:** capacity passed to the constructor → `std::vector` sized once. Flagged: the
+  `IMUReading` has no default ctor trap (`vector(n)` vs `reserve`), capacity 0 → mod by zero
+  (constructor can't return an error code — the exceptions item), don't make capacity `const`.
+- Owed: textbook entry on C++ testing layout + class/access (said "at sign-off"). Number it 28;
+  27 is on the branch.
+- He has an untracked `sensor_processing_test.cpp` — hasn't shown me.
