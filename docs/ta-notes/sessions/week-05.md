@@ -19,7 +19,7 @@ of making them."* Stamina numbers from him, logged in observations.
   **Re-read files before every review.**
 - I wrote "18:2x" once. Broke the never-approximate rule; it was 18:26.
 
-## 2026-09-27 — oral explain-backs, car ride (ended 13:24 UTC by container clock; start not recorded)
+## 2026-09-27 07:25–08:24 — oral explain-backs, car ride
 
 Voice-to-text from the car, on the way to a bowling tournament. His idea: "utilize the textbook a bit
 more", since he rarely opens it. **Correction owed and given:** I had told him entries end with
@@ -51,5 +51,5 @@ hints: `explicit`, what `std::move` returns, leak vs dangling.
 
 Not asked yet: all four stages of a build end to end, `raise X from Y`, why I/O belongs at the edges.
 
-**Hours:** not logged. The start time wasn't captured and the end time is only the container's
-UTC clock. Ask him whether this counts toward his hours, and for the times.
+**Hours:** 0.98, logged. He said to log it how I wanted. Start is the session's creation time (12:25 UTC)
+and end is the `date` output when he called the break (13:24 UTC), both converted to CDT (-0500).
