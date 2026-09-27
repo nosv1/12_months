@@ -86,12 +86,14 @@ there. Check before summarising his work back to him.
   sessions around it: front-load the concept, then hand over a build. Links to 09-12's "sessions
   feel unproductive without coding" — the same signal, now with numbers.
 - **09-27 (car ride, not work time):** background I didn't have. **BS CS 2020 → rejected by
-  SpaceX → about a year away from CS → MS** while working in a **drone research lab** (he
-  dictated this by voice and later corrected it; "modeling and simulation" and his brother's
-  involvement weren't clear, so ask). That work needed a **Secret clearance**, now
+  SpaceX → about a year away from CS → MS** while working in a **drone research lab**. Public-release
+  description, his words: **modeling and simulation developer for base defense**, working out
+  the best way to defend a base with a given set of effectors. Side projects: ArduPilot and
+  waypoint navigation. **Details are classified. Don't probe past the public version.** That
+  work needed a **Secret clearance**, now
   inactive after 2+ years unused. That changes the calibration: his aerial-sim background is more
-  than "ArduPilot waypoints." Ask what he built in the lab, which simulator and language, and what
-  he owned, before Part 3 and at capstone scope.
+  than "ArduPilot waypoints." Base defense with effectors is an allocation/optimization problem, the
+  **fourth** optimization data point, and it's a résumé line for defense autonomy.
   - **His rule, and it's right: a specific company is not a goal.** Someone else's decision is
     outside his control, so it's a setup for disappointment. I had framed SpaceX as "the target"
     and he corrected it. Aim at capabilities and directions (aerial autonomy, planning and
@@ -99,6 +101,6 @@ there. Check before summarising his work back to him.
   - Would not join the military even with a SpaceX offer in hand, so that idea is closed. He'd be
     "scared shitless" to work at SpaceX today. Treat that as an accurate read of week 5, not a
     permanent one. Answer it with evidence as it builds up, not with reassurance.
-  - Optimization pattern, **three data points** now: path planning, the GA class scheduler, and a
+  - Optimization pattern, **four data points** now: base-defense M&S, path planning, the GA class scheduler, and a
     drone-fleet optimal-routing problem from applied calculus. Also follows BPS Space. Parked idea:
     a grounded TVC test stand (ESP32 + IMU + servo gimbal) as a weeks 8–9 side project.
