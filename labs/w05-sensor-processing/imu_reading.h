@@ -12,6 +12,7 @@ struct Acceleration {
   double z_mps2;  // at rest z = +9.81
   explicit Acceleration(double x_mps2, double y_mps2, double z_mps2)
       : x_mps2(x_mps2), y_mps2(y_mps2), z_mps2(z_mps2) {}
+  std::string to_string();
 };
 
 struct Gyro {
@@ -20,6 +21,7 @@ struct Gyro {
   double z_rad_s;
   explicit Gyro(double x_rad_s, double y_rad_s, double z_rad_s)
       : x_rad_s(x_rad_s), y_rad_s(y_rad_s), z_rad_s(z_rad_s) {}
+  std::string to_string();
 };
 
 struct IMUReading {
