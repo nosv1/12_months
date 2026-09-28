@@ -35,7 +35,18 @@ void IMUBuffer::add_readings(const std::vector<IMUReading>& imu_readings) {
   }
 }
 
-std::vector<IMUReading> IMUBuffer::get_readings() { return this->_imu_readings; }
+std::vector<IMUReading> IMUBuffer::get_ordered_readings() {
+  std::vector<IMUReading> ordered_readings;
+  ordered_readings.reserve(size(this->_imu_readings));
+
+  uint i = this->_tail_idx;
+  while (size(ordered_readings) < size(this->_imu_readings)) {
+    i = (i + 1) % this->_buffer_size;
+    ordered_readings.push_back(this->_imu_readings[i]);
+  }
+
+  return ordered_readings;
+}
 
 std::string IMUBuffer::to_string() {
   std::ostringstream oss;

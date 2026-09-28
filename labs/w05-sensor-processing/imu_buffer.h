@@ -18,7 +18,7 @@ class IMUBuffer {
  public:
   explicit IMUBuffer(const std::size_t& buffer_size);
   void add_readings(const std::vector<IMUReading>& imu_readings);
-  std::vector<IMUReading> get_readings();
+  std::vector<IMUReading> get_ordered_readings();
   std::string to_string();
 };
 

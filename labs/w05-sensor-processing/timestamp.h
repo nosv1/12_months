@@ -8,7 +8,8 @@
 struct Timestamp {
   std::chrono::steady_clock::duration v;
   explicit Timestamp(std::chrono::steady_clock::duration timestamp) : v(timestamp) {}
-  std::string to_string();
+  bool operator==(const Timestamp& other) const;
+  std::string to_string() const;
 };
 
 #endif
