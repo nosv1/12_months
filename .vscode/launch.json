@@ -14,6 +14,37 @@
                 "${workspaceFolder}/projects/telemetry/data/sample_telemetry.csv",
                 "${workspaceFolder}/projects/telemetry/output",
             ]
+        },
+        {
+            // gdb on the gtest binary. Set a breakpoint in a TEST body, F5.
+            // To run one test only, add "--gtest_filter=SensorProcessing.IMUBufferCapacityTest" to args.
+            "name": "C++: w05 tests (gdb)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/labs/w05-sensor-processing/build/sensor_processing_test",
+            "args": [],
+            "cwd": "${workspaceFolder}/labs/w05-sensor-processing",
+            // LeakSanitizer can't run under a debugger (ptrace); ASan's other checks still do.
+            "environment": [{ "name": "ASAN_OPTIONS", "value": "detect_leaks=0" }],
+            "MIMode": "gdb",
+            "setupCommands": [
+                { "text": "-enable-pretty-printing", "ignoreFailures": true }
+            ],
+            "preLaunchTask": "w05: build (Debug)"
+        },
+        {
+            "name": "C++: w05 main (gdb)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/labs/w05-sensor-processing/build/sensor_processing",
+            "args": [],
+            "cwd": "${workspaceFolder}/labs/w05-sensor-processing",
+            "environment": [{ "name": "ASAN_OPTIONS", "value": "detect_leaks=0" }],
+            "MIMode": "gdb",
+            "setupCommands": [
+                { "text": "-enable-pretty-printing", "ignoreFailures": true }
+            ],
+            "preLaunchTask": "w05: build (Debug)"
         }
     ]
 }

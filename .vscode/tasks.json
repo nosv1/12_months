@@ -1,0 +1,24 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            // Debug build type adds -g to every target, test file included —
+            // without it gdb can't show source lines in sensor_processing_test.cpp.
+            "label": "w05: build (Debug)",
+            "type": "shell",
+            "command": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build",
+            "options": { "cwd": "${workspaceFolder}/labs/w05-sensor-processing" },
+            "group": { "kind": "build", "isDefault": true },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "w05: test",
+            "type": "shell",
+            "command": "ctest --test-dir build --output-on-failure",
+            "options": { "cwd": "${workspaceFolder}/labs/w05-sensor-processing" },
+            "dependsOn": "w05: build (Debug)",
+            "group": { "kind": "test", "isDefault": true },
+            "problemMatcher": []
+        }
+    ]
+}
