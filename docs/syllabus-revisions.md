@@ -220,6 +220,23 @@ asks of him. Take the week back from Part 11 then.
 Seth offered domain review. When weeks 8–9 arrive, have him check the component list for
 anything missing or misweighted.
 
+### 14. Pi 5 dropped for the Pi 4 already owned (2026-09-28)
+
+The bench kit and the robot BOM both listed a Raspberry Pi 5. He already owns a **Pi 4 Model B,
+4 GB** (Rev 1.1, verified over SSH) and a Pi 3B+. The Pi 4 becomes the robot computer. The 3B+ is
+a spare or bench Linux box (1 GB is too little for ROS 2).
+
+- **Why it's enough:** Ubuntu 24.04 + ROS 2 Jazzy are Tier 1 on arm64 and support the Pi 4. Week
+  22 runs ROS nodes, the LiDAR driver and the micro-ROS agent; 4 GB covers that. Heavy perception
+  (Part 7 on) belongs on the PC over the network anyway.
+- **Cost:** the bench kit drops back to ~$100–150, matching §13's figure. The Pi 5 line made the
+  realistic total ~$200–250.
+- **To do by week 22:** it currently runs Raspberry Pi OS (Debian 13 trixie). Reflash to Ubuntu
+  24.04 server for Jazzy. Rev 1.1 boards have the USB-C power quirk with e-marked cables: use a
+  plain 5 V 3 A supply (the official one).
+- **Watch:** if on-robot perception turns out to be a requirement, revisit a Pi 5 in Part 5 with
+  the robot order.
+
 ## What was deliberately kept
 
 The original draft was better than most. Unchanged:
