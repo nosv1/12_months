@@ -14,22 +14,25 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_executable(sensor_processing main.cpp
-    imu_buffer.cpp
-    imu_reading.cpp
-    timestamp.cpp)
-
-target_compile_options(sensor_processing PRIVATE 
+add_library(sensor_processing_library
+  imu_buffer.cpp
+  imu_reading.cpp
+  timestamp.cpp
+)
+add_executable(sensor_processing main.cpp)
+target_link_libraries(sensor_processing PRIVATE sensor_processing_library)
+target_compile_options(sensor_processing_library PRIVATE 
     -Wall 
     -Wextra 
     -D_GLIBCXX_ASSERTIONS 
     -fsanitize=address 
-    -g)
-
-target_link_options(sensor_processing PRIVATE
+    -g
+  )
+target_link_options(sensor_processing_library INTERFACE
     -fsanitize=address
 )
 
+# testing
 enable_testing()
 
 add_executable(
@@ -39,6 +42,7 @@ add_executable(
 target_link_libraries(
   sensor_processing_test
   GTest::gtest_main
+  sensor_processing_library
 )
 
 include(GoogleTest)
