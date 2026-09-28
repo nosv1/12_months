@@ -23,42 +23,41 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-27 18:35, break** ("i'll be back"). 17:21–18:35 logged (1.23 h). **51.70 h
-logged.** Session log: [week-05.md](ta-notes/sessions/week-05.md).
+**Updated 2026-09-27 21:19, signed off by him** ("too tired to continue"). 17:21–18:35 and
+20:30–21:19 logged. **52.52 h logged.** Session log: [week-05.md](ta-notes/sessions/week-05.md).
 
-- **Textbook 27 (TVC) stranded** on `origin/claude/aerospace-exploration-b3o9z5` (`91d8bc6`),
-  pushed after PR #2 merged. His to PR/cherry-pick. Owed entry is 28.
-- **Build log empty weeks 2–5** (Built/Broke/Learned/Stuck). Raised 09-27.
-- **Bench kit order due by 10-03** (week 6). Raised 09-27, not acted on.
-- Week 5 design: ring buffer, capacity via constructor, `std::vector` sized once. Open, his:
-  head == tail ambiguity; default-ctor trap; capacity 0; public interface; checkable end state
-  (asked four times now).
+- **Textbook 27 merged** (PR #3, his). 28 (ring buffer) and 29 (gtest) written 09-27.
+- **Build log empty weeks 2–5** (Built/Broke/Learned/Stuck). Raised 09-27, not acted on.
+- **Bench kit order due by 10-03** (week 6). Raised 09-27, not acted on. **Raise again.**
+- Week 5: ring buffer implemented (`8e540a6`), correct by trace, untested. Checkable end state for
+  the week still not stated (asked four times).
 - Career thread (09-24, 09-27): optimization/planning lane, ArduPilot as PR target, aerial folded into existing weeks (no syllabus change). **Goals are capabilities, never a company**: his rule. MS: drone research lab, M&S for base defense (classified; public version only). observations.md.
 
 ## Week progress — render this as the session opener
 
 ```text
-Week 5 · STL and idiom   ██░░░░░░░░░░░░░░░░  0.5/5   day 1 of 7 (started 09-26)   my est 8–12 h left
-  ◐ vector, unordered_map, string_view, optional   — vector in use; others not touched
-  ☐ iterators + <algorithm>
+Week 5 · STL and idiom   ██░░░░░░░░░░░░░░░░  0.5/5   day 2 of 7 (started 09-26)   my est 8–11 h left
+  ◐ vector, unordered_map, string_view, optional   — vector in depth (ring); optional raised, not used
+  ☐ iterators + <algorithm>                        — lands with the buffer's read access
   ☐ templates (reading)                            — lands with SensorBuffer<T> + TempReading
-  ☐ exceptions vs error codes
-  ☐ build a library, link it from another project  — single executable so far
+  ☐ exceptions vs error codes                      — lands with IMUBuffer(0)
+  ☐ build a library, link it from another project  — gtest wired, add_library not yet
 ```
 
 Items are the syllabus checklist for the week; ◐ counts as half. Syllabus ticks still wait for
 verification, so this block is the mid-week state. Update it at sign-off with the session log.
 When the remaining work fits in one session, **say so up front**.
 
-## Next session: finish the ring, then test it
+## Next session: `add_library`, then the first real test
 
-`labs/w05-sensor-processing/` has `IMUBuffer` v1 (vector + `erase(begin())`), `.cpp` splits for
-reading/timestamp, and an untracked `sensor_processing_test.cpp` I haven't seen. **All of it
-uncommitted — his.**
+`labs/w05-sensor-processing/`: ring `IMUBuffer` committed (`8e540a6`). **Uncommitted, his:**
+`CMakeLists.txt` (gtest FetchContent) and `sensor_processing_test.cpp` (one `#include`).
 
-Pick up at: head == tail (empty vs full) — the question he left open. Then `IMUBuffer` → `class`,
-ring with head/tail(+count), then gtest via FetchContent with the library split. First test: 150
-adds, predicted size written down before running.
+Concrete first step, since he stopped tired: `add_library` for the three `.cpp` files, link both
+executables to it, then one test — N=3, four *distinct* readings, check which three remain. That
+needs a public read path (his design; iterators item). Then the order test (s, t, u).
+
+Also raise: bench kit (by 10-03); week 4 build log.
 
 **Keep replies short.** Instructions I give between tool calls get buried. Put the task in the
 **final** message, never mid-turn.

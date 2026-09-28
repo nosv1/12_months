@@ -89,3 +89,26 @@ exist. Bench kit (by wk 6, i.e. by 10-03) raised for the first time. He went str
 - Owed: textbook entry on C++ testing layout + class/access (said "at sign-off"). Number it 28;
   27 is on the branch.
 - He has an untracked `sensor_processing_test.cpp` — hasn't shown me.
+
+## 2026-09-27 20:30–21:19 — ring buffer, first implementation (sign-off)
+
+Start is his ("came back at 2030"). He merged PR #3, so textbook 27 is on `dev`.
+
+- "Why head again?": to *read* oldest → newest after a wrap; writing only needs tail. Any two of
+  {head, tail, count}. **His pick: tail + count, count = `size()`** (reserve + push_back). Flagged:
+  don't read N from `capacity()`; `size_t` subtraction wraps.
+- "add readings works then": **it didn't.** `tail_idx = size()` after push_back ("next") vs
+  `(tail_idx + 1) % N` in the else ("last written"). N=3, r s t u → u overwrote s. Output was
+  size-only with identical readings, so nothing could show it. **He fixed it** (set tail before
+  push_back). Correct by my trace; **no test yet.**
+- Wanted one branch instead of push_back/`[]`; floated a map. Map has the default-ctor trap too.
+  Pre-fill → filler choice (default reading vs `optional`); he then weighed the size compare cost.
+  Told him it's negligible, keep what he has, write the test. He took it.
+- **gtest wired via FetchContent** (his, quickstart). `sensor_processing_test.cpp` is one
+  `#include`; ctest: no tests. No `add_library` yet. Both uncommitted.
+- Committed `8e540a6` (his). Stopped: "too tired to continue."
+- Textbook 28 (ring buffers + class invariants) and 29 (gtest + library split) written.
+
+Still open from the review: `uint tail_idx = -1`; `IMUBuffer(0)` → `% 0`; private setter in the
+ctor instead of an init list; `const size_t&`; `auto const` loop copy; `add_reading` private;
+non-`const` `to_string`; `Timestamp` switched to `steady_clock::duration` (asked what it bought).

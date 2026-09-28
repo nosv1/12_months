@@ -50,6 +50,8 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 25 | [Move semantics: `std::move` moves nothing](25-move-semantics.md) | 4 | "move probably moves the location of the int?", a `vector` that moved twice for one `push_back`, and a `std::move` that ran a copy |
 | 26 | [Use-after-free: the pointer still looks fine](26-use-after-free-asan-and-valgrind.md) | 4 | A borrowed `.get()` outliving its `unique_ptr`; ASan and valgrind agree on three stacks, and the value was 7 only under valgrind |
 | 27 | [Thrust vector control: balancing a pencil on a jet](27-thrust-vector-control.md) | 5 | "What is this thrust vector stuff?" after BPS Space came up; preview of IMU + PID, bench TVC stand |
+| 28 | [Ring buffers: move the index, not the data](28-ring-buffers-and-class-invariants.md) | 5 | A public `vector` with `erase(begin())`, a linked-list detour, and a `tail_idx` that meant two things in two branches |
+| 29 | [Testing C++: GoogleTest, and why tests force a library](29-testing-cpp-with-googletest.md) | 5 | "what's the convention for writing tests in cpp? we never covered it" — and `ctest` finding no tests |
 
 ---
 
