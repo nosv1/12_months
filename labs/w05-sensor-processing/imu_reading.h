@@ -2,6 +2,8 @@
 
 #define IMU_READING_H
 
+#include <string>
+
 #include "timestamp.h"
 
 struct Acceleration {
@@ -26,6 +28,7 @@ struct IMUReading {
   Gyro gyro;            // rad/s
   explicit IMUReading(Timestamp timestamp, Acceleration accel, Gyro gyro)
       : timestamp(timestamp), accel(accel), gyro(gyro) {}
+  std::string to_string();
 };
 
 #endif

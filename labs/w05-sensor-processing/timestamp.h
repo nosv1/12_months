@@ -3,10 +3,12 @@
 #define TIMESTAMP_H
 
 #include <chrono>
+#include <string>
 
 struct Timestamp {
-  std::chrono::time_point<std::chrono::steady_clock> v;
-  explicit Timestamp(std::chrono::time_point<std::chrono::steady_clock> timestamp) : v(timestamp) {}
+  std::chrono::steady_clock::duration v;
+  explicit Timestamp(std::chrono::steady_clock::duration timestamp) : v(timestamp) {}
+  std::string to_string();
 };
 
 #endif
