@@ -52,6 +52,8 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 27 | [Thrust vector control: balancing a pencil on a jet](27-thrust-vector-control.md) | 5 | "What is this thrust vector stuff?" after BPS Space came up; preview of IMU + PID, bench TVC stand |
 | 28 | [Ring buffers: move the index, not the data](28-ring-buffers-and-class-invariants.md) | 5 | A public `vector` with `erase(begin())`, a linked-list detour, and a `tail_idx` that meant two things in two branches |
 | 29 | [Testing C++: GoogleTest, and why tests force a library](29-testing-cpp-with-googletest.md) | 5 | "what's the convention for writing tests in cpp? we never covered it" — and `ctest` finding no tests |
+| 30 | [Templates vs abstract classes: when the type gets decided](30-templates-vs-abstract-classes.md) | 5 | "somewhere there's gotta be a template or an abstract class... that's just the vibe"; why one `vector` can't hold two `SensorBuffer<T>`s (not size) |
+| 31 | [Operators, `const this`, and what a header promises](31-operators-const-this-and-what-a-header-promises.md) | 5 | First order test: "no match for `operator==`" when one existed, raw-byte gtest output, an invisible `operator<<`, then a multiple definition |
 
 ---
 

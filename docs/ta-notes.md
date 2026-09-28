@@ -23,41 +23,51 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-27 21:19, signed off by him** ("too tired to continue"). 17:21–18:35 and
-20:30–21:19 logged. **52.52 h logged.** Session log: [week-05.md](ta-notes/sessions/week-05.md).
+**Updated 2026-09-28 18:29, signed off by him** ("50% chance I come back tonight to write that
+test" — if he does, ask for the start time). **54.49 h logged.** Session log:
+[week-05.md](ta-notes/sessions/week-05.md).
 
-- **Textbook 27 merged** (PR #3, his). 28 (ring buffer) and 29 (gtest) written 09-27.
-- **Build log empty weeks 2–5** (Built/Broke/Learned/Stuck). Raised 09-27, not acted on.
-- **Bench kit order due by 10-03** (week 6). Raised 09-27, not acted on. **Raise again.**
-- Week 5: ring buffer implemented (`8e540a6`), correct by trace, untested. Checkable end state for
-  the week still not stated (asked four times).
-- Career thread (09-24, 09-27): optimization/planning lane, ArduPilot as PR target, aerial folded into existing weeks (no syllabus change). **Goals are capabilities, never a company**: his rule. MS: drone research lab, M&S for base defense (classified; public version only). observations.md.
+- **Bench kit NOT ordered, due 10-03 (Sat).** Final list is in the 09-28 session log. Open: 12 V
+  adapter + 100 µF cap to add, AA stuff + one ESP32 pack to drop, Adafruit/SparkFun order (IMU,
+  Qwiic cable, MAX31855, K-type), soldering iron yes/no. Pi 5 dropped for his Pi 4 (§14).
+- **Week-5 end state set** (session log 09-28): known IMU + temp sequences → `SensorBuffer<T>`
+  (library) → statistic → exact assert; capacity 0 defined and tested.
+- **Build log empty weeks 2–5.** Raised 09-27, not acted on.
+- Textbook 30 (templates vs abstract) and 31 (operators / const this / header) written 09-28; 29
+  updated (usage requirements, ASan link).
+- Career thread (09-24, 09-27): optimization/planning lane, ArduPilot as PR target, aerial folded
+  into existing weeks. **Goals are capabilities, never a company**: his rule. observations.md.
 
 ## Week progress — render this as the session opener
 
 ```text
-Week 5 · STL and idiom   ██░░░░░░░░░░░░░░░░  0.5/5   day 2 of 7 (started 09-26)   my est 8–11 h left
-  ◐ vector, unordered_map, string_view, optional   — vector in depth (ring); optional raised, not used
-  ☐ iterators + <algorithm>                        — lands with the buffer's read access
-  ☐ templates (reading)                            — lands with SensorBuffer<T> + TempReading
-  ☐ exceptions vs error codes                      — lands with IMUBuffer(0)
-  ☐ build a library, link it from another project  — gtest wired, add_library not yet
+Week 5 · STL and idiom   ███░░░░░░░░░░░░░░░  1.0/5   day 4 of 7 (started 09-26)   my est 6–9 h left
+  ◐ vector, unordered_map, string_view, optional   — vector in depth (ring, ==); optional not used
+  ☐ iterators + <algorithm>                        — transform/back_inserter shown, not used yet
+  ☐ templates (reading)                            — taught (tb 30); SensorBuffer<T> not written
+  ☐ exceptions vs error codes                      — lands with SensorBuffer(0)
+  ◐ build a library, link it from another project  — add_library + exe + test link; INTERFACE flags
 ```
 
 Items are the syllabus checklist for the week; ◐ counts as half. Syllabus ticks still wait for
 verification, so this block is the mid-week state. Update it at sign-off with the session log.
 When the remaining work fits in one session, **say so up front**.
 
-## Next session: `add_library`, then the first real test
+## Next session: fixtures, then the under-full bug
 
-`labs/w05-sensor-processing/`: ring `IMUBuffer` committed (`8e540a6`). **Uncommitted, his:**
-`CMakeLists.txt` (gtest FetchContent) and `sensor_processing_test.cpp` (one `#include`).
+**He asked to be reminded:** gtest **fixtures** — `class X : public ::testing::Test`, `TEST_F(X,
+name)`, members `protected`, readings initialised in the member declarations (no default ctors),
+fresh object per test. Suggested fixed timestamps (`Timestamp(std::chrono::milliseconds(1))`) over
+`now()`.
 
-Concrete first step, since he stopped tired: `add_library` for the three `.cpp` files, link both
-executables to it, then one test — N=3, four *distinct* readings, check which three remain. That
-needs a public read path (his design; iterators item). Then the order test (s, t, u).
+Then the **under-full test** (N=3, push 2, expect `[r, s]`). I expect it to abort: first index is
+`(_tail_idx+1) % N` = 2 on a size-2 vector. Let the test find it; don't hand the fix. Then empty and
+exactly-N.
 
-Also raise: bench kit (by 10-03); week 4 build log.
+After that, toward the end state: `SensorBuffer<T>` + `TempReading`, `SensorBuffer(0)` (exceptions
+item), a statistic via `<algorithm>`.
+
+Also raise: **bench kit (by Saturday)**; build log weeks 2–5.
 
 **Keep replies short.** Instructions I give between tool calls get buried. Put the task in the
 **final** message, never mid-turn.

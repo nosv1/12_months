@@ -106,6 +106,37 @@ ring is reorganised. A test that checks "the oldest three readings in order" sur
   there's a library: on the library, or on each executable?
 - `ctest` vs running the test binary directly: what does each give you?
 
+## Update 2026-09-28: the split, and the sanitizer question answered by a linker error
+
+The library went in (`add_library(sensor_processing_library ...)`) with the flags moved onto it
+as `PRIVATE`, and the executable failed to link with a wall of `undefined reference to
+'__asan_report_load8'`.
+
+**`-fsanitize=address` does two jobs.** At compile time it inserts checking calls into the code.
+At link time it pulls in the runtime that defines them. The library's `.o` files had the calls.
+But a static library (`.a`) is an archive and is **never linked on its own**, so
+`target_link_options` on it does nothing for itself. The only link is the executable's, and it no
+longer had the flag. Instrumented code with no runtime gives undefined references.
+
+**Usage requirements** are the CMake idea underneath:
+
+| Keyword | Applies to this target | Passed to whoever links it |
+| --- | --- | --- |
+| `PRIVATE` | yes | no |
+| `INTERFACE` | no | yes |
+| `PUBLIC` | yes | yes |
+
+Fixed by making the library's link option `INTERFACE`, which reaches both executables. The test
+binary had been linking only because it didn't call the library yet.
+
+**`ctest` vs the binary:** a build compiles tests but doesn't run them. `ctest
+--output-on-failure` gives the pytest-style summary. `./sensor_processing_test` prints each
+`[ OK ]` or `[ FAILED ]` with the reason. The first test reported "no output" because it had only
+been built. Run, it was failing: the readings were constructed but never added.
+
+Still open: `-Wall -Wextra` and the compile-time `-fsanitize` are on the library only, so
+`main.cpp` and the test file compile without warnings or instrumentation.
+
 ## Where this returns
 
 ROS 2 packages use exactly this layout via `ament_cmake` (`ament_add_gtest`), and CI runs

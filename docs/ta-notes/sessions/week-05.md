@@ -112,3 +112,36 @@ Start is his ("came back at 2030"). He merged PR #3, so textbook 27 is on `dev`.
 Still open from the review: `uint tail_idx = -1`; `IMUBuffer(0)` → `% 0`; private setter in the
 ctor instead of an init list; `const size_t&`; `auto const` loop copy; `add_reading` private;
 non-`const` `to_string`; `Timestamp` switched to `steady_clock::duration` (asked what it bought).
+
+## 2026-09-28 16:31–18:29 — bench kit, library split, first real tests (sign-off)
+
+- **Bench kit.** SSH'd to `chris@rpi` (Windows `ssh.exe` only; WSL key not authorized): **Pi 4 Model
+  B Rev 1.1, 4 GB**, Raspberry Pi OS trixie. Pi 5 dropped → syllabus-revisions §14 (`0a6f967`).
+  Reviewed his Amazon cart. Open on it: confirm motor variant has the encoder (he saw magnet disk +
+  6-pin cable, looks right; check cable ends); **DRV8825 min VMOT 8.2 V** so the AA pack can't run
+  the NEMA 17 → add **12 V 2–3 A adapter + barrel-to-terminal**, drop AA holder + NiMH; **100 µF
+  cap**; one ESP32 3-pack not two; ICM-20948 not on Amazon → **Adafruit/SparkFun order: ICM-20948,
+  Qwiic/STEMMA-to-jumper cable, MAX31855, K-type probe**; soldering iron (unanswered). He said
+  "startin to feel overwhelmed" — shrank it to a list, parked it. **Not ordered. Due 10-03.**
+- **Week-5 end state, finally.** His version was weeks 5–7 (threads, backpressure, new sensor
+  without touching core). Mapped each to its week. Accepted: *a gtest pushes known IMU and temp
+  sequences through the same `SensorBuffer<T>` (library linked from exe + test), a processor
+  computes a statistic, test asserts the exact value; capacity 0 has a defined, tested failure.*
+  "Temperature threw me off" — it was his own 09-26 plan.
+- **Templates vs abstract classes** taught (textbook 30). Explain-back: said "size unknown". Half
+  right; corrected with the same-`sizeof` counterexample. Unrelated types is the root.
+- **`add_library`** his. Put flags `PRIVATE` on the lib → ASan undefined refs at the exe link.
+  Explained compile vs link jobs of `-fsanitize`; he chose `INTERFACE`. Good.
+- Tests: first capacity test "no output" = only built; running showed it failing (readings never
+  added). Then: renamed `get_readings` → `get_ordered_readings` (answered the order question by
+  naming it). `operator==` without `const` → he learned `const this` ("const on the right side").
+  `operator<<` defined in .cpp only → invisible to gtest; body in header → multiple definition;
+  then declared correctly. Implemented ordered read; **both tests green**, all committed by him
+  (`061790f`..`0476f5c`).
+- **Review finding, not yet told as a fix:** `get_ordered_readings` starts at `(_tail_idx+1) % N`
+  — for an under-full buffer (N=3, push 2) that's index 2 of a size-2 vector → `_GLIBCXX_ASSERTIONS`
+  abort. Asked him to write the under-full test first.
+- Tooling (mine, `050bfe1`): gdb launch configs + Debug build/test tasks. He'd meant his own
+  `debug.sh` (build + run both); suggested shebang + `set -e`.
+- Asked for gtest fixtures → explained `TEST_F`, protected members, init in declaration (no default
+  ctors), fixed timestamps. He paused: **"remind me of this when we resume."**
