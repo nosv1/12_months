@@ -22,7 +22,7 @@ class SensorProcessing : public ::testing::Test {
                            Gyro(7, 1, 1)};
 };
 
-TEST_F(SensorProcessing, IMUBufferCapcityNTest) {
+TEST_F(SensorProcessing, IMUBufferCapacityNTest) {
   std::size_t buffer_size(3);
   IMUBuffer imu_buffer(buffer_size);
   imu_buffer.add_readings({r_imu_reading, s_imu_reading, t_imu_reading});
