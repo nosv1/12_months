@@ -41,7 +41,7 @@ std::vector<IMUReading> IMUBuffer::get_ordered_readings() {
 
   uint i = this->_tail_idx;
   while (size(ordered_readings) < size(this->_imu_readings)) {
-    i = (i + 1) % this->_buffer_size;
+    i = (i + 1) % size(this->_imu_readings);
     ordered_readings.push_back(this->_imu_readings[i]);
   }
 
