@@ -19,8 +19,8 @@ class SensorBuffer {
  public:
   explicit SensorBuffer(const std::size_t& buffer_size);
   void add_readings(const std::vector<T>& readings);
-  std::vector<T> get_ordered_readings();
-  std::string to_string();
+  std::vector<T> get_ordered_readings() const;
+  std::string to_string() const;
 };
 
 template <typename T>
@@ -63,7 +63,7 @@ void SensorBuffer<T>::add_readings(const std::vector<T>& readings) {
 }
 
 template <typename T>
-std::vector<T> SensorBuffer<T>::get_ordered_readings() {
+std::vector<T> SensorBuffer<T>::get_ordered_readings() const {
   std::vector<T> ordered_readings;
   ordered_readings.reserve(size(this->_readings));
 
@@ -77,7 +77,7 @@ std::vector<T> SensorBuffer<T>::get_ordered_readings() {
 }
 
 template <typename T>
-std::string SensorBuffer<T>::to_string() {
+std::string SensorBuffer<T>::to_string() const {
   std::ostringstream oss;
   oss << "size: " << size(this->_readings) << " of " << this->_buffer_size;
   return oss.str();
