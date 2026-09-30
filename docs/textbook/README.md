@@ -54,6 +54,8 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 29 | [Testing C++: GoogleTest, and why tests force a library](29-testing-cpp-with-googletest.md) | 5 | "what's the convention for writing tests in cpp? we never covered it" — and `ctest` finding no tests |
 | 30 | [Templates vs abstract classes: when the type gets decided](30-templates-vs-abstract-classes.md) | 5 | "somewhere there's gotta be a template or an abstract class... that's just the vibe"; why one `vector` can't hold two `SensorBuffer<T>`s (not size) |
 | 31 | [Operators, `const this`, and what a header promises](31-operators-const-this-and-what-a-header-promises.md) | 5 | First order test: "no match for `operator==`" when one existed, raw-byte gtest output, an invisible `operator<<`, then a multiple definition |
+| 32 | [Debugging an abort: read the backtrace first](32-debugging-an-abort-read-the-backtrace.md) | 5 | Under-full ring buffer aborted on `__n < size()`; prints vanished, the backtrace named the line; `size` vs `capacity`; stale binary and `.gch` |
+| 33 | [Writing a class template](33-writing-a-class-template.md) | 5 | `IMUBuffer` → `SensorBuffer<T>`: bodies written per type twice before "bodies once, in `T`"; implicit requirements (construct vs assign vs `==`) |
 
 ---
 

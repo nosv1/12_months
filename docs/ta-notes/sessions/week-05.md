@@ -145,3 +145,34 @@ non-`const` `to_string`; `Timestamp` switched to `steady_clock::duration` (asked
   `debug.sh` (build + run both); suggested shebang + `set -e`.
 - Asked for gtest fixtures → explained `TEST_F`, protected members, init in declaration (no default
   ctors), fixed timestamps. He paused: **"remind me of this when we resume."**
+
+## 2026-09-29 18:00–19:33 — fixtures, the under-full bug, `SensorBuffer<T>` (sign-off)
+
+- Did not come back 09-28 evening. Nothing to log for it.
+- **Asked "are we not ahead anymore?"** Yes, ~11 days ahead: calendar week 3 day 7, curriculum week
+  5. Lead comes from ~18 h/week against a 10–12 budget, not faster weeks. My "tight but doable"
+  measured against the 7-day week length, which isn't a deadline. **Relabelled the opener field.**
+- **Fixtures:** generic `Point`/`PathTest` example. He converted his tests, fixed timestamps, later
+  moved the buffer into the fixture too.
+- **Under-full test aborted** (`operator[]` `__n < size()`). "Feel like a fool tryna print debug":
+  abort doesn't flush `cout`. Taught backtrace-first; I reproduced but didn't name the line. He
+  found it in `get_ordered_readings` (he'd guessed `add_reading`). Asked for `capacity()` — told
+  why not (not N; `[]` needs `< size()`). "0 holds the oldest" — his. Branch fix with `-1`
+  sentinel, "gross flag"; hinted `tail + 1 == size()` when under-full → he found `% size()`.
+  Empty case: reasoned the loop guard protects `% 0`; wrote the test anyway.
+- **My error:** said the 7-into-3 test wasn't saved without reading the file. He'd edited the
+  order test in place. Read before claiming.
+- **Templates:** "which parts depend on IMU?" → "none, just holding readings". Conflated with
+  textbook 30's `unique_ptr<Shape>`; separated. Requirements: said "a copy" for all three; split
+  into copy-construct / copy-assign / `==` (tests only). Wrote bodies as `SensorBuffer<IMUReading>::`,
+  then `SensorBuffer<TempReading>::` — **same misconception twice**; landed on "bodies once, in `T`"
+  on the third pass. Also hit: stale binary showing PASSED over a failing build; a `.gch` from
+  compiling the header. "Where does TempReading get declared" → at the use site.
+- **`TempReading` read as "temporary".** My shorthand. Renamed `TemperatureReading`.
+- TemperatureReading review: .cpp not in `add_library`, `operator<<` declared not defined,
+  tautological test, CapacityTest lost overflow. He fixed all; replaced the tautological test with
+  a temperature **order** test. 7 green. Commits `b6d638f`, `d60126c`, `40926aa`, `39a8cb6`, his.
+- Textbook 32 (backtrace, size/capacity, stale build) and 33 (class templates) written.
+
+Open: no test ends with tail mid-array; `_`-prefixed test locals; `uint` (POSIX, not standard) for
+indices; `const size_t&` params; bench kit; build log.

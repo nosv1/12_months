@@ -44,6 +44,8 @@ into measurements.
 | 09-26 | Use-after-free under ASan (predicted report) + same bug under valgrind; week 4 evidence-complete | code-new | — | 25–30 min | ~27 min (16:27–16:54) | ~1x | Exercise given 09-25 18:20, not started. Guided. Included the unused-`*borrowed;` detour and a valgrind concept explanation. |
 | 09-26 | Copy elision: `return t` by value, predict ctors, confirm with `&t`/`&x` and `-fno-elide-constructors` | code-new | — | "five minutes" | ~19 min (16:55 to ~17:14; end not timestamped) | ~4x | Grew with two follow-ups (what the flag does, why a move) — worth it, but "five minutes" was a throwaway number. |
 | 09-26 | Week 5 library: Sensor → SensorBuffer → Processor → Statistics, linked from a separate program | code-new | "4h max… double it, 8 hours" | 8–12 h, if STL items are learned inside it | open | — | End state not yet stated as checkable — asked for. His doubling was explicit: unknown data shape + thin C++. First generative C++ design; the 1.6–2.1x generative prior says his 4h base was low, 8h plausible. |
+| 09-29 | Week 5 remainder (all five checklist items to verified) | code-new | — | 6–9 h (18:00 opener) | open | — | Given at the opener with 1.0/5 done. After 1.55 h, 2.0/5; revised forward at sign-off to 3–5 h for the rest (separate row, not a revision of this one). |
+| 09-29 | Week 5 remainder after sign-off: `SensorBuffer(0)` + a statistic via `<algorithm>` + `optional` used + library item closed | code-new | — | 3–5 h | open | — | Given 19:33 at sign-off. |
 
 ## Working hypothesis — his, 2026-09-22
 

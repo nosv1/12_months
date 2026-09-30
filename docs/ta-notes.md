@@ -23,54 +23,51 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-28 18:29, signed off by him** ("50% chance I come back tonight to write that
-test" — if he does, ask for the start time). **54.49 h logged.** Session log:
-[week-05.md](ta-notes/sessions/week-05.md).
+**Updated 2026-09-29 19:33, signed off by him.** **56.04 h logged.** Session log:
+[week-05.md](ta-notes/sessions/week-05.md). ~11 days ahead of the calendar (week 5 would start
+10-07), carried by ~18 h/week against a 10–12 budget.
 
 - **Bench kit NOT ordered, due 10-03 (Sat).** Final list is in the 09-28 session log. Open: 12 V
   adapter + 100 µF cap to add, AA stuff + one ESP32 pack to drop, Adafruit/SparkFun order (IMU,
-  Qwiic cable, MAX31855, K-type), soldering iron yes/no. Pi 5 dropped for his Pi 4 (§14).
-- **Week-5 end state set** (session log 09-28): known IMU + temp sequences → `SensorBuffer<T>`
-  (library) → statistic → exact assert; capacity 0 defined and tested.
-- **Build log empty weeks 2–5.** Raised 09-27, not acted on.
-- Textbook 30 (templates vs abstract) and 31 (operators / const this / header) written 09-28; 29
-  updated (usage requirements, ASan link).
+  Qwiic cable, MAX31855, K-type), soldering iron yes/no. Not raised again 09-29 beyond the opener.
+- **`SensorBuffer<T>` is real**: header-only, two types (`IMUReading`, `TemperatureReading`),
+  7 gtests green, fixture-based. Under-full bug found by test + gdb and fixed (`% size()`).
+- **Build log empty weeks 2–5.** Raised 09-27 and 09-29, not acted on.
+- Textbook 32 (backtrace-first, size vs capacity, stale binary/.gch) and 33 (class templates).
 - Career thread (09-24, 09-27): optimization/planning lane, ArduPilot as PR target, aerial folded
   into existing weeks. **Goals are capabilities, never a company**: his rule. observations.md.
 
 ## Week progress — render this as the session opener
 
 ```text
-Week 5 · STL and idiom   ███░░░░░░░░░░░░░░░  1.0/5   day 4 of 7 (started 09-26)   my est 6–9 h left
-  ◐ vector, unordered_map, string_view, optional   — vector in depth (ring, ==); optional not used
+Week 5 · STL and idiom   ███████░░░░░░░░░░░  2.0/5   week length: day 5 of 7 (started 09-26)   my est 3–5 h left
+  ◐ vector, unordered_map, string_view, optional   — vector in depth (ring, size/capacity, []); optional not used
   ☐ iterators + <algorithm>                        — transform/back_inserter shown, not used yet
-  ☐ templates (reading)                            — taught (tb 30); SensorBuffer<T> not written
+  ✓ templates (reading)                            — SensorBuffer<T>, header-only, two reading types (tb 33)
   ☐ exceptions vs error codes                      — lands with SensorBuffer(0)
-  ◐ build a library, link it from another project  — add_library + exe + test link; INTERFACE flags
+  ◐ build a library, link it from another project  — lib linked by exe + test; header-only template in it
 ```
 
 Items are the syllabus checklist for the week; ◐ counts as half. Syllabus ticks still wait for
 verification, so this block is the mid-week state. Update it at sign-off with the session log.
-When the remaining work fits in one session, **say so up front**.
+When the remaining work fits in one session, **say so up front**. **"Week length" is not a
+deadline** — he read "day 4 of 7, tight" as falling behind (09-29). Say where he stands against
+the calendar if it's ambiguous.
 
-## Next session: fixtures, then the under-full bug
+## Next session: `SensorBuffer(0)`, then a statistic
 
-**He asked to be reminded:** gtest **fixtures** — `class X : public ::testing::Test`, `TEST_F(X,
-name)`, members `protected`, readings initialised in the member declarations (no default ctors),
-fresh object per test. Suggested fixed timestamps (`Timestamp(std::chrono::milliseconds(1))`) over
-`now()`.
+**`SensorBuffer(0)`** is the exceptions item. `_insert_idx` does `% _buffer_size`, so capacity 0 is
+`% 0` on the first overwrite. The end state says "capacity 0 has a defined, tested failure": the
+design call (throw in the ctor? which exception? or disallow another way?) is his. Test first:
+`EXPECT_THROW`. Let him decide what's thrown; ask why exceptions over an error code *here*.
 
-Then the **under-full test** (N=3, push 2, expect `[r, s]`). I expect it to abort: first index is
-`(_tail_idx+1) % N` = 2 on a size-2 vector. Let the test find it; don't hand the fix. Then empty and
-exactly-N.
+Then a **statistic via `<algorithm>`** over `get_ordered_readings()` (mean temperature, or mean
+accel magnitude) with an exact assert — the iterators item. `std::optional` fits an empty buffer's
+statistic, which closes the vector/optional item. That plus the library item may fit one session.
 
-After that, toward the end state: `SensorBuffer<T>` + `TempReading`, `SensorBuffer(0)` (exceptions
-item), a statistic via `<algorithm>`.
+Also: **bench kit by Saturday**; build log weeks 2–5. Optional: tail-mid-array order test.
 
-Also raise: **bench kit (by Saturday)**; build log weeks 2–5.
-
-**Keep replies short.** Instructions I give between tool calls get buried. Put the task in the
-**final** message, never mid-turn.
+**Keep replies short.** Put the task in the **final** message, never mid-turn.
 
 ## Open, his — the week-2 `telemetry/` project (not the fight rebuild)
 
