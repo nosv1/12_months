@@ -12,5 +12,9 @@
 
   // cmake-tools finds every CMakeLists.txt in the repo; don't let it prompt
   // on every window open.
-  "cmake.configureOnOpen": false
+  "cmake.configureOnOpen": false,
+
+  // IntelliSense reads the real compiler flags (include dirs etc.) from CMake's
+  // export instead of guessing. Point this at the current week's build dir.
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/labs/w05-sensor-processing/build/compile_commands.json"
 }

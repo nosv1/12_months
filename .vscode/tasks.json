@@ -6,7 +6,7 @@
             // without it gdb can't show source lines in sensor_processing_test.cpp.
             "label": "w05: build (Debug)",
             "type": "shell",
-            "command": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build",
+            "command": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && cmake --build build",
             "options": { "cwd": "${workspaceFolder}/labs/w05-sensor-processing" },
             "group": { "kind": "build", "isDefault": true },
             "problemMatcher": ["$gcc"]
