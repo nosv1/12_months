@@ -29,7 +29,9 @@ He reads these notes too. Write them so that's fine.
 
 - **Bench kit NOT ordered, due 10-03 (Sat).** Final list is in the 09-28 session log. Open: 12 V
   adapter + 100 µF cap to add, AA stuff + one ESP32 pack to drop, Adafruit/SparkFun order (IMU,
-  Qwiic cable, MAX31855, K-type), soldering iron yes/no. Not raised again 09-29 beyond the opener.
+  Qwiic cable, MAX31855, K-type). **Soldering iron: I recommended yes** (09-29) — temperature-
+  controlled (Pinecil-class) + stand + a **practice kit**. Not confirmed by him. He'll bring it up
+  when he has the energy; don't push, but it's a Saturday deadline.
 - **`SensorBuffer<T>` is real**: header-only, two types (`IMUReading`, `TemperatureReading`),
   7 gtests green, fixture-based. Under-full bug found by test + gdb and fixed (`% size()`).
 - **Build log empty weeks 2–5.** Raised 09-27 and 09-29, not acted on.

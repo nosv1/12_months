@@ -104,3 +104,7 @@ there. Check before summarising his work back to him.
   - Optimization pattern, **four data points** now: base-defense M&S, path planning, the GA class scheduler, and a
     drone-fleet optimal-routing problem from applied calculus. Also follows BPS Space. Parked idea:
     a grounded TVC test stand (ESP32 + IMU + servo gimbal) as a weeks 8–9 side project.
+- **Hardware nerves (09-29).** Soldering is a named worry, alongside the bench kit sitting unordered
+  since 09-28 with low energy for it. Same pattern as C++: unfamiliar reads as "can't." Answer with
+  the concrete scope (one row of header pins) and a cheap way to fail safely (practice kit), not
+  with "it's easy." Evidence arrives after the first practice board.

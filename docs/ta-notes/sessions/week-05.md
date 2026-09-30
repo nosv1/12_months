@@ -176,3 +176,19 @@ non-`const` `to_string`; `Timestamp` switched to `steady_clock::duration` (asked
 
 Open: no test ends with tail mid-array; `_`-prefixed test locals; `uint` (POSIX, not standard) for
 indices; `const size_t&` params; bench kit; build log.
+
+### After sign-off, 19:33–19:42 (chat, not logged as hours)
+
+- **"Raspberry Pi robotics kit"** from his brother. Bench kit: no — hobby car kits lack quadrature
+  encoders and hide the hardware behind a vendor library, so the week-9 PID step response can't be
+  done. Week-22 robot: maybe, if it has encoders, room to self-mount RPLIDAR/camera/IMU, is driven
+  by his own code, and fits $250–400 incl. the Pi/IMU he has. TurtleBot 4 as the reference point
+  (over budget, integration pre-done). **He used TurtleBots in the grad robotics class** — that's
+  the Gazebo exposure; résumé-worthy. Offered to vet a specific kit when he names it; decision is
+  Part 5.
+- **Soldering makes him nervous** ("am i gonna have to solder too???"). Accurate answer: probably
+  one row of header pins on the MAX31855; IMU is Qwiic, no soldering; motor/driver via cable and
+  breadboard. Week 22 may add battery/motor leads. Recommended temperature-controlled iron +
+  practice kit, first 20 joints on the practice board. Ventilation, stand, wash hands if leaded.
+- Bench-kit energy is low ("will try to find the mental energy... soon tm"). Most decisions are
+  already made (09-28 list); remaining work is cart edits.
