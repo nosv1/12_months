@@ -31,6 +31,12 @@ class SensorProcessing : public ::testing::Test {
   TemperatureReading temperature_reading_t{Timestamp(std::chrono::milliseconds(3)), Temperature(3)};
 };
 
+////////      SENSOR BUFFER TESTS      ////////
+TEST_F(SensorProcessing, BufferSize0Test) {
+  std::size_t buffer_size{0};
+  EXPECT_THROW(SensorBuffer<IMUReading> buffer{buffer_size}, std::invalid_argument);
+}
+
 ////////      IMU TESTS      ////////
 
 TEST_F(SensorProcessing, IMUBufferCapacityNTest) {
@@ -62,10 +68,10 @@ TEST_F(SensorProcessing, IMUBufferOrderTest) {
 }
 
 TEST_F(SensorProcessing, IMUBufferCapacityTest) {
-  std::size_t _buffer_size = 3;
-  SensorBuffer<IMUReading> _imu_buffer{_buffer_size};
-  _imu_buffer.add_readings({imu_reading_r, imu_reading_s, imu_reading_t, imu_reading_u});
-  EXPECT_EQ(size(_imu_buffer.get_ordered_readings()), _buffer_size);
+  std::size_t buffer_size = 3;
+  SensorBuffer<IMUReading> imu_buffer{buffer_size};
+  imu_buffer.add_readings({imu_reading_r, imu_reading_s, imu_reading_t, imu_reading_u});
+  EXPECT_EQ(size(imu_buffer.get_ordered_readings()), buffer_size);
 }
 
 ////////      TEMPERATURE TESTS      ////////

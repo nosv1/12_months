@@ -3,6 +3,7 @@
 #define SENSOR_BUFFER_H
 
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -24,6 +25,9 @@ class SensorBuffer {
 
 template <typename T>
 void SensorBuffer<T>::_set_buffer_size(const std::size_t& buffer_size) {
+  if (buffer_size == 0) {
+    throw std::invalid_argument("Buffer size must be > 0");
+  }
   this->_buffer_size = buffer_size;
 }
 
