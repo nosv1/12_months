@@ -33,9 +33,9 @@ struct Gyro {
 // IMU READING
 
 struct IMUReading {
-  Timestamp timestamp;  // high res clock duration (needs testing to know what this outputs)
-  Acceleration accel;   // m/s^2
-  Gyro gyro;            // rad/s
+  Timestamp timestamp;
+  Acceleration accel;  // m/s^2
+  Gyro gyro;           // rad/s
   explicit IMUReading(Timestamp timestamp, Acceleration accel, Gyro gyro)
       : timestamp(timestamp), accel(accel), gyro(gyro) {}
   bool operator==(const IMUReading& other) const;

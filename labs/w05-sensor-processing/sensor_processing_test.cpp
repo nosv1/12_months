@@ -2,32 +2,41 @@
 
 #include "imu_reading.h"
 #include "sensor_buffer.h"
+#include "temperature_reading.h"
 #include "timestamp.h"
 
 class SensorProcessing : public ::testing::Test {
  protected:
-  std::size_t buffer_size{3};
-  SensorBuffer<IMUReading> imu_buffer{buffer_size};
-  IMUReading r_imu_reading{Timestamp(std::chrono::milliseconds(1)), Acceleration(1, 1, 1),
+  /////      IMU READINGS      /////
+  std::size_t imu_buffer_size{3};
+  SensorBuffer<IMUReading> imu_buffer{imu_buffer_size};
+  IMUReading imu_reading_r{Timestamp(std::chrono::milliseconds(1)), Acceleration(1, 1, 1),
                            Gyro(1, 1, 1)};
-  IMUReading s_imu_reading{Timestamp(std::chrono::milliseconds(2)), Acceleration(2, 1, 1),
+  IMUReading imu_reading_s{Timestamp(std::chrono::milliseconds(2)), Acceleration(2, 1, 1),
                            Gyro(2, 1, 1)};
-  IMUReading t_imu_reading{Timestamp(std::chrono::milliseconds(3)), Acceleration(3, 1, 1),
+  IMUReading imu_reading_t{Timestamp(std::chrono::milliseconds(3)), Acceleration(3, 1, 1),
                            Gyro(3, 1, 1)};
-  IMUReading u_imu_reading{Timestamp(std::chrono::milliseconds(4)), Acceleration(4, 1, 1),
+  IMUReading imu_reading_u{Timestamp(std::chrono::milliseconds(4)), Acceleration(4, 1, 1),
                            Gyro(4, 1, 1)};
-  IMUReading v_imu_reading{Timestamp(std::chrono::milliseconds(5)), Acceleration(5, 1, 1),
+  IMUReading imu_reading_v{Timestamp(std::chrono::milliseconds(5)), Acceleration(5, 1, 1),
                            Gyro(5, 1, 1)};
-  IMUReading w_imu_reading{Timestamp(std::chrono::milliseconds(6)), Acceleration(6, 1, 1),
+  IMUReading imu_reading_w{Timestamp(std::chrono::milliseconds(6)), Acceleration(6, 1, 1),
                            Gyro(6, 1, 1)};
-  IMUReading x_imu_reading{Timestamp(std::chrono::milliseconds(7)), Acceleration(7, 1, 1),
+  IMUReading imu_reading_x{Timestamp(std::chrono::milliseconds(7)), Acceleration(7, 1, 1),
                            Gyro(7, 1, 1)};
+
+  /////      TEMPERATURE READINGS      /////
+  TemperatureReading temperature_reading_r{Timestamp(std::chrono::milliseconds(1)), Temperature(1)};
+  TemperatureReading temperature_reading_s{Timestamp(std::chrono::milliseconds(2)), Temperature(2)};
+  TemperatureReading temperature_reading_t{Timestamp(std::chrono::milliseconds(3)), Temperature(3)};
 };
 
+////////      IMU TESTS      ////////
+
 TEST_F(SensorProcessing, IMUBufferCapacityNTest) {
-  imu_buffer.add_readings({r_imu_reading, s_imu_reading, t_imu_reading});
+  imu_buffer.add_readings({imu_reading_r, imu_reading_s, imu_reading_t});
   std::vector<IMUReading> ordered_imu_readings = imu_buffer.get_ordered_readings();
-  std::vector<IMUReading> expected_readings{r_imu_reading, s_imu_reading, t_imu_reading};
+  std::vector<IMUReading> expected_readings{imu_reading_r, imu_reading_s, imu_reading_t};
   EXPECT_EQ(ordered_imu_readings, expected_readings);
 }
 
@@ -38,21 +47,35 @@ TEST_F(SensorProcessing, IMUBufferEmptyTest) {
 }
 
 TEST_F(SensorProcessing, IMUBufferNotFullTest) {
-  imu_buffer.add_readings({r_imu_reading, s_imu_reading});
+  imu_buffer.add_readings({imu_reading_r, imu_reading_s});
   std::vector<IMUReading> ordered_imu_readings = imu_buffer.get_ordered_readings();
-  std::vector<IMUReading> expected_readings{r_imu_reading, s_imu_reading};
+  std::vector<IMUReading> expected_readings{imu_reading_r, imu_reading_s};
   EXPECT_EQ(ordered_imu_readings, expected_readings);
 }
 
 TEST_F(SensorProcessing, IMUBufferOrderTest) {
-  imu_buffer.add_readings({r_imu_reading, s_imu_reading, t_imu_reading, u_imu_reading,
-                           v_imu_reading, w_imu_reading, x_imu_reading});
+  imu_buffer.add_readings({imu_reading_r, imu_reading_s, imu_reading_t, imu_reading_u,
+                           imu_reading_v, imu_reading_w, imu_reading_x});
   std::vector<IMUReading> ordered_imu_readings = imu_buffer.get_ordered_readings();
-  std::vector<IMUReading> expected_readings{v_imu_reading, w_imu_reading, x_imu_reading};
+  std::vector<IMUReading> expected_readings{imu_reading_v, imu_reading_w, imu_reading_x};
   EXPECT_EQ(ordered_imu_readings, expected_readings);
 }
 
 TEST_F(SensorProcessing, IMUBufferCapacityTest) {
-  imu_buffer.add_readings({r_imu_reading, s_imu_reading, t_imu_reading, u_imu_reading});
-  EXPECT_EQ(size(imu_buffer.get_ordered_readings()), buffer_size);
+  std::size_t _buffer_size = 3;
+  SensorBuffer<IMUReading> _imu_buffer{_buffer_size};
+  _imu_buffer.add_readings({imu_reading_r, imu_reading_s, imu_reading_t, imu_reading_u});
+  EXPECT_EQ(size(_imu_buffer.get_ordered_readings()), _buffer_size);
+}
+
+////////      TEMPERATURE TESTS      ////////
+TEST_F(SensorProcessing, TemperatureBufferOrderTest) {
+  std::size_t buffer_size{2};
+  SensorBuffer<TemperatureReading> temperature_buffer(buffer_size);
+  temperature_buffer.add_readings(
+      {temperature_reading_r, temperature_reading_s, temperature_reading_t});
+  std::vector<TemperatureReading> ordered_temperature_readings =
+      temperature_buffer.get_ordered_readings();
+  std::vector<TemperatureReading> expected_readings{temperature_reading_s, temperature_reading_t};
+  EXPECT_EQ(ordered_temperature_readings, expected_readings);
 }

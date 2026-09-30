@@ -16,6 +16,7 @@ FetchContent_MakeAvailable(googletest)
 
 add_library(sensor_processing_library
   imu_reading.cpp
+  temperature_reading.cpp
   timestamp.cpp
 )
 add_executable(sensor_processing main.cpp)

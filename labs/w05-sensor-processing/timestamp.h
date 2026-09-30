@@ -6,6 +6,7 @@
 #include <string>
 
 struct Timestamp {
+  // high res clock duration (needs testing to know what this outputs)
   std::chrono::steady_clock::duration v;
   explicit Timestamp(std::chrono::steady_clock::duration timestamp) : v(timestamp) {}
   bool operator==(const Timestamp& other) const;
