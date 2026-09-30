@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_library(sensor_processing_library
   src/analysis.cpp
   src/imu_reading.cpp
+  src/robot.cpp
   src/temperature_reading.cpp
   src/timestamp.cpp
 )

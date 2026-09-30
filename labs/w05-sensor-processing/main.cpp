@@ -2,25 +2,24 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
-#include "imu_reading.h"
+#include "robot.h"
 #include "sensor_buffer.h"
+#include "temperature_reading.h"
 #include "timestamp.h"
 
-struct Robot {
-  std::string robot_id;
-  std::unordered_map<std::string, SensorBuffer<IMUReading>> imu_sensors;
-  explicit Robot(const std::string& robot_id, const std::size_t& imu_buffer_size)
-      : robot_id(robot_id) {
-    for (const auto& imu_location : {"imu_front", "imu_rear", "imu_left", "imu_right"}) {
-      imu_sensors.emplace(imu_location, SensorBuffer<IMUReading>(imu_buffer_size));
-    }
-  }
-};
-
 int main() {
-  Robot robot_r{"r", std::size_t{100}};
-  // std::cout << robot_r.imu_sensors << std::endl;
+  // Robot robot_r{"r", std::size_t{100}};
+  // for (const auto& pair : robot_r.temperature_sensor_buffers) {
+  //   std::string temperature_location = pair.first;
+  //   SensorBuffer<TemperatureReading> temperature_buffer = pair.second;
+  //   std::cout << temperature_location << ": " << size(temperature_buffer.get_ordered_readings())
+  //             << std::endl;
+  // }
+
+  // robot_r.temperature_sensor_buffers.at("battery").add_readings(
+  //     {TemperatureReading{Timestamp{std::chrono::milliseconds(1)}, Temperature{1}}});
 
   return 0;
 }

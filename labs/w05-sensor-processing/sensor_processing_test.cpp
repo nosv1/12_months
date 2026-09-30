@@ -4,6 +4,7 @@
 
 #include "analysis.h"
 #include "imu_reading.h"
+#include "robot.h"
 #include "sensor_buffer.h"
 #include "temperature_reading.h"
 #include "timestamp.h"
@@ -107,4 +108,24 @@ TEST_F(SensorProcessing, TemperatureMeanTest) {
   temperature_buffer_.add_readings(
       {temperature_reading_r, temperature_reading_s, temperature_reading_t});
   EXPECT_DOUBLE_EQ(analysis::temperature::mean(temperature_buffer_.get_ordered_readings()), 2);
+}
+
+////////      ROBOT TESTS      ////////
+TEST_F(SensorProcessing, RobotSensorNotPresentTest) {
+  Robot robot_r("r", temperature_buffer_size);
+  std::string temperature_battery_sensor_name = "battery";
+  EXPECT_THROW(robot_r.get_temperature_sensor_buffer(temperature_battery_sensor_name),
+               std::out_of_range);
+}
+
+TEST_F(SensorProcessing, RobotSensorMeanTest) {
+  Robot robot_r("r", temperature_buffer_size);
+  std::string temperature_battery_sensor_name = "battery";
+  robot_r.add_temperature_sensors({temperature_battery_sensor_name});
+  robot_r.get_temperature_sensor_buffer(temperature_battery_sensor_name)
+      .add_readings({temperature_reading_r, temperature_reading_s, temperature_reading_t});
+  EXPECT_DOUBLE_EQ(analysis::temperature::mean(
+                       robot_r.get_temperature_sensor_buffer(temperature_battery_sensor_name)
+                           .get_ordered_readings()),
+                   2);
 }
