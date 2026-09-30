@@ -1,8 +1,8 @@
 #include <chrono>
 #include <iostream>
 
-#include "imu_buffer.h"
 #include "imu_reading.h"
+#include "sensor_buffer.h"
 #include "timestamp.h"
 
 int main() {
@@ -19,7 +19,7 @@ int main() {
                Acceleration(4, 1, 1), Gyro(1, 1, 1)};
 
   const std::size_t imu_buffer_size = 3;
-  IMUBuffer imu_buffer(imu_buffer_size);
+  SensorBuffer<IMUReading> imu_buffer(imu_buffer_size);
   imu_buffer.add_readings({r, s, t});
   imu_buffer.add_readings({u});
 
