@@ -15,6 +15,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 add_library(sensor_processing_library
+  analysis.cpp
   imu_reading.cpp
   temperature_reading.cpp
   timestamp.cpp

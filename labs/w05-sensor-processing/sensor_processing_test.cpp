@@ -1,5 +1,8 @@
+#include <cmath>
+
 #include <gtest/gtest.h>
 
+#include "analysis.h"
 #include "imu_reading.h"
 #include "sensor_buffer.h"
 #include "temperature_reading.h"
@@ -26,9 +29,15 @@ class SensorProcessing : public ::testing::Test {
                            Gyro(7, 1, 1)};
 
   /////      TEMPERATURE READINGS      /////
+  std::size_t temperature_buffer_size{3};
+  SensorBuffer<TemperatureReading> temperature_buffer{temperature_buffer_size};
   TemperatureReading temperature_reading_r{Timestamp(std::chrono::milliseconds(1)), Temperature(1)};
   TemperatureReading temperature_reading_s{Timestamp(std::chrono::milliseconds(2)), Temperature(2)};
   TemperatureReading temperature_reading_t{Timestamp(std::chrono::milliseconds(3)), Temperature(3)};
+  void add_temperature_readings() {
+    temperature_buffer.add_readings(
+        {temperature_reading_r, temperature_reading_s, temperature_reading_t});
+  }
 };
 
 ////////      SENSOR BUFFER TESTS      ////////
@@ -84,4 +93,18 @@ TEST_F(SensorProcessing, TemperatureBufferOrderTest) {
       temperature_buffer.get_ordered_readings();
   std::vector<TemperatureReading> expected_readings{temperature_reading_s, temperature_reading_t};
   EXPECT_EQ(ordered_temperature_readings, expected_readings);
+}
+
+TEST_F(SensorProcessing, TemperatureMeanWith0ReadingsTest) {
+  std::size_t buffer_size{3};
+  SensorBuffer<TemperatureReading> temperature_buffer_(buffer_size);
+  EXPECT_TRUE(std::isnan(analysis::temperature::mean(temperature_buffer_.get_ordered_readings())));
+}
+
+TEST_F(SensorProcessing, TemperatureMeanTest) {
+  std::size_t buffer_size{3};
+  SensorBuffer<TemperatureReading> temperature_buffer_(buffer_size);
+  temperature_buffer_.add_readings(
+      {temperature_reading_r, temperature_reading_s, temperature_reading_t});
+  EXPECT_DOUBLE_EQ(analysis::temperature::mean(temperature_buffer_.get_ordered_readings()), 2);
 }
