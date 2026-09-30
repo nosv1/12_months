@@ -108,3 +108,16 @@ there. Check before summarising his work back to him.
   since 09-28 with low energy for it. Same pattern as C++: unfamiliar reads as "can't." Answer with
   the concrete scope (one row of header pins) and a cheap way to fail safely (practice kit), not
   with "it's easy." Evidence arrives after the first practice board.
+- **"Pick one that seems right," then graded by convention (09-30).** He picked `length_error`
+  then `domain_error`, each with sound plain-English reasoning, and got corrected twice. His
+  pushback was right. When the answer is convention, **say it's convention up front**, or just
+  give it — mechanics get direct answers. Asking him to derive something that can't be derived
+  reads as a trap, and it costs trust.
+- **Checklist vs application (09-30).** "I feel like I'm mixing requirements for the sensor buffer
+  and C++ learnings together." Forcing syllabus features into the app produces bent designs, then
+  a feature he learned gets dropped, and that reads as wasted effort. Proposed standalone drills;
+  awaiting his answer.
+- **He derives more than he credits himself for.** 09-30, unprompted: fail fast in the ctor,
+  `CMAKE_SOURCE_DIR` pointing at the consumer, the copies in `get_ordered_readings`, "the consumer
+  only needs the library." Same day: "one day i'll understand this shit." The gap he feels is
+  lookup syntax, not judgement. Point at the specific instances, not at general encouragement.

@@ -23,31 +23,30 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-29 19:33, signed off by him.** **56.04 h logged.** Session log:
-[week-05.md](ta-notes/sessions/week-05.md). ~11 days ahead of the calendar (week 5 would start
-10-07), carried by ~18 h/week against a 10–12 budget.
+**Updated 2026-09-30 11:36, signed off by him.** **59.32 h logged.** Session log:
+[week-05.md](ta-notes/sessions/week-05.md). ~11 days ahead of the calendar.
 
-- **Bench kit NOT ordered, due 10-03 (Sat).** Final list is in the 09-28 session log. Open: 12 V
-  adapter + 100 µF cap to add, AA stuff + one ESP32 pack to drop, Adafruit/SparkFun order (IMU,
-  Qwiic cable, MAX31855, K-type). **Soldering iron: I recommended yes** (09-29) — temperature-
-  controlled (Pinecil-class) + stand + a **practice kit**. Not confirmed by him. He'll bring it up
-  when he has the energy; don't push, but it's a Saturday deadline.
-- **`SensorBuffer<T>` is real**: header-only, two types (`IMUReading`, `TemperatureReading`),
-  7 gtests green, fixture-based. Under-full bug found by test + gdb and fixed (`% size()`).
-- **Build log empty weeks 2–5.** Raised 09-27 and 09-29, not acted on.
-- Textbook 32 (backtrace-first, size vs capacity, stale binary/.gch) and 33 (class templates).
-- Career thread (09-24, 09-27): optimization/planning lane, ArduPilot as PR target, aerial folded
-  into existing weeks. **Goals are capabilities, never a company**: his rule. observations.md.
+- **Bench kit NOT ordered, due 10-03 (Sat).** Unchanged since 09-29: final list in the 09-28 log;
+  12 V adapter + 100 µF cap to add, AA stuff + one ESP32 pack to drop, Adafruit/SparkFun order;
+  soldering iron + practice kit recommended, not confirmed. Not raised today beyond the opener.
+- **Library is consumable**: `include/`+`src/`, `PUBLIC` include dir, `PROJECT_IS_TOP_LEVEL` guard,
+  `labs/w05-consumer` via `add_subdirectory ... EXCLUDE_FROM_ALL`. 11 gtests green.
+  `Robot` (temperature buffers by name, `at` + throw) lives in the library.
+- **His open process question**: app requirements vs checklist drills. I proposed "learned counts;
+  drill what the app doesn't need." **Awaiting his yes/no** before it goes in decisions.md.
+- **Build log empty weeks 2–5.** Raised 09-27, 09-29. Sunday 10-04 is the natural place.
+- Textbook 34 (ctor invariants, exceptions, NaN), 35 (library for another project, CMake
+  visibility), 36 (iterators, maps, optional copies).
 
 ## Week progress — render this as the session opener
 
 ```text
-Week 5 · STL and idiom   ███████░░░░░░░░░░░  2.0/5   week length: day 5 of 7 (started 09-26)   my est 3–5 h left
-  ◐ vector, unordered_map, string_view, optional   — vector in depth (ring, size/capacity, []); optional not used
-  ☐ iterators + <algorithm>                        — transform/back_inserter shown, not used yet
-  ✓ templates (reading)                            — SensorBuffer<T>, header-only, two reading types (tb 33)
-  ☐ exceptions vs error codes                      — lands with SensorBuffer(0)
-  ◐ build a library, link it from another project  — lib linked by exe + test; header-only template in it
+Week 5 · STL and idiom   ████████████████░░  4.5/5   week length: day 5 of 7 (started 09-26)   my est 30–45 min left
+  ◐ vector, unordered_map, string_view, optional   — vector ✓, map ✓ (emplace/at/throw); optional learned, dropped; string_view ☐
+  ✓ iterators + <algorithm>                        — accumulate + lambda (tb 36)
+  ✓ templates (reading)                            — SensorBuffer<T> (tb 33)
+  ✓ exceptions vs error codes                      — invalid_argument in ctor, EXPECT_THROW (tb 34)
+  ✓ build a library, link it from another project  — w05-consumer, add_subdirectory (tb 35)
 ```
 
 Items are the syllabus checklist for the week; ◐ counts as half. Syllabus ticks still wait for
@@ -56,18 +55,18 @@ When the remaining work fits in one session, **say so up front**. **"Week length
 deadline** — he read "day 4 of 7, tight" as falling behind (09-29). Say where he stands against
 the calendar if it's ambiguous.
 
-## Next session: `SensorBuffer(0)`, then a statistic
+## Next session: close week 5, then the bench kit
 
-**`SensorBuffer(0)`** is the exceptions item. `_insert_idx` does `% _buffer_size`, so capacity 0 is
-`% 0` on the first overwrite. The end state says "capacity 0 has a defined, tested failure": the
-design call (throw in the ctor? which exception? or disallow another way?) is his. Test first:
-`EXPECT_THROW`. Let him decide what's thrown; ask why exceptions over an error code *here*.
+1. **Ask his answer on the drill proposal** first; it decides how to close the last item.
+2. **`string_view`**: getter param `const std::string&` → `std::string_view`; he hits the C++17
+   `at`/`find` conversion. **`optional`**: learned 09-30 (unwrap, can't hold `&`, copies); if he
+   wants it exercised, a drill or `optional<double> mean_temperature(name)`. Either way, ~30–45 min.
+3. Then **verify and tick week 5**, and go through the syllabus checklist with evidence.
+4. **Bench kit by Saturday.** Build log weeks 2–5 on Sunday.
 
-Then a **statistic via `<algorithm>`** over `get_ordered_readings()` (mean temperature, or mean
-accel magnitude) with an exact assert — the iterators item. `std::optional` fits an empty buffer's
-statistic, which closes the vector/optional item. That plus the library item may fit one session.
-
-Also: **bench kit by Saturday**; build log weeks 2–5. Optional: tail-mid-array order test.
+Loose ends he was told about: `robot.h` unused `#include <optional>`; `-Wall` inside the top-level
+guard; consumer `main` prints nothing; `const std::size_t&` in `SensorBuffer`'s ctor; `emplace`
+with a temporary instead of ctor args.
 
 **Keep replies short.** Put the task in the **final** message, never mid-turn.
 

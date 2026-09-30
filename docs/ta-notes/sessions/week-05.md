@@ -192,3 +192,42 @@ indices; `const size_t&` params; bench kit; build log.
   practice kit, first 20 joints on the practice board. Ventilation, stand, wash hands if leaded.
 - Bench-kit energy is low ("will try to find the mental energy... soon tm"). Most decisions are
   already made (09-28 list); remaining work is cart edits.
+
+## 2026-09-30 (Wed, off day) — 07:58–08:54, 09:15–11:36 (3.28 h)
+
+Week 5 went from 2.0/5 to 4.5/5. Only `string_view` + `optional` remain.
+
+- **`SensorBuffer(0)`**: found the `% 0` himself, and **argued fail-fast in the ctor unprompted**.
+  Picked `length_error`, then `domain_error`; I rejected both, and he pushed back hard ("MATE you
+  said… pick one that seemed right"). **He was right**: I invited picking by name, then graded by
+  convention. Owned it. Landed on `invalid_argument`. He wrote the throw before the test (not test
+  first), then replaced both old capacity-0 tests with a single `EXPECT_THROW` and argued correctly
+  that the add case was unreachable.
+- **`mean`**: proposed an `Analysis` struct holding a `TemperatureAnalysis` struct; took the
+  namespace instead. NaN on empty (his choice over `optional`). Hit NaN ≠ NaN, then `std::` on
+  `isnan`. ODR: body was in the header, moved to `analysis.cpp`. Loop → `accumulate` with
+  `double{0}` (he avoided the int trap). Spotted the `get_ordered_readings` copies himself.
+- **Consumer**: needed the configure command; quoted `add_subdirectory` args. Include dir first
+  put in the consumer (worked "by luck"), moved into the library as `PUBLIC`. Said
+  `CMAKE_SOURCE_DIR` would be the consumer's **before** hitting it. Did the `include/`+`src/` move
+  himself with `git mv`. Explain-back of PUBLIC/INTERFACE was **backwards** (INTERFACE = "only
+  local"); corrected with a table and a deliberate break — saw the error. "Consumer only needs the
+  library bit" → EXCLUDE_FROM_ALL + PROJECT_IS_TOP_LEVEL; target-order errors while moving blocks.
+  The ASan/-Wall flags ended up inside the guard; told him -Wall needn't be. Unresolved.
+- **Robot + map**: wanted a map of mixed sensor types → laid out variant / base+`unique_ptr` /
+  map-per-type, flagged Boss Fight #2, **no design input**. He scoped down: "was just tryna find a
+  reason to use a map." `operator[]` default-ctor error → `emplace`. `optional<SensorBuffer>`
+  returned a copy → I listed 3 options; he, low on patience, chose a reference via `at` + throw.
+  Made member functions `const`. 11 tests green, all committed by him (`980c806`…`2c6e1bd`).
+- **My errors today**: said "it's 09:52" without running `date`; told him to wrap a declaration
+  in parens inside `EXPECT_THROW` (invalid C++); the "think back to INTERFACE" hint sent him to
+  the wrong line. All three corrected when he hit them.
+- Tooling (mine, `5432980`): compile_commands.json + cpptools setting after IntelliSense lost
+  `include/`. Per-week path in `.vscode/settings.json`.
+- Mood: "woke up on wrong side", "one day i'll understand this shit", "running outta patience".
+  Answered the second with the specific list of things he derived unaided today.
+- **His critique, unanswered**: mixing app requirements with checklist learning is annoying —
+  "learned optional then ditched it cause irrelevant." I agreed it's partly my framing and
+  proposed: count learned-not-used, do short standalone drills for items the app doesn't need.
+  **He hasn't said yes.** Don't record it in decisions.md until he does.
+- Textbook 34, 35, 36.

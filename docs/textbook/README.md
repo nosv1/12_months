@@ -56,6 +56,9 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 31 | [Operators, `const this`, and what a header promises](31-operators-const-this-and-what-a-header-promises.md) | 5 | First order test: "no match for `operator==`" when one existed, raw-byte gtest output, an invisible `operator<<`, then a multiple definition |
 | 32 | [Debugging an abort: read the backtrace first](32-debugging-an-abort-read-the-backtrace.md) | 5 | Under-full ring buffer aborted on `__n < size()`; prints vanished, the backtrace named the line; `size` vs `capacity`; stale binary and `.gch` |
 | 33 | [Writing a class template](33-writing-a-class-template.md) | 5 | `IMUBuffer` → `SensorBuffer<T>`: bodies written per type twice before "bodies once, in `T`"; implicit requirements (construct vs assign vs `==`) |
+| 34 | [Constructors enforce invariants](34-constructors-enforce-invariants.md) | 5 | `SensorBuffer(0)` fine until the first `% 0`; fail fast in the ctor; `length_error` vs `domain_error` vs `invalid_argument`; NaN ≠ NaN |
+| 35 | [A library another project can use](35-a-library-another-project-can-use.md) | 5 | ODR in `analysis.h`; consumer can't find headers; `PRIVATE`/`INTERFACE`/`PUBLIC` table; `add_subdirectory` builds everything; `EXCLUDE_FROM_ALL` |
+| 36 | [Iterators, maps, `optional`, and the copy nobody asked for](36-maps-optional-and-the-copy-nobody-asked-for.md) | 5 | `accumulate` and `init`'s type; `map[]` needs a default ctor; `optional<SensorBuffer>` returned a copy; `at` returns a reference |
 
 ---
 
