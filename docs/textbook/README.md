@@ -59,6 +59,7 @@ learned, not in syllabus order — the sequence is the actual path through the y
 | 34 | [Constructors enforce invariants](34-constructors-enforce-invariants.md) | 5 | `SensorBuffer(0)` fine until the first `% 0`; fail fast in the ctor; `length_error` vs `domain_error` vs `invalid_argument`; NaN ≠ NaN |
 | 35 | [A library another project can use](35-a-library-another-project-can-use.md) | 5 | ODR in `analysis.h`; consumer can't find headers; `PRIVATE`/`INTERFACE`/`PUBLIC` table; `add_subdirectory` builds everything; `EXCLUDE_FROM_ALL` |
 | 36 | [Iterators, maps, `optional`, and the copy nobody asked for](36-maps-optional-and-the-copy-nobody-asked-for.md) | 5 | `accumulate` and `init`'s type; `map[]` needs a default ctor; `optional<SensorBuffer>` returned a copy; `at` returns a reference |
+| 37 | [`string_view`, and when it doesn't help](37-string-view-and-when-it-doesnt-help.md) | 5 | `at()` wouldn't take a view; why the conversion is explicit; counting copies showed the view tied or lost |
 
 ---
 
