@@ -245,4 +245,4 @@ Week 5 went from 2.0/5 to 4.5/5. Only `string_view` + `optional` remain.
 - **string_view**: linter spoiled the error; predicted no-matching-call at `at()`. Why explicit:
   "not actually a string" → corrected to ownership/copy cost. Copy count: right for the
   caller-holds-a-string case, missed the literal tie. Reverted to `const std::string&`. Done.
-- Drill proposal: still unanswered. Treat string_view as closed by this; optional by 09-30.
+- Drill proposal: **yes**, after sign-off. In decisions.md. string_view closed by this; optional by 09-30.

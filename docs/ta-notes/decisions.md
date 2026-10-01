@@ -27,6 +27,11 @@ repo-convention change.
   week's skill). *Noted* goes on a written list; writing it down closes it. *Taste* stays out of chat
   entirely — in the notes only, raised if he asks — because he said taste items still land as fix-now.
 - **Agree "done for tonight" at session start**; stop there, leave the next step written down.
+- **Learned counts; drill what the app doesn't need** (proposed 09-30, his yes 10-01). A checklist
+  item is done when he understands it and can explain it back — the app doesn't have to use it.
+  Items with no natural place in the app get a 15–30 min throwaway drill in `labs/`, not a design
+  bent to fit. His framing: "learn this for the sake of learning it, not for the sake of making the
+  app better." Prompted by `optional` learned then rightly dropped (09-30).
 - **Toolchain prereq not added to the syllabus.** Installed and verified before week 3, so moot.
 
 ## Tooling and layout
