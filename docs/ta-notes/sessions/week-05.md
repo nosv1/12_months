@@ -231,3 +231,18 @@ Week 5 went from 2.0/5 to 4.5/5. Only `string_view` + `optional` remain.
   proposed: count learned-not-used, do short standalone drills for items the app doesn't need.
   **He hasn't said yes.** Don't record it in decisions.md until he does.
 - Textbook 34, 35, 36.
+
+## 2026-10-01 (Thu) 16:11–16:38, 0.45 h
+
+- **Opened on motivation, not code.** Less enthused than weeks 1–2. Data: hours logged every day
+  09-10 → 09-30, no off days, ~19 h/week vs the 10–12 plan. The 09-12 "revisit around week 4"
+  decision triggered. Fri 10-02 off (bench kit order only), back Saturday.
+- **His diagnosis, and it's partly mine**: "always something to fix" — untagged critique lists read
+  as mandatory, and he can't stop at a half-fixed state; C++ is "a dark tunnel, what else is there
+  before I'm out." Answered with the remaining map (wk 5 string_view, wk 6 threads, wk 7 sockets +
+  Docker + BF2, wk 8 hardware). Adopted **fix now / noted / taste**, taste kept out of chat (he
+  said taste still lands as fix-now). He'd already dismissed the telemetry open list himself.
+- **string_view**: linter spoiled the error; predicted no-matching-call at `at()`. Why explicit:
+  "not actually a string" → corrected to ownership/copy cost. Copy count: right for the
+  caller-holds-a-string case, missed the literal tie. Reverted to `const std::string&`. Done.
+- Drill proposal: still unanswered. Treat string_view as closed by this; optional by 09-30.

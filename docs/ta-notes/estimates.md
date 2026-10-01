@@ -47,6 +47,7 @@ into measurements.
 | 09-29 | Week 5 remainder (all five checklist items to verified) | code-new | — | 6–9 h (18:00 opener) | open: 4.83 h so far (1.55 on 09-29 + 3.28 on 09-30), 4.5/5 | — | Given at the opener with 1.0/5 done. After 1.55 h, 2.0/5; revised forward at sign-off to 3–5 h for the rest (separate row, not a revision of this one). |
 | 09-29 | Week 5 remainder after sign-off: `SensorBuffer(0)` + a statistic via `<algorithm>` + `optional` used + library item closed | code-new | — | 3–5 h | 3.28 h (07:58–08:54 + 09:15–11:36, 09-30), all but `optional` | ~0.8x on what was done | Given 19:33 at sign-off. `optional` written, then dropped for a reference + throw (a design call, not a gap in understanding). Scope grew: `include/`/`src/` layout, top-level guards, a `Robot` + map, none of which were in the estimate. |
 | 09-30 | Rolling "what's left of week 5" at checkpoints: 08:53 → 1.5–3 h; 10:31 → 1–1.5 h; 11:32 → 30–45 min | code-new | — | see task | 2.35 h from 09:15 to 11:36 without finishing | — | The 10:31 number didn't hold: the `Robot` detour (map of different types, then `optional` copy semantics) took the hour. Remainder is `string_view` + `optional`, both now proposed as short drills, not app features. |
+| 10-01 | `string_view` in the getter → decided and tests green | code-new | — | 30–45 min (incl. drill decision) | ~17 min (16:21–16:38, after ~10 min of motivation talk) | ~0.5x | Reading/prediction work, not design. Ended in a revert, so nothing to commit. Drill proposal never answered. |
 
 ## Working hypothesis — his, 2026-09-22
 

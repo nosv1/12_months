@@ -23,26 +23,26 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-09-30 11:36, signed off by him.** **59.32 h logged.** Session log:
+**Updated 2026-10-01 16:38, signed off.** **59.77 h logged.** Session log:
 [week-05.md](ta-notes/sessions/week-05.md). ~11 days ahead of the calendar.
 
-- **Bench kit NOT ordered, due 10-03 (Sat).** Unchanged since 09-29: final list in the 09-28 log;
-  12 V adapter + 100 µF cap to add, AA stuff + one ESP32 pack to drop, Adafruit/SparkFun order;
-  soldering iron + practice kit recommended, not confirmed. Not raised today beyond the opener.
-- **Library is consumable**: `include/`+`src/`, `PUBLIC` include dir, `PROJECT_IS_TOP_LEVEL` guard,
-  `labs/w05-consumer` via `add_subdirectory ... EXCLUDE_FROM_ALL`. 11 gtests green.
-  `Robot` (temperature buffers by name, `at` + throw) lives in the library.
-- **His open process question**: app requirements vs checklist drills. I proposed "learned counts;
-  drill what the app doesn't need." **Awaiting his yes/no** before it goes in decisions.md.
-- **Build log empty weeks 2–5.** Raised 09-27, 09-29. Sunday 10-04 is the natural place.
-- Textbook 34 (ctor invariants, exceptions, NaN), 35 (library for another project, CMake
-  visibility), 36 (iterators, maps, optional copies).
+- **Off days are now real**: Fri 10-02 off. Running ~19 h/week, 22 days straight before today;
+  enthusiasm dropping. Watch hours, not just progress. See decisions.md 2026-10-01.
+- **Critique tags in force**: fix now / noted / taste; taste stays out of chat. Agree tonight's
+  "done" at the opener.
+- **Bench kit: he's ordering Fri 10-02**, due Sat 10-03. List in the 09-28 log (12 V adapter +
+  100 µF cap added, AA stuff + one ESP32 pack dropped, Adafruit/SparkFun). Iron unconfirmed.
+- **Week 5 checklist all done, not yet ticked.** string_view done 10-01 (reverted by reasoning,
+  textbook 37). optional learned 09-30. 11 tests green.
+- Week-5 loose ends, tagged: **noted** — `-Wall` inside the top-level guard; `emplace` with a
+  temporary. The other three are taste; don't raise.
+- **Build log empty weeks 2–5.** Sunday 10-04.
 
 ## Week progress — render this as the session opener
 
 ```text
-Week 5 · STL and idiom   ████████████████░░  4.5/5   week length: day 5 of 7 (started 09-26)   my est 30–45 min left
-  ◐ vector, unordered_map, string_view, optional   — vector ✓, map ✓ (emplace/at/throw); optional learned, dropped; string_view ☐
+Week 5 · STL and idiom   ██████████████████  5/5 (unverified)   day 7 of 7 (started 09-26)   left: verify + tick
+  ✓ vector, unordered_map, string_view, optional   — string_view tb 37; optional tb 36
   ✓ iterators + <algorithm>                        — accumulate + lambda (tb 36)
   ✓ templates (reading)                            — SensorBuffer<T> (tb 33)
   ✓ exceptions vs error codes                      — invalid_argument in ctor, EXPECT_THROW (tb 34)
@@ -55,18 +55,13 @@ When the remaining work fits in one session, **say so up front**. **"Week length
 deadline** — he read "day 4 of 7, tight" as falling behind (09-29). Say where he stands against
 the calendar if it's ambiguous.
 
-## Next session: close week 5, then the bench kit
+## Next session (Sat 10-03): tick week 5, bench kit, week 6
 
-1. **Ask his answer on the drill proposal** first; it decides how to close the last item.
-2. **`string_view`**: getter param `const std::string&` → `std::string_view`; he hits the C++17
-   `at`/`find` conversion. **`optional`**: learned 09-30 (unwrap, can't hold `&`, copies); if he
-   wants it exercised, a drill or `optional<double> mean_temperature(name)`. Either way, ~30–45 min.
-3. Then **verify and tick week 5**, and go through the syllabus checklist with evidence.
-4. **Bench kit by Saturday.** Build log weeks 2–5 on Sunday.
-
-Loose ends he was told about: `robot.h` unused `#include <optional>`; `-Wall` inside the top-level
-guard; consumer `main` prints nothing; `const std::size_t&` in `SensorBuffer`'s ctor; `emplace`
-with a temporary instead of ctor args.
+1. **Ask if the bench kit got ordered.** If not, that's first, 20 min.
+2. **Verify and tick week 5** against the syllabus with evidence (tb 33–37, hours lines, commits).
+3. Agree "done" for the session, then start week 6 (Linux internals: processes, threads).
+4. Sunday 10-04: build log weeks 2–5 — keep it short, "what broke" only, so it isn't another
+   backlog.
 
 **Keep replies short.** Put the task in the **final** message, never mid-turn.
 
