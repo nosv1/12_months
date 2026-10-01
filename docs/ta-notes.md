@@ -121,6 +121,8 @@ with a temporary instead of ctor args.
 - **Log every time estimate** in [ta-notes/estimates.md](ta-notes/estimates.md), his and mine, when
   given; fill actuals from `date`/commits at sign-off. Never revise an estimate after the fact.
   Asked for 2026-09-21: my numbers were priors, not measurements of him.
+- **Tag every critique: fix now / noted / taste.** Taste never goes in chat. Agree tonight's "done" at the
+  start; stop there. See decisions.md, 2026-10-01.
 - **Textbook entry whenever a real lesson is given.**
 - **I play the customer** for telemetry requirements questions — see telemetry.md.
 

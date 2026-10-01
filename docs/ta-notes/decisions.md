@@ -20,6 +20,13 @@ repo-convention change.
   against a record (textbook entry, hours line, commit) before ticking. Sunday review still happens.
 - **Working off days (Wed–Sat) is his call.** Accepted 2026-09-12. Revisit only if hours drop or he
   reports burnout, around week 4.
+  **Revisited 2026-10-01:** 22 straight days logged, ~19 h/week against a 10–12 plan, enthusiasm
+  dropping. Recommended Wed/Fri genuinely off; he's taking Fri 10-02 off (bench kit order only).
+- **Every critique is tagged: fix now / noted / taste** (2026-10-01, his yes). Untagged lists read as
+  "one more thing before I can stop" — every item looked mandatory. *Fix now* is short (wrong, or the
+  week's skill). *Noted* goes on a written list; writing it down closes it. *Taste* stays out of chat
+  entirely — in the notes only, raised if he asks — because he said taste items still land as fix-now.
+- **Agree "done for tonight" at session start**; stop there, leave the next step written down.
 - **Toolchain prereq not added to the syllabus.** Installed and verified before week 3, so moot.
 
 ## Tooling and layout
