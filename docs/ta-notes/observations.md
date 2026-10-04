@@ -108,6 +108,11 @@ there. Check before summarising his work back to him.
   since 09-28 with low energy for it. Same pattern as C++: unfamiliar reads as "can't." Answer with
   the concrete scope (one row of header pins) and a cheap way to fail safely (practice kit), not
   with "it's easy." Evidence arrives after the first practice board.
+- **Purchase block, named by him (10-04).** Still not ordered, after a bowling tournament: "software
+  is safe, it's all free. Hardware costs money," "not being an expert." Third slip (09-28, 10-02,
+  10-04). Answered with: inexpertise is what the kit fixes, not a reason to wait; the cart was
+  already vetted; worst case is one ~$15 wrong part. If it stalls again, ask what specifically
+  he's afraid of losing (money, a wrong pick, breaking it) — each has a different fix.
 - **"Pick one that seems right," then graded by convention (09-30).** He picked `length_error`
   then `domain_error`, each with sound plain-English reasoning, and got corrected twice. His
   pushback was right. When the answer is convention, **say it's convention up front**, or just

@@ -30,7 +30,8 @@ He reads these notes too. Write them so that's fine.
   enthusiasm dropping. Watch hours, not just progress. See decisions.md 2026-10-01.
 - **Critique tags in force**: fix now / noted / taste; taste stays out of chat. Agree tonight's
   "done" at the opener.
-- **Bench kit: he's ordering Fri 10-02**, due Sat 10-03. List in the 09-28 log (12 V adapter +
+- **Bench kit: NOT ordered as of 10-04** (named a purchase block, observations.md). Needed
+  before week 8. List in the 09-28 log (12 V adapter +
   100 µF cap added, AA stuff + one ESP32 pack dropped, Adafruit/SparkFun). Iron unconfirmed.
 - **Week 5 checklist all done, not yet ticked.** string_view done 10-01 (reverted by reasoning,
   textbook 37). optional learned 09-30. 11 tests green.
