@@ -117,6 +117,8 @@ there. Check before summarising his work back to him.
   code, and he expects it to be slow and confusing at the bench. Partly right. Answer: make the
   bench readable (photos, multimeter numbers, serial/`i2cdetect` output, SSH to the Pi); that
   translation is the hardware debugging skill itself. Check the multimeter is in his cart.
+  **Third reason, same night:** "once you buy something, it becomes real." Answered: it's been real
+  for 60 h; what changes is that quitting stops being invisible. Asked what "real" costs him.
 - **"Pick one that seems right," then graded by convention (09-30).** He picked `length_error`
   then `domain_error`, each with sound plain-English reasoning, and got corrected twice. His
   pushback was right. When the answer is convention, **say it's convention up front**, or just
