@@ -113,6 +113,10 @@ there. Check before summarising his work back to him.
   10-04). Answered with: inexpertise is what the kit fixes, not a reason to wait; the cart was
   already vetted; worst case is one ~$15 wrong part. If it stalls again, ask what specifically
   he's afraid of losing (money, a wrong pick, breaking it) — each has a different fix.
+  **His real reason, same night:** "real life is invisible" — help is quick when I can read his
+  code, and he expects it to be slow and confusing at the bench. Partly right. Answer: make the
+  bench readable (photos, multimeter numbers, serial/`i2cdetect` output, SSH to the Pi); that
+  translation is the hardware debugging skill itself. Check the multimeter is in his cart.
 - **"Pick one that seems right," then graded by convention (09-30).** He picked `length_error`
   then `domain_error`, each with sound plain-English reasoning, and got corrected twice. His
   pushback was right. When the answer is convention, **say it's convention up front**, or just
