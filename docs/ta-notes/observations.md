@@ -119,6 +119,11 @@ there. Check before summarising his work back to him.
   translation is the hardware debugging skill itself. Check the multimeter is in his cart.
   **Third reason, same night:** "once you buy something, it becomes real." Answered: it's been real
   for 60 h; what changes is that quitting stops being invisible. Asked what "real" costs him.
+  **Fourth, and probably the root:** "what am I building? ... am I motivated to do it? I don't
+  know." Gave him the syllabus answer (bench rig → IMU into his own SensorBuffer code, PID motor;
+  parts carry into the wk-22 robot) and admitted it isn't a reason to care. Re-offered *his* parked
+  TVC test stand idea: same parts and skills. Didn't decide motivation tonight (tired, 22 days
+  straight). Open question to him: what did he want to build when he started this?
 - **"Pick one that seems right," then graded by convention (09-30).** He picked `length_error`
   then `domain_error`, each with sound plain-English reasoning, and got corrected twice. His
   pushback was right. When the answer is convention, **say it's convention up front**, or just
