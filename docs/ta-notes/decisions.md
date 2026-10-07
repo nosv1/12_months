@@ -60,3 +60,14 @@ repo-convention change.
   links. Written by me, committed as Claude, whenever a real lesson is given.
 - **TA notes are split into an index plus files** (2026-09-12, his suggestion — the single file got
   "chunky"). Index stays short; history goes in `sessions/`.
+
+## 2026-10-07
+
+- **The bench kit is his to raise, not mine.** He stayed away from the repo for six days partly to
+  avoid being asked about the order: not buying it calls up questions about motivation and long-term
+  goals that he doesn't want to work through right now. Asking was costing more sessions than it
+  saved. Don't ask about it. If week 9 or week 22 is actually blocked by missing hardware, state
+  that fact once, when it happens, not ahead of time.
+- **Build log dropped, his call.** "Everything breaks, everything gets fixed; the textbook has it."
+  On record once: the textbook is in my words, and in an interview he'll need the failure stories
+  in his own. Not to be raised again. The CLAUDE.md convention stays as written until he edits it.

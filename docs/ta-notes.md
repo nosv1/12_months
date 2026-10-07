@@ -26,22 +26,17 @@ He reads these notes too. Write them so that's fine.
 **Updated 2026-10-01 16:38, signed off.** **59.77 h logged.** Session log:
 [week-05.md](ta-notes/sessions/week-05.md). ~11 days ahead of the calendar.
 
-- **10-07: no commits since the 10-01 sign-off** (local or `origin/dev`). The Sat 10-03 session
-  below didn't happen in this repo. 10-07 was a short off-topic chat (orbital mechanics; see
-  observations), not a work session — no hours logged. Next opener: ask, don't assume — break,
-  unpushed work, or the kit. A break after 22 straight days is fine; say so if it was one.
+- **10-07 (work off day): 10-02 to 10-06 was an off period**, partly to avoid the kit question.
+  The kit and the build log are both dropped; see decisions.md 2026-10-07. **Week 5 ticked**, after
+  re-verifying (11/11 tests, consumer builds). Current week: 6. He finds Linux internals
+  unexciting but doable.
 
 - **Off days are now real**: Fri 10-02 off. Running ~19 h/week, 22 days straight before today;
   enthusiasm dropping. Watch hours, not just progress. See decisions.md 2026-10-01.
 - **Critique tags in force**: fix now / noted / taste; taste stays out of chat. Agree tonight's
   "done" at the opener.
-- **Bench kit: he's ordering Fri 10-02**, due Sat 10-03. List in the 09-28 log (12 V adapter +
-  100 µF cap added, AA stuff + one ESP32 pack dropped, Adafruit/SparkFun). Iron unconfirmed.
-- **Week 5 checklist all done, not yet ticked.** string_view done 10-01 (reverted by reasoning,
-  textbook 37). optional learned 09-30. 11 tests green.
 - Week-5 loose ends, tagged: **noted** — `-Wall` inside the top-level guard; `emplace` with a
   temporary. The other three are taste; don't raise.
-- **Build log empty weeks 2–5.** Sunday 10-04.
 
 ## Week progress — render this as the session opener
 
@@ -60,13 +55,12 @@ When the remaining work fits in one session, **say so up front**. **"Week length
 deadline** — he read "day 4 of 7, tight" as falling behind (09-29). Say where he stands against
 the calendar if it's ambiguous.
 
-## Next session (Sat 10-03): tick week 5, bench kit, week 6
+## Next session: week 6 (Linux internals)
 
-1. **Ask if the bench kit got ordered.** If not, that's first, 20 min.
-2. **Verify and tick week 5** against the syllabus with evidence (tb 33–37, hours lines, commits).
-3. Agree "done" for the session, then start week 6 (Linux internals: processes, threads).
-4. Sunday 10-04: build log weeks 2–5 — keep it short, "what broke" only, so it isn't another
-   backlog.
+1. Agree "done" for the session, then start week 6: processes, fork/exec, threads. Threads are
+   the hard part of the week, and they matter later (ROS executors, sensor loops).
+2. Side project in flight: orbital path planning. See the session log. It's his project, under
+   flight-instructor terms.
 
 **Keep replies short.** Put the task in the **final** message, never mid-turn.
 

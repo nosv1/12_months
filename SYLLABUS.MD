@@ -168,11 +168,11 @@ Do not rush it. If you need a sixth week, take it from Part 3.
 
 ### Week 5 — STL and idiom
 
-- [ ] `vector`, `unordered_map`, `string_view`, `optional`
-- [ ] Iterators and the algorithm header
-- [ ] Templates — enough to read them, not to write clever ones
-- [ ] Error handling: exceptions vs error codes
-- [ ] Build a small library and link it from another project
+- [x] `vector`, `unordered_map`, `string_view`, `optional`
+- [x] Iterators and the algorithm header
+- [x] Templates — enough to read them, not to write clever ones
+- [x] Error handling: exceptions vs error codes
+- [x] Build a small library and link it from another project
 
 `Sensor → SensorBuffer → Processor → Statistics`
 
