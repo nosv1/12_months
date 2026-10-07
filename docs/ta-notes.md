@@ -23,7 +23,7 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-10-07 10:27, signed off.** **59.77 h logged** (10-07 not yet counted). Session log:
+**Updated 2026-10-07 10:27, signed off.** **59.77 h logged** (10-07 not counted, his call). Session log:
 [week-06.md](ta-notes/sessions/week-06.md). ~11 days ahead of the calendar.
 
 - **10-07 (work off day): 10-02 to 10-06 was an off period**, partly to avoid the kit question.
@@ -57,11 +57,12 @@ the calendar if it's ambiguous.
 
 ## Next session
 
-1. **Ask the three open questions** at the bottom of [week-06.md](ta-notes/sessions/week-06.md):
-   today's hours, the scope of a global profile, and side-project terms. He said "don't act yet",
-   so nothing has been built.
-2. Then he chooses: week 6 (processes, threads) or a side project (orbital sim / bowling tracker).
-   Agree "done" first. Don't push week 6 over the side projects. Interest is the fuel right now.
+1. **Week 6** (processes, fork/exec, threads) if he comes back for it. Agree "done" first.
+2. **Orbital side project**, if he chooses it: flight-instructor mode, and his hours aren't logged.
+   State in [week-06.md](ta-notes/sessions/week-06.md).
+3. **Global profile** ("me" across projects, including the phone app): scope settled, not built.
+   Find out whether claude.ai/code supports user-level instructions before proposing anything. Wait
+   for him to ask.
 
 **Keep replies short.** Put the task in the **final** message, never mid-turn.
 

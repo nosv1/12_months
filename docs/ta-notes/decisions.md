@@ -71,3 +71,7 @@ repo-convention change.
 - **Build log dropped, his call.** "Everything breaks, everything gets fixed; the textbook has it."
   On record once: the textbook is in my words, and in an interview he'll need the failure stories
   in his own. Not to be raised again. The CLAUDE.md convention stays as written until he edits it.
+- **Hours: curriculum only.** Side-project and off-topic time is never logged (10-07, his call).
+- **Flight instructor by default, everywhere, until he says otherwise.** "You have the answers, I
+  need to develop the skill." This applies to side projects too, not only to the curriculum. The
+  test that decides what I write freely (tooling vs the skill being learned) is unchanged.

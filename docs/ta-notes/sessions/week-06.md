@@ -34,3 +34,15 @@
    supports user-level instructions across repos. If it doesn't, the fallback is a profile file
    committed per repo, or a small profile repo.
 3. **Flight-instructor terms** for the side projects, and which project comes first.
+
+### Answered 10:3x, same day
+
+1. **Today's hours and side-project hours are not logged.** Only curriculum hours count.
+2. **"You are always my flight instructor until stated otherwise. You have the answers, I need to
+   develop the skill."** Settles the scope: teaching mode is the default everywhere, not just in this
+   repo. The global profile has still not been built, and the cloud-instructions question is still
+   open.
+3. **Terms: pass. Bowling app: not now.** Orbital path planning is the active side project.
+   Bowling stays parked; don't raise it.
+
+He may come back later today for week 6.
