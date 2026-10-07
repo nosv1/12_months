@@ -121,3 +121,9 @@ there. Check before summarising his work back to him.
   `CMAKE_SOURCE_DIR` pointing at the consumer, the copies in `get_ordered_readings`, "the consumer
   only needs the library." Same day: "one day i'll understand this shit." The gap he feels is
   lookup syntax, not judgement. Point at the specific instances, not at general encouragement.
+- **Curiosity outside the syllabus (10-07).** Watched a Kurzgesagt video, came in wanting to talk
+  gravity-assist trajectory planning (the long braking sequence in *Aurora*). Gave keywords:
+  Lambert's problem as a steer function, flyby-sequence search, GTOC, kinodynamic planning,
+  underactuated robotics (Tedrake). He declined a write-up — "just sharing thoughts." Interest in
+  the field is alive even after a quiet week. Don't turn it into homework; if Tedrake fits a later
+  control/planning week, mention it once there.

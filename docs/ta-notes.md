@@ -26,6 +26,11 @@ He reads these notes too. Write them so that's fine.
 **Updated 2026-10-01 16:38, signed off.** **59.77 h logged.** Session log:
 [week-05.md](ta-notes/sessions/week-05.md). ~11 days ahead of the calendar.
 
+- **10-07: no commits since the 10-01 sign-off** (local or `origin/dev`). The Sat 10-03 session
+  below didn't happen in this repo. 10-07 was a short off-topic chat (orbital mechanics; see
+  observations), not a work session — no hours logged. Next opener: ask, don't assume — break,
+  unpushed work, or the kit. A break after 22 straight days is fine; say so if it was one.
+
 - **Off days are now real**: Fri 10-02 off. Running ~19 h/week, 22 days straight before today;
   enthusiasm dropping. Watch hours, not just progress. See decisions.md 2026-10-01.
 - **Critique tags in force**: fix now / noted / taste; taste stays out of chat. Agree tonight's
