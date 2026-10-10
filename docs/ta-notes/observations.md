@@ -200,3 +200,11 @@ there. Check before summarising his work back to him.
 - **Voice mode (10-10).** He uses speech-to-text and text-to-speech on phone calls and misses
   detail in long replies. On phone sessions: short, speakable answers, no file paths or dense lists,
   and one question at a time. Save the detail for the notes.
+
+## 2026-10-10 evening — the goal is open, and that's fine
+
+After deciding the curriculum is a skills map, not the path: "I'm not sure what the goal is
+anymore." The job hunt is **seasonal**: it flares when outdoor work conditions are bad (heat, cold)
+and fades otherwise. Money would be nice for saving and investing, and a "better" place to live,
+but he lives within his means; nothing is urgent. **Don't push a career target he hasn't chosen.**
+Frame the projects as readiness: when the itch returns, there's public, tested work to point at.
