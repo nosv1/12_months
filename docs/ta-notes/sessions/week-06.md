@@ -70,3 +70,8 @@ He may come back later today for week 6.
 - **Signed off energized**: "I feel energized again about writing some code," whether robotics or the
   race engineer. Credits himself with redirecting rather than avoiding. No hours logged (phone, not
   curriculum).
+- **My miss:** skipped the session-start read because the call opened as a brainstorm. Read
+  ta-notes only when he asked for notes, five turns in. Cost: raised bowling twice (parked, "don't
+  raise"), and flagged side projects eating curriculum hours, which was already settled 10-07. He
+  asked "have you not peeked around my repo yet?" **Read ta-notes.md first, every session, phone
+  included.**
