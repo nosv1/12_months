@@ -148,3 +148,11 @@ there. Check before summarising his work back to him.
   buying to learn. Examples: rocket launch/landing (ties to the parked TVC stand), robots for the
   goal-seeker. He's unsure whether "saw it work in sim" will kill it like "saw it in my head" does.
   Unresolved. Test it by building the sim first and noticing. Don't sell hardware.
+- **Calibration from his GitHub (10-10).** 37 public repos under `nosv1`. The 2022 class
+  (ME5501) was **ROS 2 + Gazebo + TurtleBot3**, not just "Gazebo exposure": he wrote nodes, lidar
+  object detection, PID and PN controllers, pursuit-evasion, and A* / Dijkstra / RRT / Dubins / GA-TSP
+  in Python. **So syllabus Parts 4–5 (ROS 2, planning) are partly review**, and CLAUDE.md's "some
+  prior exposure: Gazebo" undersells it; propose the edit to him. Also: `sra-insights`, a live
+  React/TypeScript web app for his sim-racing league (pushed May 2026), `F1-Schedule-Optimizer`
+  (another optimization data point), an ACC UDP interface fork, SimHub plugins, an ArduPilot fork,
+  UAV-Sandbox. The ACC race engineer isn't public. Ask where it lives.
