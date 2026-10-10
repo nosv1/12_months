@@ -81,3 +81,6 @@ He may come back later today for week 6.
   Gazebo Classic to Jazzy + modern Gazebo (the realistic "edit a codebase" skill), then write the new
   stealth planner fresh (the fun part). The race engineer can be a clean rewrite: different game,
   different API.
+- **Hardware idea with a reason: motorcycle telemetry** on his 2025 CBR500R
+  ([docs/ideas/motorcycle-telemetry.md](../../ideas/motorcycle-telemetry.md)). Possibly the answer to
+  the kit stall and week 8.
