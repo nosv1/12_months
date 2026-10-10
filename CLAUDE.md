@@ -80,10 +80,18 @@ an asymmetric profile:
   metrics, statistics. Don't re-teach these. Jog them.
 - **Genuinely thin, possibly never learned:** C++, manual memory, RAII, threading, sockets, Linux
   internals, software engineering practice (packaging, testing, CI).
-- **Some prior exposure:** Gazebo, from a graduate robotics course.
+- **Real prior work, rusty:** ROS 2 + Gazebo Classic + TurtleBot3 from a graduate robotics course
+  (ME5501, Fall 2022, ROS 2 on Python 3.8, so Foxy-era). He wrote `rclpy` nodes, lidar object
+  detection, PID and proportional-navigation controllers, pursuit-evasion, and Dijkstra / A* / RRT /
+  Dubins / GA-TSP. Code: [seagraves_unmanned_systems_pkg](https://github.com/nosv1/seagraves_unmanned_systems_pkg),
+  [seagraves_unmanned_systems](https://github.com/nosv1/seagraves_unmanned_systems). Jog it, don't
+  re-teach it. Jazzy and modern Gazebo differ enough that the migration is real work.
+- **Builds real things outside class:** [sra-insights](https://github.com/nosv1/sra-insights), a live
+  React/TypeScript site for his sim-racing league; an ACC race engineer (local, not yet pushed); SimHub
+  plugins; an F1 schedule optimizer. Recurring pull: optimization and planning problems.
 
 So: skip programming fundamentals, teach robotics and systems concepts properly, and don't assume
-the DS-adjacent material is new.
+the DS-adjacent material, or the ROS 2 and planning basics, is new.
 
 Started this because recent AI/robotics progress made him feel left behind. The real goal is
 employable capability plus the confidence of having built things that work — worth optimizing for

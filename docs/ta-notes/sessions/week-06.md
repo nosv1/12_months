@@ -75,3 +75,9 @@ He may come back later today for week 6.
   raise"), and flagged side projects eating curriculum hours, which was already settled 10-07. He
   asked "have you not peeked around my repo yet?" **Read ta-notes.md first, every session, phone
   included.**
+- **CLAUDE.md profile updated** (his OK): the 2022 ROS 2/Gazebo work, outside projects, and the
+  optimization pull. ACC engineer is local; he'll push it.
+- **Proposed, not decided: port, then rewrite.** Port `seagraves_unmanned_systems_pkg` from Foxy +
+  Gazebo Classic to Jazzy + modern Gazebo (the realistic "edit a codebase" skill), then write the new
+  stealth planner fresh (the fun part). The race engineer can be a clean rewrite: different game,
+  different API.
