@@ -189,3 +189,11 @@ there. Check before summarising his work back to him.
   defense M&S via his network, and the blocker is preference, not ability. **Implication: CLAUDE.md's
   goal ("employable robotics/AI engineer") may not be his real goal.** Raise it as a question; don't
   rewrite it for him.
+- **A job he'd actually want (10-10, phone):** assistant race engineer or strategy team at a racing
+  team (IndyCar, F1). "Learn what goes on in those meetings." Downside he named: travel means no
+  motorcycle riding. **Never charges or accepts money for his work**: once it's paid, it's about the
+  customer, not his own experience. Wishes he trusted his projects enough to sell them. Fit check:
+  sim racing, telemetry tools, `sra-insights` race plots (its TODO has "correlate pit lap and
+  positions gained"), optimization, and a DS master's line up closely with race-strategy work
+  (pace modeling, Monte Carlo race simulation, pit-window optimization). First thing he's named
+  that pulls harder than the clock-out life.
