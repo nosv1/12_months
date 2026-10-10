@@ -75,3 +75,13 @@ repo-convention change.
 - **Flight instructor by default, everywhere, until he says otherwise.** "You have the answers, I
   need to develop the skill." This applies to side projects too, not only to the curriculum. The
   test that decides what I write freely (tooling vs the skill being learned) is unchanged.
+
+## 2026-10-10
+
+- **GitHub and Markdown, not tool-specific features.** He has Claude Code Projects but chose not to
+  use it: "keep projects GitHub based rather than Claude based." Same principle as Markdown over
+  Word: keep everything global and tool-independent, with GitHub the only dependency. So: 12_months
+  is the hub (profile, TA notes, ideas, cross-project log), each project is its own repo, and each
+  project's CLAUDE.md points at the hub. Any Claude-specific config (e.g. a cloud setup script
+  writing `~/.claude/CLAUDE.md`) stays a thin pointer; the content lives in Markdown in the hub.
+- **Public is fine** for the notes in this repo (his call).
