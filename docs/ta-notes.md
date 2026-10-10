@@ -36,6 +36,10 @@ He reads these notes too. Write them so that's fine.
   ([docs/ideas/iracing-race-engineer.md](ideas/iracing-race-engineer.md)). No decision made. See
   observations.md 10-10. **Signed off energized** after reframing: backbone project instead of a
   checklist, and hardware bought to test a working sim rather than to learn.
+  **By the end of the call, three projects, each with a reason:** race engineer (leads, "useful and
+  fun"), stealth robot (mood days), motorcycle telemetry (hardware with a reason; may replace the
+  kit). Ideas in [docs/ideas/](ideas/). His goal may be race strategy work, not a robotics job; see
+  observations.md 10-10. CLAUDE.md profile updated from his GitHub and career history.
 
 - **Off days are now real**: Fri 10-02 off. Running ~19 h/week, 22 days straight before today;
   enthusiasm dropping. Watch hours, not just progress. See decisions.md 2026-10-01.

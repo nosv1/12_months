@@ -84,3 +84,9 @@ He may come back later today for week 6.
 - **Hardware idea with a reason: motorcycle telemetry** on his 2025 CBR500R
   ([docs/ideas/motorcycle-telemetry.md](../../ideas/motorcycle-telemetry.md)). Possibly the answer to
   the kit stall and week 8.
+- **Late additions:** career history and passed-on defense offers (preference, not ability); race
+  strategy as the job he'd want; motorcycle telemetry, with cone practice as the use case. Signed off
+  ~16:5x UTC by `date` at commit; "probably resume tonight."
+- **Tonight, in order:** (1) did he push the ACC engineer; (2) pick the race engineer's "useful"
+  milestone; (3) decide the curriculum's fate: continue, reshape around the projects, or set aside.
+  Don't open with the week-6 progress bar as if nothing changed.
