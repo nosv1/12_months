@@ -80,9 +80,14 @@ the calendar if it's ambiguous.
 2. **Week 6** (processes, fork/exec, threads) if he comes back for it. Agree "done" first.
 3. **Side projects**: orbital (active) or iRacing engineer (idea, 10-10). **Orbital side project**, if he chooses it: flight-instructor mode, and his hours aren't logged.
    State in [week-06.md](ta-notes/sessions/week-06.md).
-4. **Global profile** ("me" across projects, including the phone app): scope settled, not built.
-   Find out whether claude.ai/code supports user-level instructions before proposing anything. Wait
-   for him to ask.
+4. **Global profile, researched 10-10 (docs, not guessed):** cloud sessions do **not** read a user
+   `~/.claude/CLAUDE.md`; they read only what's in the clone. Two supported routes: (a) a **setup
+   script on his cloud environment** that writes `~/.claude/CLAUDE.md` (loaded as user instructions in
+   every cloud session, phone included); (b) **Projects** (beta, Pro/Max, rolling out): one
+   conversation across several repos, with shared instructions (16k chars) and project memory, usable
+   on mobile. Proposed: 12_months becomes the hub (profile, TA notes, ideas); each project gets its own
+   repo with a short CLAUDE.md pointing at the hub. **Asked him:** is Projects in his sidebar, and is
+   it OK that personal notes live in a public repo? Build nothing until he answers.
 
 **Keep replies short.** Put the task in the **final** message, never mid-turn.
 
