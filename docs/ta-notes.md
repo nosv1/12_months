@@ -64,6 +64,9 @@ the calendar if it's ambiguous.
 
 1. **Ask where he landed on the curriculum** (10-10) before assuming week 6. Continue, reshape
    around projects, or stop: all fine. It should be a decision.
+   **Lead candidate (10-10): the stealth goal-seeker from his grad class**, which he'd "enjoy the
+   heck out of" as a curriculum project. He'll bring the original project details.
+   [docs/ideas/stealth-goal-seeker.md](ideas/stealth-goal-seeker.md).
 2. **Week 6** (processes, fork/exec, threads) if he comes back for it. Agree "done" first.
 3. **Side projects**: orbital (active) or iRacing engineer (idea, 10-10). **Orbital side project**, if he chooses it: flight-instructor mode, and his hours aren't logged.
    State in [week-06.md](ta-notes/sessions/week-06.md).
