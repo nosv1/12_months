@@ -58,7 +58,7 @@ If something feels like it wants to be added, write it down instead of building 
 
 To be answered — out loud, as rubber-ducking — **before** any code is written. They are the
 generative part, and per the working hypothesis in
-[`../docs/ta-notes/estimates.md`](../docs/ta-notes/estimates.md) the generative hours are the
+[`nosv1/ta-notes/estimates.md`](https://github.com/nosv1/nosv1/blob/main/ta-notes/estimates.md) the generative hours are the
 valuable ones.
 
 1. **What owns the collection of readings?** How do per-robot stats accumulate, and what happens to

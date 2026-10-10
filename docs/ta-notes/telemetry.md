@@ -1,6 +1,6 @@
 # Telemetry toolkit — design history, customer role, Boss Fight #1
 
-Back to the [TA notes index](../ta-notes.md). Read when reviewing telemetry code, answering a
+Back to the [TA notes index](https://github.com/nosv1/nosv1/blob/main/ta-notes.md). Read when reviewing telemetry code, answering a
 requirements question as the customer, or when Boss Fight #1 starts.
 
 ---
@@ -147,3 +147,32 @@ sample alone could never have tested multi-error collection. The swapped pair on
 - Suggested its own directory (e.g. `boss-fights/01-telemetry/`) with commits as he goes.
 
 **During the fight: strictly hands-off per CLAUDE.md.** Rubber-duck only. No "have you considered."
+
+## Open, his — the week-2 `telemetry/` project (not the fight rebuild)
+
+- **No test for the `-Infinity` fix.** The bug is fixed; nothing pins it. Needs a robot with zero
+  valid readings — two lines of input. `json.dumps(report, allow_nan=False)` is the oracle.
+- **§6's unrecognized-failure count is absent from the report.** Top-level keys are `robots` and
+  `bad_readings` only. Requirements gap, not raised with him yet.
+- `test_parsed_line_rejects` now pins the **count** (1 and 3) — verified to fail against a
+  short-circuiting `validate_parsed_line`. Still only checks the *base* type, so three wrong error
+  classes would pass. Naming the classes is the stronger version; told him, not blocking.
+- **conftest runs the pipeline twice**: `sample_parsed_lines` and `sample_bad_readings` each call
+  `get_parsed_lines_and_bad_readings` and discard half, so the partition test compares two
+  independent runs. Passes by determinism, not construction. Told him 09-17.
+- **`robot_id` has no validator at all.** Noticed 09-17, still not raised.
+- Fixtures: `sample_valid_line` (09-18) is the **first hand-made input** in the suite. The rest are
+  still the sample file. `parse_lines` has no test for empty or headerless input.
+- Smaller, still open: `seed_max_temp` names the running value, not the seed; `list(lines)[0]`
+  materialises the whole iterable; trailing `\n` in messages (arguably correct per §6); `"had a/an
+  exception(s)"` log string; `",".join` with no space; `NotANumberError("", ...)` empty first arg;
+  `UnknownError`/`UnrecognizedError` never raised; `build_report -> dict` untyped and untested;
+  magic-number limits vs injected thresholds (same `20`/`60` duplicated in conftest); `readlines()`.
+  Resolved 09-21: `pyproject.toml` description filled in; `matplotlib` and the
+  dead `Robot.plot` removed.
+- **Customer questions still unanswered**, §9: can columns be reordered; should a swapped pair flag
+  both rows. His to ask.
+- Resolved 09-18: `validate_timestamp_order` no longer returns a constant (`a57b142`, his), stray
+  `Literal` import gone, `set_analysis_to_none` gone. **`py.typed` added and verified** — a consumer
+  outside the tree now gets real type errors instead of `import-untyped`, and `uv build` ships the
+  marker in the wheel without any `pyproject.toml` entry.

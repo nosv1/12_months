@@ -7,12 +7,19 @@ A 52-week self-directed curriculum: rusty CS grad → employable robotics/AI eng
 - [docs/environment.md](docs/environment.md) — machine, toolchain, gotchas
 - [docs/background-threads.md](docs/background-threads.md) — build log, interviews, applications
 - [docs/syllabus-revisions.md](docs/syllabus-revisions.md) — why the syllabus differs from the original draft
-- [docs/ta-notes.md](docs/ta-notes.md) — Claude's working notes; read at session start, update at session end
 - [docs/textbook/](docs/textbook/README.md) — write-ups of lessons taught in session; Claude writes these
-- [docs/PROFILE.md](docs/PROFILE.md) — who he is and how I work with him in **every** repo; other
-  repos point here. The rules below are the curriculum's stricter version.
 
-@docs/PROFILE.md
+**Paused 2026-10-10.** The curriculum is no longer the path; the syllabus stays as a skills map
+that his projects tick off, and he may come back. Weeks 1–5 are done.
+
+**Before anything else this session, fetch and read his profile and the TA notes** from the hub,
+[nosv1/nosv1](https://github.com/nosv1/nosv1) (local clone: `~/nosv1`):
+
+- <https://raw.githubusercontent.com/nosv1/nosv1/main/PROFILE.md>
+- <https://raw.githubusercontent.com/nosv1/nosv1/main/ta-notes.md>
+
+Session notes go there, not here. The rules below are the curriculum's stricter version of the
+profile.
 
 ---
 
@@ -78,7 +85,7 @@ Chris — MS in Computer Science, 2024, **data-science emphasis**. Two years wit
 programming since. Feels he "barely graduated" on the CS side. Works in vehicle inventory management at a dealership,
 automating it with Google Apps Script. Post-MS job search was small: a couple of Garmin applications
 (no interviews) and one dev-team interview at the Kansas Department of Revenue, which ended in a hiring
-freeze. Detail in [observations.md](docs/ta-notes/observations.md).
+freeze. Detail in [observations.md](https://github.com/nosv1/nosv1/blob/main/ta-notes/observations.md).
 
 That self-assessment is worth taking seriously as a *calibration signal*, not as fact. It creates
 an asymmetric profile:

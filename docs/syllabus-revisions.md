@@ -215,7 +215,7 @@ learning and diffusion/VLA get one week each, and Isaac Lab becomes optional. Ch
 **Reverse it** if interviews from week 24 onward show that RL/learning depth is what the market
 asks of him. Take the week back from Part 11 then.
 
-**Estimate, mine:** the components weeks at ~20–25 h. Logged in `ta-notes/estimates.md`.
+**Estimate, mine:** the components weeks at ~20–25 h. Logged in [`nosv1/ta-notes/estimates.md`](https://github.com/nosv1/nosv1/blob/main/ta-notes/estimates.md).
 
 Seth offered domain review. When weeks 8–9 arrive, have him check the component list for
 anything missing or misweighted.

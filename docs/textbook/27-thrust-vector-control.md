@@ -82,4 +82,4 @@ regulations.
 ## Where this returns
 
 Week 8 (IMU: gyro vs accel, how each fails), week 9 (PID, cascaded loops), week 18 (state
-estimation), and the aerial hooks in [ta-notes/observations.md](../ta-notes/observations.md) 09-27.
+estimation), and the aerial hooks in [ta-notes/observations.md](https://github.com/nosv1/nosv1/blob/main/ta-notes/observations.md) 09-27.

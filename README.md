@@ -59,4 +59,4 @@ scripts/       machine setup
 | [docs/background-threads.md](docs/background-threads.md) | Build log, interviews, applications |
 | [docs/textbook/](docs/textbook/README.md) | Write-ups of lessons from sessions |
 | [docs/syllabus-revisions.md](docs/syllabus-revisions.md) | Why the syllabus differs from the first draft |
-| [docs/ta-notes.md](docs/ta-notes.md) | TA session notes |
+| [nosv1/ta-notes.md](https://github.com/nosv1/nosv1/blob/main/ta-notes.md) | TA session notes (moved to the hub 2026-10-10) |

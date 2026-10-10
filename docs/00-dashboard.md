@@ -2,7 +2,7 @@
 
 Single source of truth. Update every Sunday.
 
-**Started:** Wed 2026 Sep 9   **Current week:** 6   **Hours logged:** 59.77
+**Started:** Wed 2026 Sep 9   **Current week:** paused 2026-10-10 after week 5 (see [nosv1 decisions](https://github.com/nosv1/nosv1/blob/main/ta-notes/decisions.md))   **Hours logged:** 59.77
 
 ---
 

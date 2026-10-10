@@ -5,7 +5,7 @@ outlives the chat window it was given in.
 
 **Not** a progress log ([00-dashboard.md](../00-dashboard.md)), **not** a build log
 ([background-threads.md](../background-threads.md)), **not** session state
-([ta-notes.md](../ta-notes.md)). This is the *why it works that way* material.
+([ta-notes.md](https://github.com/nosv1/nosv1/blob/main/ta-notes.md)). This is the *why it works that way* material.
 
 New entry whenever a real lesson gets taught in a session. Numbered in the order they were
 learned, not in syllabus order — the sequence is the actual path through the year.
