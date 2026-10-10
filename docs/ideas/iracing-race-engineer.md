@@ -32,6 +32,36 @@ he races iRacing. A project he'll keep using is the one that gets finished.
 
 **To do, his:** push the ACC race engineer to GitHub.
 
+## First "useful" milestone: the caught call (10-10, evening)
+
+**"Caught Smith by 0.8 seconds."** The ACC version (Soma) already had it; it was the call he
+remembers as most useful in any race format: "the glimmer of hope of catching someone." It works
+even when it's noise: "caught P3 by 7 seconds" told him P3 crashed without anyone saying so.
+
+His spec:
+
+- **When:** each time he crosses the start/finish line (mini-sector 0).
+- **Who:** same class, ahead of him in position.
+- **Measure:** gap change since his previous crossing, from the timestamps each car crossed the
+  same line. Report the car he gained the most on.
+- **Nobody caught:** silent.
+- **Pit stops:** not filtered in v1. A big gain is information even for the "wrong" reason.
+- **Output:** spoken only. "This is a race engineer, not a heads-up display."
+
+Still his to decide: ahead by **position or on track** (a leader about to lap him counts by
+position); **name or position** in the call ("P3" drifts as positions shuffle).
+
+**Research before code:** ACC sent line-crossing events over UDP. iRacing's SDK is shared memory
+with per-car arrays, so the crossing probably has to be **detected**, not received. Find out what
+the SDK exposes per car index.
+
+**Done (proposed, not agreed):** spoken, in a real race, left on the whole time, calls were right.
+The project itself has no "done"; it's ongoing while he races. Publishing it for others is a
+possible later bar, and needs the testing rigor he's been building since week 1.
+
+**Repo:** a new one, not `strategist`. Strategist stays a frozen archive to read (`Soma/Alerts.py`,
+`Soma/Analysis.py`). The name "Soma" (Strategy Operations and Monitoring Assistant) may come along.
+
 ## What was wrong with the ACC version
 
 - All behavior was pre-programmed triggers: catching the car ahead, car behind closing, pit gap
