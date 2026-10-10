@@ -179,3 +179,13 @@ there. Check before summarising his work back to him.
     work → learning ML to predict baseball (`MLB-Beat-the-Streak`, "didn't totally master") →
     Discord bots for racing leagues → **GTALens**, a Discord bot rewritten in **Rust** as an excuse to
     learn it. Pattern: learns a tool when a project he cares about needs it.
+- **Not "can't get a dev job": hasn't wanted one enough (10-10, phone).** The full list adds a
+  SpaceX HR-only interview. The KDOR application was "I need a job" mode, for an easy-ish role. Life
+  rule: no programming job for its own sake; won't stress over work he doesn't care about. **Values
+  the current job because he clocks out and the problems go away**, and his own projects stay his.
+  **Passed on defense offers that came through the lab:** joining Epirus, a Pentagon role, and
+  modeling and sim with Nebraska Air Force people. Not interested "for some reason," plus reluctance
+  to move out of state for something he might not like. So the evidence says he's employable in
+  defense M&S via his network, and the blocker is preference, not ability. **Implication: CLAUDE.md's
+  goal ("employable robotics/AI engineer") may not be his real goal.** Raise it as a question; don't
+  rewrite it for him.
