@@ -163,3 +163,19 @@ there. Check before summarising his work back to him.
   evidence; take the correction. Weigh his own code (2022 package, this repo) over repo names. The
   "business situation" fear is the next confidence gap. Answer it with specifics (the lab job; the
   customer role-play; this year's practice), not reassurance.
+- **Career history, his account (10-10, phone).** Newest first:
+  - **Now:** vehicle inventory management at a car dealership: tracking and organizing where vehicles
+    sit on the lot. Uses Google Sheets plus **Google Apps Script** "for my sanity and efficiency" (he
+    programs at work, unofficially).
+  - **Job search after the MS (2024):** applied to **Garmin**, a couple of positions; no interviews
+    (no C++ then). **Kansas Department of Revenue:** reached the interview with the dev team, then
+    was told they were no longer hiring. That's about **three applications and one real interview**,
+    too few to conclude anything about ability. The KDOR interview is a positive data point.
+  - **Left the drone lab at graduation** rather than staying on as a graduate. His read: the
+    project's scope or ambition felt too big for him, and he didn't want to learn everything it would
+    take. Same shape as the kit, soldering, and C++: unfamiliar reads as "can't." Don't diagnose it to
+    him; let the evidence pile up.
+  - **Origin:** high-school racing-league spreadsheets (time trials) → his dad's baseball prediction
+    work → learning ML to predict baseball (`MLB-Beat-the-Streak`, "didn't totally master") →
+    Discord bots for racing leagues → **GTALens**, a Discord bot rewritten in **Rust** as an excuse to
+    learn it. Pattern: learns a tool when a project he cares about needs it.

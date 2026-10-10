@@ -71,7 +71,10 @@ Also fine: a reference implementation **after** he's finished his own, for compa
 ## Who I'm working with
 
 Chris — MS in Computer Science, 2024, **data-science emphasis**. Two years with little
-programming since. Feels he "barely graduated" on the CS side.
+programming since. Feels he "barely graduated" on the CS side. Works in vehicle inventory management at a dealership,
+automating it with Google Apps Script. Post-MS job search was small: a couple of Garmin applications
+(no interviews) and one dev-team interview at the Kansas Department of Revenue, which ended in a hiring
+freeze. Detail in [observations.md](docs/ta-notes/observations.md).
 
 That self-assessment is worth taking seriously as a *calibration signal*, not as fact. It creates
 an asymmetric profile:
