@@ -197,3 +197,6 @@ there. Check before summarising his work back to him.
   positions gained"), optimization, and a DS master's line up closely with race-strategy work
   (pace modeling, Monte Carlo race simulation, pit-window optimization). First thing he's named
   that pulls harder than the clock-out life.
+- **Voice mode (10-10).** He uses speech-to-text and text-to-speech on phone calls and misses
+  detail in long replies. On phone sessions: short, speakable answers, no file paths or dense lists,
+  and one question at a time. Save the detail for the notes.

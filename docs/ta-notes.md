@@ -86,8 +86,9 @@ the calendar if it's ambiguous.
    every cloud session, phone included); (b) **Projects** (beta, Pro/Max, rolling out): one
    conversation across several repos, with shared instructions (16k chars) and project memory, usable
    on mobile. Proposed: 12_months becomes the hub (profile, TA notes, ideas); each project gets its own
-   repo with a short CLAUDE.md pointing at the hub. **Asked him:** is Projects in his sidebar, and is
-   it OK that personal notes live in a public repo? Build nothing until he answers.
+   repo with a short CLAUDE.md pointing at the hub. **Privacy answered: public is fine** ("my resume
+   is public enough"). **Still open:** is Projects in his sidebar? Gist of the hub plan approved; build
+   it at a keyboard.
 
 **Keep replies short.** Put the task in the **final** message, never mid-turn.
 
