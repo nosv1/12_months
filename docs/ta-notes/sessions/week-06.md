@@ -63,3 +63,10 @@ He may come back later today for week 6.
 - He recalled the video as "two weeks ago." Logged hours start 09-09, about a month. Not raised.
 - **No decision was made.** I didn't push. Told him I'd rather talk through doubt directly than
   let a side project quietly replace the plan without deciding it.
+- **Later in the same call:** stealth goal-seeker from his grad class came up as a curriculum backbone
+  ([docs/ideas/stealth-goal-seeker.md](../../ideas/stealth-goal-seeker.md)). Proposed order: 2D Python
+  now → Gazebo → ROS 2 → mapping/planning/Nav2. Weeks 6–7 compressed, hardware weeks a decision. Not
+  decided; to work out at a keyboard. Also "buy to test, not to learn" (observations.md).
+- **Signed off energized**: "I feel energized again about writing some code," whether robotics or the
+  race engineer. Credits himself with redirecting rather than avoiding. No hours logged (phone, not
+  curriculum).

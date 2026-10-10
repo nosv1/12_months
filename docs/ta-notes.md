@@ -34,7 +34,8 @@ He reads these notes too. Write them so that's fine.
 - **10-10 (phone, Saturday): curriculum future open.** He said robotics was "something to get me by"
   while he had no projects. He's unsure about continuing. New side-project idea: iRacing race engineer
   ([docs/ideas/iracing-race-engineer.md](ideas/iracing-race-engineer.md)). No decision made. See
-  observations.md 10-10.
+  observations.md 10-10. **Signed off energized** after reframing: backbone project instead of a
+  checklist, and hardware bought to test a working sim rather than to learn.
 
 - **Off days are now real**: Fri 10-02 off. Running ~19 h/week, 22 days straight before today;
   enthusiasm dropping. Watch hours, not just progress. See decisions.md 2026-10-01.
