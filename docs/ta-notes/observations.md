@@ -143,3 +143,8 @@ there. Check before summarising his work back to him.
   back gently on "whole solution": the bugs he found this year (`-Infinity`, the conftest double
   run) were all invisible until built. Finishing is also the only thing that answers the confidence
   gap. Don't moralize; it's fine if some ideas stay thoughts.
+- **Buy to test, not to learn (10-10, phone).** His hypothesis: hardware might appeal once a
+  simulation works and raises "does this work in real life?", in contrast to the kit, which was
+  buying to learn. Examples: rocket launch/landing (ties to the parked TVC stand), robots for the
+  goal-seeker. He's unsure whether "saw it work in sim" will kill it like "saw it in my head" does.
+  Unresolved. Test it by building the sim first and noticing. Don't sell hardware.
