@@ -135,3 +135,11 @@ there. Check before summarising his work back to him.
   Don't defend the syllabus for its own sake. The CLAUDE.md goal is employable capability plus the
   confidence of having built things that work, and projects he actually wants to build can serve
   that. Help him make it a decision, not a drift.
+- **Design over building (10-10, phone).** His words: he enjoys "the heck out of thinking through
+  the whole problem" but rarely finishes, because "I've already thought of the whole solution" and
+  the thing isn't needed. Example: the unfinished grad-class project, a goal-seeker robot evading
+  2–3 detector robots (pursuit-evasion / covert path planning; the mirror image of his base-defense
+  work). This explains a lot: the kit stall, energy for ideas, low energy for execution weeks. Push
+  back gently on "whole solution": the bugs he found this year (`-Infinity`, the conftest double
+  run) were all invisible until built. Finishing is also the only thing that answers the confidence
+  gap. Don't moralize; it's fine if some ideas stay thoughts.
