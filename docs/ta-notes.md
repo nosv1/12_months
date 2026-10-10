@@ -66,7 +66,9 @@ the calendar if it's ambiguous.
 1. **Ask where he landed on the curriculum** (10-10) before assuming week 6. Continue, reshape
    around projects, or stop: all fine. It should be a decision.
    **Later on 10-10 the race engineer took the lead** ("useful and fun"; he'll use it as long as he
-   races). Open question: does the year stay a robotics curriculum, or become race engineer first?
+   races). **His call: keep both open; pick by mood.** But once the engineer is started he'd stay on
+   it until it's useful. The robot is "fun in my head, then 'you did a good job, whatever.'" Help
+   him define "useful" as a concrete first milestone. Still open: does the robotics curriculum continue?
    He wants race strategy work someday. Ask whether he pushed the ACC code.
    Earlier lead candidate: **the stealth goal-seeker from his grad class**, which he'd "enjoy the
    heck out of" as a curriculum project. He'll bring the original project details.
