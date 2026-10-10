@@ -46,3 +46,20 @@
    Bowling stays parked; don't raise it.
 
 He may come back later today for week 6.
+
+## 2026-10-10 Sat, phone, driving to Omaha for work (not curriculum; not logged)
+
+- **Side project 3, iRacing race engineer.** Brainstorm only. Notes:
+  [docs/ideas/iracing-race-engineer.md](../../ideas/iracing-race-engineer.md). The ACC version was
+  trigger-only Python; Python wasn't the problem. Wants: local LLM, real conversation, a spotter,
+  audio first. Quest 3. **His key takeaway, flagged to keep: log the questions that need the code
+  fallback, and promote the repeated ones to built-in functions.**
+- **Where the curriculum stands, his words.** Watched an NVIDIA robotics video, thought "better get
+  on that train," had GPT write a syllabus, had me edit it. Then hit not wanting to buy things,
+  questioned his motivation, and "not seeing that light at the end of the tunnel." **"Not sure what
+  the future is with the robotic stuff anymore."** Robotics "was just something to get me by in a
+  time where I had no projects." Interests and coding skill are intact; ideas still feel fun. He
+  does not see side projects as taking time from robotics.
+- He recalled the video as "two weeks ago." Logged hours start 09-09, about a month. Not raised.
+- **No decision was made.** I didn't push. Told him I'd rather talk through doubt directly than
+  let a side project quietly replace the plan without deciding it.

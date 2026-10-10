@@ -127,3 +127,11 @@ there. Check before summarising his work back to him.
   underactuated robotics (Tedrake). He declined a write-up — "just sharing thoughts." Interest in
   the field is alive even after a quiet week. Don't turn it into homework; if Tedrake fits a later
   control/planning week, mention it once there.
+- **Robotics as a placeholder (10-10, phone).** "That pursuit was just something to get me by in a
+  time where I had no projects." The origin was FOMO (an NVIDIA video, "get on that train"), not a
+  pull toward the work. Stalled on the kit purchase, questioning his motivation, no light at the
+  end of the tunnel. Interest in building things is intact: three side-project ideas in a week
+  (orbital, bowling, iRacing engineer). So the problem is the frame, not his ability or drive.
+  Don't defend the syllabus for its own sake. The CLAUDE.md goal is employable capability plus the
+  confidence of having built things that work, and projects he actually wants to build can serve
+  that. Help him make it a decision, not a drift.

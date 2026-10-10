@@ -31,6 +31,11 @@ He reads these notes too. Write them so that's fine.
   re-verifying (11/11 tests, consumer builds). Current week: 6. He finds Linux internals
   unexciting but doable.
 
+- **10-10 (phone, Saturday): curriculum future open.** He said robotics was "something to get me by"
+  while he had no projects. He's unsure about continuing. New side-project idea: iRacing race engineer
+  ([docs/ideas/iracing-race-engineer.md](ideas/iracing-race-engineer.md)). No decision made. See
+  observations.md 10-10.
+
 - **Off days are now real**: Fri 10-02 off. Running ~19 h/week, 22 days straight before today;
   enthusiasm dropping. Watch hours, not just progress. See decisions.md 2026-10-01.
 - **Critique tags in force**: fix now / noted / taste; taste stays out of chat. Agree tonight's
@@ -57,10 +62,12 @@ the calendar if it's ambiguous.
 
 ## Next session
 
-1. **Week 6** (processes, fork/exec, threads) if he comes back for it. Agree "done" first.
-2. **Orbital side project**, if he chooses it: flight-instructor mode, and his hours aren't logged.
+1. **Ask where he landed on the curriculum** (10-10) before assuming week 6. Continue, reshape
+   around projects, or stop: all fine. It should be a decision.
+2. **Week 6** (processes, fork/exec, threads) if he comes back for it. Agree "done" first.
+3. **Side projects**: orbital (active) or iRacing engineer (idea, 10-10). **Orbital side project**, if he chooses it: flight-instructor mode, and his hours aren't logged.
    State in [week-06.md](ta-notes/sessions/week-06.md).
-3. **Global profile** ("me" across projects, including the phone app): scope settled, not built.
+4. **Global profile** ("me" across projects, including the phone app): scope settled, not built.
    Find out whether claude.ai/code supports user-level instructions before proposing anything. Wait
    for him to ask.
 
