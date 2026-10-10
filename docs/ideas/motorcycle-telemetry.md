@@ -25,6 +25,18 @@ what simulation leaves out.
 - Leave the bike's own electronics alone until he's researched them. It may have a diagnostic port;
   read-only, and only once he knows what it does.
 
+## His first answers (10-10)
+
+- **Tire pressures and temperatures.** Pressure: Bluetooth TPMS sensors exist, and reading them from
+  a Pi is a contained project. Temperature: an IR sensor aimed at the tire, which is harder to mount.
+- **Lean angle**, but the peg feeler already marks the physical max. The more interesting signal is
+  lean against speed (cornering efficiency) and how close he runs to the limit.
+- **Parking-lot cone practice: the best use case.** Low speed, repeatable, comparable runs, like laps
+  on a tiny track. Catch: consumer GPS is accurate to a few metres, coarser than the cones. Fusing
+  IMU and GPS is state estimation (syllabus week 18, Kalman filters) with a reason.
+- **Frame sliders are bought, not installed.** He's unsure how much fairing or frame work they need.
+  Install them before pushing harder in cone practice. A shop install is a fine answer.
+
 ## Open question (his)
 
 What would he want to see after a ride? Lean angle, braking and acceleration g, speed over a GPS
