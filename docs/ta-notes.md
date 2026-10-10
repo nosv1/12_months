@@ -23,7 +23,7 @@ He reads these notes too. Write them so that's fine.
 
 ## Where things stand
 
-**Updated 2026-10-07 10:27, signed off.** **59.77 h logged** (10-07 not counted, his call). Session log:
+**Updated 2026-10-10 (phone, not logged); last curriculum sign-off 2026-10-07 10:27.** **59.77 h logged** (10-07 not counted, his call). Session log:
 [week-06.md](ta-notes/sessions/week-06.md). ~11 days ahead of the calendar.
 
 - **10-07 (work off day): 10-02 to 10-06 was an off period**, partly to avoid the kit question.
@@ -66,6 +66,8 @@ deadline** — he read "day 4 of 7, tight" as falling behind (09-29). Say where 
 the calendar if it's ambiguous.
 
 ## Next session
+
+**Tonight's agenda (10-10) is at the bottom of [week-06.md](ta-notes/sessions/week-06.md).** Start there.
 
 1. **Ask where he landed on the curriculum** (10-10) before assuming week 6. Continue, reshape
    around projects, or stop: all fine. It should be a decision.

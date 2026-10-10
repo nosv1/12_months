@@ -87,6 +87,11 @@ He may come back later today for week 6.
 - **Late additions:** career history and passed-on defense offers (preference, not ability); race
   strategy as the job he'd want; motorcycle telemetry, with cone practice as the use case. Signed off
   18:38 UTC (`date`); "probably resume tonight."
-- **Tonight, in order:** (1) did he push the ACC engineer; (2) pick the race engineer's "useful"
-  milestone; (3) decide the curriculum's fate: continue, reshape around the projects, or set aside.
+- **After that sign-off:** organization across projects. Researched the docs: cloud sessions only
+  read the clone. Decided: GitHub + Markdown hub, per-project repos, no Claude Projects; public notes
+  OK (decisions.md 10-10). He's on voice: keep phone replies short.
+- **Tonight, in order:** (1) did he push the ACC engineer; (2) build the hub setup (project-repo
+  CLAUDE.md pointer template, optional cloud setup script, maybe a hub README index); (3) pick the
+  race engineer's "useful" milestone; (4) decide the curriculum's fate: continue, reshape around
+  the projects, or set aside.
   Don't open with the week-6 progress bar as if nothing changed.
