@@ -9,6 +9,10 @@ A 52-week self-directed curriculum: rusty CS grad → employable robotics/AI eng
 - [docs/syllabus-revisions.md](docs/syllabus-revisions.md) — why the syllabus differs from the original draft
 - [docs/ta-notes.md](docs/ta-notes.md) — Claude's working notes; read at session start, update at session end
 - [docs/textbook/](docs/textbook/README.md) — write-ups of lessons taught in session; Claude writes these
+- [docs/PROFILE.md](docs/PROFILE.md) — who he is and how I work with him in **every** repo; other
+  repos point here. The rules below are the curriculum's stricter version.
+
+@docs/PROFILE.md
 
 ---
 
