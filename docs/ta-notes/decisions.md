@@ -85,3 +85,10 @@ repo-convention change.
   project's CLAUDE.md points at the hub. Any Claude-specific config (e.g. a cloud setup script
   writing `~/.claude/CLAUDE.md`) stays a thin pointer; the content lives in Markdown in the hub.
 - **Public is fine** for the notes in this repo (his call).
+- **The robotics curriculum is no longer the path (17:3x CDT, his call).** "The specific robotics
+  curriculum is no longer the path we're taking." The syllabus stays as **a list of skills to build**:
+  "now these other projects feel like I'm actually ticking stuff off." He's not inclined to run
+  through it week by week. "It can be viewed as achievements for a robotics student, but I don't
+  think that's who I am." Weeks 1–5 stand as done; week 6 is not started and is not owed.
+  Consequences still open: hours logging, the dashboard, boss fights, whether the hub stays in
+  12_months, and the curriculum-specific rules in CLAUDE.md.
