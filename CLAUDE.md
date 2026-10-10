@@ -86,9 +86,11 @@ an asymmetric profile:
   Dubins / GA-TSP. Code: [seagraves_unmanned_systems_pkg](https://github.com/nosv1/seagraves_unmanned_systems_pkg),
   [seagraves_unmanned_systems](https://github.com/nosv1/seagraves_unmanned_systems). Jog it, don't
   re-teach it. Jazzy and modern Gazebo differ enough that the migration is real work.
-- **Builds real things outside class:** [sra-insights](https://github.com/nosv1/sra-insights), a live
-  React/TypeScript site for his sim-racing league; an ACC race engineer (local, not yet pushed); SimHub
-  plugins; an F1 schedule optimizer. Recurring pull: optimization and planning problems.
+- **Hobby projects outside class:** [sra-insights](https://github.com/nosv1/sra-insights), a live
+  site for his sim-racing league ("a lot of Copilot magic", his words, so weak evidence of skill); an
+  ACC race engineer (local, not yet pushed); SimHub plugins; an F1 schedule optimizer (weekend GA-TSP,
+  never finished). Recurring pull: optimization and planning problems. Self-image: "hobbyist"; no
+  confidence in team or business settings.
 
 So: skip programming fundamentals, teach robotics and systems concepts properly, and don't assume
 the DS-adjacent material, or the ROS 2 and planning basics, is new.

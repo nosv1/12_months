@@ -156,3 +156,10 @@ there. Check before summarising his work back to him.
   React/TypeScript web app for his sim-racing league (pushed May 2026), `F1-Schedule-Optimizer`
   (another optimization data point), an ACC UDP interface fork, SimHub plugins, an ArduPilot fork,
   UAV-Sandbox. The ACC race engineer isn't public. Ask where it lives.
+- **His correction to my GitHub read (10-10).** `sra-insights` was "a lot of Copilot magic," and
+  F1-Schedule-Optimizer was a weekend GA-TSP, never fully working (the design-over-building pattern
+  again). Self-image: "hobbyist skill set." He can get things working at home, but in "a business
+  situation with meetings and cloud software crap, not a chance in hell." I overstated the web app as
+  evidence; take the correction. Weigh his own code (2022 package, this repo) over repo names. The
+  "business situation" fear is the next confidence gap. Answer it with specifics (the lab job; the
+  customer role-play; this year's practice), not reassurance.
