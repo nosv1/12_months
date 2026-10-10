@@ -19,6 +19,19 @@ Fallbacks are slow (several model round trips) and can be quietly wrong. Promoti
 ones to built-ins means the engineer gets faster and more reliable on the questions you actually
 ask. The replay recorder (below) lets you test this at a desk.
 
+## Beyond races: practice awareness (10-10)
+
+Not race-only. It should watch **practice sessions**, store the data across sessions, and make sense
+of it: how long tires last, and the tradeoff between tires, fuel, and stint length. The ACC version
+already did some of this. This persistent store is what the LLM's code fallback queries, and it's
+the seed of a strategy brain (pit windows, stint plans, simulating the rest of the race).
+
+**Why this one leads (his words):** the stealth robot "would be fun"; the race engineer "would be
+useful and fun." The robot gets built and put aside, while the engineer gets used for as long as
+he races iRacing. A project he'll keep using is the one that gets finished.
+
+**To do, his:** push the ACC race engineer to GitHub.
+
 ## What was wrong with the ACC version
 
 - All behavior was pre-programmed triggers: catching the car ahead, car behind closing, pit gap

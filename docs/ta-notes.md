@@ -65,7 +65,10 @@ the calendar if it's ambiguous.
 
 1. **Ask where he landed on the curriculum** (10-10) before assuming week 6. Continue, reshape
    around projects, or stop: all fine. It should be a decision.
-   **Lead candidate (10-10): the stealth goal-seeker from his grad class**, which he'd "enjoy the
+   **Later on 10-10 the race engineer took the lead** ("useful and fun"; he'll use it as long as he
+   races). Open question: does the year stay a robotics curriculum, or become race engineer first?
+   He wants race strategy work someday. Ask whether he pushed the ACC code.
+   Earlier lead candidate: **the stealth goal-seeker from his grad class**, which he'd "enjoy the
    heck out of" as a curriculum project. He'll bring the original project details.
    [docs/ideas/stealth-goal-seeker.md](ideas/stealth-goal-seeker.md).
 2. **Week 6** (processes, fork/exec, threads) if he comes back for it. Agree "done" first.
